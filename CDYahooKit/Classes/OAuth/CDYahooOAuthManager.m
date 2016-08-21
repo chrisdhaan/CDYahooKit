@@ -10,6 +10,12 @@
 
 static NSString *YahooAPIV2OAuthEndpoint = @"https://api.login.yahoo.com/oauth/v2/";
 
+@interface CDYahooOAuthManager ()
+
+@property (strong, nonatomic) BDBOAuth1Credential *requestToken;
+
+@end
+
 @implementation CDYahooOAuthManager
 
 #pragma mark - Initialization Methods
@@ -34,6 +40,7 @@ static NSString *YahooAPIV2OAuthEndpoint = @"https://api.login.yahoo.com/oauth/v
                                             callbackURL:[NSURL URLWithString:@"https://www.christopherdehaan.me"]
                                                   scope:nil
                                                 success:^(BDBOAuth1Credential *requestToken) {
+                                                    self.requestToken = requestToken;
                                                     NSString *authURL = [NSString stringWithFormat:@"%@request_auth?oauth_token=%@", YahooAPIV2OAuthEndpoint, requestToken.token];
                                                     if (self.delegate) {
                                                         [self.delegate didReceiveAuthorization:[NSURL URLWithString:authURL]];
@@ -50,9 +57,9 @@ static NSString *YahooAPIV2OAuthEndpoint = @"https://api.login.yahoo.com/oauth/v
 }
 
 - (void)fetchAccessToken {
-    [self.oAuthSessionManager fetchAccessTokenWithPath:@""
-                                                method:@""
-                                          requestToken:@""
+    [self.oAuthSessionManager fetchAccessTokenWithPath:@"get_token"
+                                                method:@"POST"
+                                          requestToken:self.requestToken
                                                success:^(BDBOAuth1Credential *accessToken) {
                                                    NSLog(@"%@", accessToken);
                                                } failure:^(NSError *error) {

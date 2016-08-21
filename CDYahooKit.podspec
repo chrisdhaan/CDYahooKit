@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'CDYahooKit'
-  s.version          = '0.1.2'
+  s.version          = '0.1.3'
   s.summary          = 'An extensive Objective C wrapper for the Yahoo Developers Social and Fantasy Football APIs.'
   s.description      = <<-DESC
 This Objective C wrapper covers all possible network endpoints and responses for the Yahoo Developers Social and Fantasy Football API's.
