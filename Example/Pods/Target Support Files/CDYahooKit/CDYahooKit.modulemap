@@ -1,0 +1,6 @@
+framework module CDYahooKit {
+  umbrella header "CDYahooKit-umbrella.h"
+
+  export *
+  module * { export * }
+}

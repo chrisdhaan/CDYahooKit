@@ -1,9 +1,8 @@
-FRAMEWORK_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking" "$PODS_CONFIGURATION_BUILD_DIR/BDBOAuth1Manager" "$PODS_CONFIGURATION_BUILD_DIR/Mantle" "$PODS_CONFIGURATION_BUILD_DIR/Overcoat"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking" "$PODS_CONFIGURATION_BUILD_DIR/BDBOAuth1Manager" "$PODS_CONFIGURATION_BUILD_DIR/CDYahooKit" "$PODS_CONFIGURATION_BUILD_DIR/Mantle" "$PODS_CONFIGURATION_BUILD_DIR/Overcoat"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/CDYahooKit"
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking/AFNetworking.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/BDBOAuth1Manager/BDBOAuth1Manager.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Mantle/Mantle.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Overcoat/Overcoat.framework/Headers" -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/CDYahooKit"
-OTHER_LDFLAGS = $(inherited) -framework "AFNetworking" -framework "BDBOAuth1Manager" -framework "CoreLocation" -framework "Mantle" -framework "Overcoat"
+OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking/AFNetworking.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/BDBOAuth1Manager/BDBOAuth1Manager.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/CDYahooKit/CDYahooKit.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Mantle/Mantle.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Overcoat/Overcoat.framework/Headers"
+OTHER_LDFLAGS = $(inherited) -framework "AFNetworking" -framework "BDBOAuth1Manager" -framework "CDYahooKit" -framework "Mantle" -framework "Overcoat"
 PODS_BUILD_DIR = $BUILD_DIR
 PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_ROOT = ${SRCROOT}/Pods

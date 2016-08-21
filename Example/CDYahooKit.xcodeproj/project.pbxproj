@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0C0093601B8D52589DD07204 /* Pods_CDYahooKit_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23D6AE4F5673D2080DCAD024 /* Pods_CDYahooKit_Example.framework */; };
 		2F0ED3A8BC0BF8C1A2BACC73 /* Pods_CDYahooKit_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B33699288EE3FF34EA80F8AE /* Pods_CDYahooKit_Tests.framework */; };
+		5F75A3D61D698075005CD74B /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F75A3D51D698075005CD74B /* Launch Screen.storyboard */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -40,6 +41,7 @@
 		2F8E69440DC2CF5B92E93BF6 /* Pods-CDYahooKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CDYahooKit_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CDYahooKit_Tests/Pods-CDYahooKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		49767CAF1C1865364EA7B516 /* Pods-CDYahooKit_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CDYahooKit_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-CDYahooKit_Example/Pods-CDYahooKit_Example.release.xcconfig"; sourceTree = "<group>"; };
 		49FBF8BF86E1B4E79A4E88BE /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		5F75A3D51D698075005CD74B /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* CDYahooKit_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CDYahooKit_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -143,10 +145,11 @@
 			children = (
 				6003F59C195388D20070C39A /* CDAppDelegate.h */,
 				6003F59D195388D20070C39A /* CDAppDelegate.m */,
-				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
 				6003F5A5195388D20070C39A /* CDViewController.h */,
 				6003F5A6195388D20070C39A /* CDViewController.m */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
+				5F75A3D51D698075005CD74B /* Launch Screen.storyboard */,
+				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
 				6003F594195388D20070C39A /* Supporting Files */,
 			);
 			name = "Example for CDYahooKit";
@@ -278,6 +281,7 @@
 			files = (
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
+				5F75A3D61D698075005CD74B /* Launch Screen.storyboard in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -512,7 +516,6 @@
 			baseConfigurationReference = 8104862E51BEC097998318EC /* Pods-CDYahooKit_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CDYahooKit/CDYahooKit-Prefix.pch";
 				INFOPLIST_FILE = "CDYahooKit/CDYahooKit-Info.plist";
@@ -528,7 +531,6 @@
 			baseConfigurationReference = 49767CAF1C1865364EA7B516 /* Pods-CDYahooKit_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CDYahooKit/CDYahooKit-Prefix.pch";
 				INFOPLIST_FILE = "CDYahooKit/CDYahooKit-Info.plist";
