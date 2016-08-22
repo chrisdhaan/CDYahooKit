@@ -19,12 +19,13 @@
 
 @interface CDYahooOAuthManager : NSObject
 
-@property (strong, nonatomic) BDBOAuth1SessionManager *oAuthSessionManager;
-
 @property (nonatomic, weak) id<CDYahooOAuthManagerDelegate> delegate;
 
 - (id)initWithConsumerKey:(NSString *)consumerKey
            consumerSecret:(NSString *)consumerSecret;
+- (BOOL)isAuthorized;
+- (BOOL)isAuthorizationExpired;
+- (void)deauthorize;
 - (void)fetchRequestToken;
 - (void)parseAuthenticationResponse:(NSURLRequest *)authenticationRequest;
 - (void)fetchAccessToken;

@@ -11,11 +11,11 @@
 @interface CDYahooOAuthWebViewController : UIViewController
 
 @property (strong, nonatomic) UIWebView *authorizationWebView;
-@property (strong, nonatomic) NSURLRequest *authorizationRequest;
 
 - (id)initWithFrame:(CGRect)frame
 andAuthorizationURL:(NSURL *)authorizationURL;
 
 - (void)loadRequest;
+- (void)displayWebView;
 
 @end

@@ -16,6 +16,8 @@
 
 @property (strong, nonatomic) CDYahooKitManager *manager;
 
+@property (strong, nonatomic) CDYahooOAuthWebViewController *oAuthWebVC;
+
 @end
 
 @implementation CDViewController
@@ -26,15 +28,17 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
     
     self.manager = [[CDYahooKitManager alloc] initWithConsumerKey:@"dj0yJmk9S2JNTElkQkxUdlUwJmQ9WVdrOVFreE5ZM1k0TkhVbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD05ZQ--"
                                                    consumerSecret:@"fcf6a6eb4dc648bf9738ef1613998a3c8381fd81"];
     [self.manager.oAuthManager setDelegate:self];
-    [self.manager.oAuthManager fetchRequestToken];
+//    [self.manager.oAuthManager deauthorize];
+    if ([self.manager.oAuthManager isAuthorized] == false) {
+        [self.manager.oAuthManager fetchRequestToken];
+    }
+    if ([self.manager.oAuthManager isAuthorizationExpired] == true) {
+        [self.manager.oAuthManager fetchAccessToken];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,14 +70,18 @@
     return YES;
 }
 
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    [self.oAuthWebVC displayWebView];
+}
+
 #pragma mark - Private Methods
 
 - (void)displayAuthorizationWebViewForURL:(NSURL *)authorizationUrl {
-    CDYahooOAuthWebViewController *oAuthWebVC = [[CDYahooOAuthWebViewController alloc] initWithFrame:self.view.frame
+    self.oAuthWebVC = [[CDYahooOAuthWebViewController alloc] initWithFrame:self.view.frame
                                                                                  andAuthorizationURL:authorizationUrl];
-    [oAuthWebVC.authorizationWebView setDelegate:self];
-    [oAuthWebVC loadRequest];
-    [self presentViewController:oAuthWebVC animated:true completion:nil];
+    [self.oAuthWebVC.authorizationWebView setDelegate:self];
+    [self.oAuthWebVC loadRequest];
+    [self presentViewController:self.oAuthWebVC animated:true completion:nil];
 }
 
 @end
