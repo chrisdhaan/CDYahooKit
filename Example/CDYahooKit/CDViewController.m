@@ -29,15 +29,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    self.manager = [[CDYahooKitManager alloc] initWithConsumerKey:@"dj0yJmk9S2JNTElkQkxUdlUwJmQ9WVdrOVFreE5ZM1k0TkhVbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD05ZQ--"
-                                                   consumerSecret:@"fcf6a6eb4dc648bf9738ef1613998a3c8381fd81"];
+    self.manager = [[CDYahooKitManager alloc] initWithConsumerKey:@"<YOUR CONSUMER KEY>"
+                                                   consumerSecret:@"<YOUR CONSUMER SECRET>"
+                                                      callbackURL:[NSURL URLWithString:@"<YOUR CALLBACK URL>"]];
     [self.manager.oAuthManager setDelegate:self];
 //    [self.manager.oAuthManager deauthorize];
     if ([self.manager.oAuthManager isAuthorized] == false) {
         [self.manager.oAuthManager fetchRequestToken];
-    }
-    if ([self.manager.oAuthManager isAuthorizationExpired] == true) {
-        [self.manager.oAuthManager fetchAccessToken];
+    } else if ([self.manager.oAuthManager isAuthorizationExpired] == true) {
+        [self.manager.oAuthManager refreshAccessToken];
+    } else {
+        NSLog(@"%@", [self.manager.oAuthManager userGuid]);
     }
 }
 

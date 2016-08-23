@@ -5,13 +5,20 @@
 [![License](https://img.shields.io/cocoapods/l/CDYahooKit.svg?style=flat)](http://cocoapods.org/pods/CDYahooKit)
 [![Platform](https://img.shields.io/cocoapods/p/CDYahooKit.svg?style=flat)](http://cocoapods.org/pods/CDYahooKit)
 
-This pod is currently in development. It is not yet in a usable state and is subject to code breaking changes until version 1.0 release.
+This pod is currently in development. As of release 0.9.0 the code is stable and in a usable state to install in applications.
 
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
+---
+
 ## Requirements
+
+- iosSDK: 8.0
+- [Yahoo API Access](https://developer.yahoo.com/apps/)
+
+---
 
 ## Installation
 
@@ -22,10 +29,22 @@ it, simply add the following line to your Podfile:
 pod "CDYahooKit"
 ```
 
+---
+
+## Usage
+
+### OAuth Usage
+
+### Core Usage
+
+---
+
 ## Author
 
-Christopher de Haan, chrisdhaan@gmail.com
+Christopher de Haan, contact@christopherdehaan.me
 
 ## License
 
 CDYahooKit is available under the MIT license. See the LICENSE file for more info.
+
+---

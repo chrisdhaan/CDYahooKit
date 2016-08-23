@@ -8,14 +8,14 @@
 
 Pod::Spec.new do |s|
   s.name             = 'CDYahooKit'
-  s.version          = '0.1.4'
+  s.version          = '0.9.0'
   s.summary          = 'An extensive Objective C wrapper for the Yahoo Developers Social and Fantasy Football APIs.'
   s.description      = <<-DESC
 This Objective C wrapper covers all possible network endpoints and responses for the Yahoo Developers Social and Fantasy Football API's.
                        DESC
   s.homepage         = 'https://github.com/chrisdhaan/CDYahooKit'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'Christopher de Haan' => 'chrisdhaan@gmail.com' }
+  s.author           = { 'Christopher de Haan' => 'contact@christopherdehaan.me' }
   s.source           = { :git => 'https://github.com/chrisdhaan/CDYahooKit.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/dehaan_solo'
 

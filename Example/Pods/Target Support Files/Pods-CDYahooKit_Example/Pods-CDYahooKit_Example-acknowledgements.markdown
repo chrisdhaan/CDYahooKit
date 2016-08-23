@@ -50,7 +50,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## CDYahooKit
 
-Copyright (c) 2016 Christopher de Haan <chris@meowingrooster.com>
+Copyright (c) 2016 Christopher de Haan <contact@christopherdehaan.me>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
