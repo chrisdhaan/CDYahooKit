@@ -27,7 +27,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import <BDBOAuth1Manager/BDBOAuth1SessionManager.h>
+#import <BDBOAuth1Manager/BDBOAuth1RequestSerializer.h>
 
 @protocol CDYahooOAuthManagerDelegate <NSObject>
 
@@ -37,6 +37,8 @@
 @end
 
 @interface CDYahooOAuthManager : NSObject
+
+@property (nonatomic) BDBOAuth1RequestSerializer *requestSerializer;
 
 @property (nonatomic, weak) id<CDYahooOAuthManagerDelegate> delegate;
 

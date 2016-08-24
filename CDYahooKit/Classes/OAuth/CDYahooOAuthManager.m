@@ -25,6 +25,8 @@
 //  THE SOFTWARE.
 //
 
+#import <BDBOAuth1Manager/BDBOAuth1SessionManager.h>
+
 #import "CDYahooOAuthManager.h"
 
 static NSString *YahooAPIV2OAuthEndpoint = @"https://api.login.yahoo.com/oauth/v2/";
@@ -99,6 +101,7 @@ static NSString *YahooAPIV2OAuthEndpoint = @"https://api.login.yahoo.com/oauth/v
                                           requestToken:requestToken
                                                success:^(BDBOAuth1Credential *accessToken) {
                                                    [self.oAuthSessionManager.requestSerializer saveAccessToken:accessToken];
+                                                   self.requestSerializer = self.oAuthSessionManager.requestSerializer;
                                                } failure:^(NSError *error) {
                                                    NSLog(@"Fetch Access Token Error: %@", error.localizedDescription);
                                                }];
