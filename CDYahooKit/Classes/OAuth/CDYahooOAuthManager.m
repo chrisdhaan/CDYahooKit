@@ -101,7 +101,6 @@ static NSString *YahooAPIV2OAuthEndpoint = @"https://api.login.yahoo.com/oauth/v
                                           requestToken:requestToken
                                                success:^(BDBOAuth1Credential *accessToken) {
                                                    [self.oAuthSessionManager.requestSerializer saveAccessToken:accessToken];
-                                                   self.requestSerializer = self.oAuthSessionManager.requestSerializer;
                                                } failure:^(NSError *error) {
                                                    NSLog(@"Fetch Access Token Error: %@", error.localizedDescription);
                                                }];
@@ -114,6 +113,10 @@ static NSString *YahooAPIV2OAuthEndpoint = @"https://api.login.yahoo.com/oauth/v
 - (NSString *)userGuid {
     BDBOAuth1Credential *accessToken = self.oAuthSessionManager.requestSerializer.accessToken;
     return accessToken.userInfo[@"xoauth_yahoo_guid"] ? accessToken.userInfo[@"xoauth_yahoo_guid"] : @"";
+}
+
+- (BDBOAuth1RequestSerializer *)requestSerializer {
+    return self.oAuthSessionManager.requestSerializer;
 }
 
 @end

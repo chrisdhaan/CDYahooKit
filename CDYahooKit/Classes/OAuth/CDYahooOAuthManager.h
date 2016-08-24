@@ -38,8 +38,6 @@
 
 @interface CDYahooOAuthManager : NSObject
 
-@property (nonatomic) BDBOAuth1RequestSerializer *requestSerializer;
-
 @property (nonatomic, weak) id<CDYahooOAuthManagerDelegate> delegate;
 
 - (id)initWithConsumerKey:(NSString *)consumerKey
@@ -52,5 +50,6 @@
 - (void)parseAuthenticationResponse:(NSURLRequest *)authenticationRequest;
 - (void)refreshAccessToken;
 - (NSString *)userGuid;
+- (BDBOAuth1RequestSerializer *)requestSerializer;
 
 @end
