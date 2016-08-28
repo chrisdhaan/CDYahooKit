@@ -52,6 +52,8 @@ FOUNDATION_EXPORT NSString * const BDBOAuth1OAuthCallbackParameter;
  */
 @property (nonatomic, copy) NSString *verifier;
 
+@property (nonatomic) NSDate *expiration;
+
 /**
  *  Check whether or not this token is expired.
  */

@@ -52,8 +52,6 @@ NSString * const BDBOAuth1SignatureNonceParameter       = @"oauth_nonce";
 @property (nonatomic, copy, readwrite) NSString *token;
 @property (nonatomic, copy, readwrite) NSString *secret;
 
-@property (nonatomic) NSDate *expiration;
-
 @end
 
 

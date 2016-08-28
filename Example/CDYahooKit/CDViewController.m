@@ -35,8 +35,10 @@
     [self.manager.oAuthManager setDelegate:self];
 //    [self.manager.oAuthManager deauthorize];
     if ([self.manager.oAuthManager isAuthorized] == false) {
+        NSLog(@"User is not authorized through Yahoo");
         [self.manager.oAuthManager fetchRequestToken];
     } else if ([self.manager.oAuthManager isAuthorizationExpired] == true) {
+        NSLog(@"User authorization has expired");
         [self.manager.oAuthManager refreshAccessToken];
     } else {
         NSLog(@"%@", [self.manager.oAuthManager userGuid]);

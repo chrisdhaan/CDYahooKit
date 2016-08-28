@@ -60,11 +60,11 @@ static NSString *YahooAPIV2OAuthEndpoint = @"https://api.login.yahoo.com/oauth/v
 #pragma mark - OAuth Methods
 
 - (BOOL)isAuthorized {
-    return [self.oAuthSessionManager isAuthorized];
+    return self.oAuthSessionManager.requestSerializer.accessToken;
 }
 
 - (BOOL)isAuthorizationExpired {
-    if (self.oAuthSessionManager.requestSerializer.accessToken && self.oAuthSessionManager.requestSerializer.accessToken.expired) {
+    if (self.oAuthSessionManager.requestSerializer.accessToken && [self.oAuthSessionManager.requestSerializer.accessToken isExpired]) {
         return true;
     }
     return false;
@@ -100,14 +100,75 @@ static NSString *YahooAPIV2OAuthEndpoint = @"https://api.login.yahoo.com/oauth/v
                                                 method:@"POST"
                                           requestToken:requestToken
                                                success:^(BDBOAuth1Credential *accessToken) {
-                                                   [self.oAuthSessionManager.requestSerializer saveAccessToken:accessToken];
+                                                   [self saveAccessToken:accessToken];
                                                } failure:^(NSError *error) {
                                                    NSLog(@"Fetch Access Token Error: %@", error.localizedDescription);
                                                }];
 }
 
 - (void)refreshAccessToken {
-    [self fetchAccessTokenWithRequestToken:self.oAuthSessionManager.requestSerializer.accessToken];
+    [self refreshAccessTokenWithAccessToken:self.oAuthSessionManager.requestSerializer.accessToken
+                                    success:^(BDBOAuth1Credential *accessToken) {
+                                        [self saveAccessToken:accessToken];
+                                    } failure:^(NSError *error) {
+                                        NSLog(@"Refresh Access Token Error: %@", error.localizedDescription);
+                                    }];
+}
+
+- (void)refreshAccessTokenWithAccessToken:(BDBOAuth1Credential *)accessToken
+                                  success:(void (^)(BDBOAuth1Credential *accessToken))success
+                                  failure:(void (^)(NSError *error))failure {
+    
+    if (!accessToken.token) {
+        NSError *error = [[NSError alloc] initWithDomain:BDBOAuth1ErrorDomain
+                                                    code:NSURLErrorBadServerResponse
+                                                userInfo:@{NSLocalizedFailureReasonErrorKey:@"Invalid OAuth response received from server."}];
+        
+        failure(error);
+        
+        return;
+    }
+    
+    AFHTTPResponseSerializer *defaultSerializer = self.oAuthSessionManager.responseSerializer;
+    self.oAuthSessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    NSMutableDictionary *parameters = @{
+                                        @"oauth_session_handle": accessToken.userInfo[@"oauth_session_handle"]
+                                        };
+    
+    NSString *URLString = [[NSURL URLWithString:@"get_token" relativeToURL:self.oAuthSessionManager.baseURL] absoluteString];
+    NSError *error;
+    NSMutableURLRequest *request = [self.oAuthSessionManager.requestSerializer requestWithMethod:@"POST" URLString:URLString parameters:parameters error:&error];
+    
+    if (error) {
+        failure(error);
+        
+        return;
+    }
+    
+    void (^completionBlock)(NSURLResponse * __unused, id, NSError *) = ^(NSURLResponse * __unused response, id responseObject, NSError *completionError) {
+        self.oAuthSessionManager.responseSerializer = defaultSerializer;
+        self.oAuthSessionManager.requestSerializer.requestToken = nil;
+        
+        if (completionError) {
+            failure(completionError);
+            
+            return;
+        }
+        
+        BDBOAuth1Credential *accessToken = [BDBOAuth1Credential credentialWithQueryString:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]];
+        [self.oAuthSessionManager.requestSerializer saveAccessToken:accessToken];
+        
+        success(accessToken);
+    };
+    
+    NSURLSessionDataTask *task = [self.oAuthSessionManager dataTaskWithRequest:request completionHandler:completionBlock];
+    [task resume];
+}
+
+- (void)saveAccessToken:(BDBOAuth1Credential *)accessToken {
+    accessToken.expiration = [NSDate dateWithTimeIntervalSinceNow:[(NSString *)self.oAuthSessionManager.requestSerializer.accessToken.userInfo[@"oauth_expires_in"] intValue]];
+    [self.oAuthSessionManager.requestSerializer saveAccessToken:accessToken];
 }
 
 - (NSString *)userGuid {
