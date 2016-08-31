@@ -1,0 +1,6 @@
+framework module CDOAuth1Kit {
+  umbrella header "CDOAuth1Kit-umbrella.h"
+
+  export *
+  module * { export * }
+}

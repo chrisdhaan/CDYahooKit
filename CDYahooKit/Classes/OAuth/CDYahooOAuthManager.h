@@ -27,7 +27,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import <BDBOAuth1Manager/BDBOAuth1RequestSerializer.h>
+#import <CDOAuth1Kit/CDOAuth1RequestSerializer.h>
 
 @protocol CDYahooOAuthManagerDelegate <NSObject>
 
@@ -50,6 +50,6 @@
 - (void)parseAuthenticationResponse:(NSURLRequest *)authenticationRequest;
 - (void)refreshAccessToken;
 - (NSString *)userGuid;
-- (BDBOAuth1RequestSerializer *)requestSerializer;
+- (CDOAuth1RequestSerializer *)requestSerializer;
 
 @end

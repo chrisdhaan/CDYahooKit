@@ -1,6 +1,6 @@
 {
   "name": "CDYahooKit",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "summary": "An extensive Objective C wrapper for the Yahoo Developers Social and Fantasy Football APIs.",
   "description": "This Objective C wrapper covers all possible network endpoints and responses for the Yahoo Developers Social and Fantasy Football API's.",
   "homepage": "https://github.com/chrisdhaan/CDYahooKit",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/chrisdhaan/CDYahooKit.git",
-    "tag": "0.9.3"
+    "tag": "0.9.4"
   },
   "social_media_url": "https://twitter.com/dehaan_solo",
   "platforms": {
@@ -38,8 +38,8 @@
       "name": "OAuth",
       "source_files": "CDYahooKit/Classes/OAuth",
       "dependencies": {
-        "BDBOAuth1Manager": [
-          "~> 2.0.0"
+        "CDOAuth1Kit": [
+
         ]
       }
     }

@@ -25,7 +25,7 @@
 //  THE SOFTWARE.
 //
 
-#import <BDBOAuth1Manager/BDBOAuth1SessionManager.h>
+#import <CDOAuth1Kit/CDOAuth1SessionManager.h>
 
 #import "CDYahooOAuthManager.h"
 
@@ -33,7 +33,7 @@ static NSString *YahooAPIV2OAuthEndpoint = @"https://api.login.yahoo.com/oauth/v
 
 @interface CDYahooOAuthManager ()
 
-@property (strong, nonatomic) BDBOAuth1SessionManager *oAuthSessionManager;
+@property (strong, nonatomic) CDOAuth1SessionManager *oAuthSessionManager;
 
 @property (strong, nonatomic) NSURL *callbackURL;
 
@@ -49,9 +49,9 @@ static NSString *YahooAPIV2OAuthEndpoint = @"https://api.login.yahoo.com/oauth/v
     
     if (self = [super init]) {
         
-        self.oAuthSessionManager = [[BDBOAuth1SessionManager alloc] initWithBaseURL:[NSURL URLWithString:YahooAPIV2OAuthEndpoint]
-                                                                        consumerKey:consumerKey
-                                                                     consumerSecret:consumerSecret];
+        self.oAuthSessionManager = [[CDOAuth1SessionManager alloc] initWithBaseURL:[NSURL URLWithString:YahooAPIV2OAuthEndpoint]
+                                                                       consumerKey:consumerKey
+                                                                    consumerSecret:consumerSecret];
         self.callbackURL = callbackURL;
     }
     return self;
@@ -60,7 +60,10 @@ static NSString *YahooAPIV2OAuthEndpoint = @"https://api.login.yahoo.com/oauth/v
 #pragma mark - OAuth Methods
 
 - (BOOL)isAuthorized {
-    return self.oAuthSessionManager.requestSerializer.accessToken;
+    if (self.oAuthSessionManager.requestSerializer.accessToken) {
+        return true;
+    }
+    return false;
 }
 
 - (BOOL)isAuthorizationExpired {
@@ -79,7 +82,7 @@ static NSString *YahooAPIV2OAuthEndpoint = @"https://api.login.yahoo.com/oauth/v
                                                  method:@"POST"
                                             callbackURL:self.callbackURL
                                                   scope:nil
-                                                success:^(BDBOAuth1Credential *requestToken) {
+                                                success:^(CDOAuth1Credential *requestToken) {
                                                     NSString *authURL = [NSString stringWithFormat:@"%@request_auth?oauth_token=%@", YahooAPIV2OAuthEndpoint, requestToken.token];
                                                     if (self.delegate) {
                                                         [self.delegate didReceiveAuthorization:[NSURL URLWithString:authURL]];
@@ -91,15 +94,15 @@ static NSString *YahooAPIV2OAuthEndpoint = @"https://api.login.yahoo.com/oauth/v
 
 - (void)parseAuthenticationResponse:(NSURLRequest *)authenticationRequest {
     NSString *requestQueryString = authenticationRequest.URL.query;
-    BDBOAuth1Credential *requestToken = [BDBOAuth1Credential credentialWithQueryString:requestQueryString];
+    CDOAuth1Credential *requestToken = [CDOAuth1Credential credentialWithQueryString:requestQueryString];
     [self fetchAccessTokenWithRequestToken:requestToken];
 }
 
-- (void)fetchAccessTokenWithRequestToken:(BDBOAuth1Credential *)requestToken {
+- (void)fetchAccessTokenWithRequestToken:(CDOAuth1Credential *)requestToken {
     [self.oAuthSessionManager fetchAccessTokenWithPath:@"get_token"
                                                 method:@"POST"
                                           requestToken:requestToken
-                                               success:^(BDBOAuth1Credential *accessToken) {
+                                               success:^(CDOAuth1Credential *accessToken) {
                                                    [self saveAccessToken:accessToken];
                                                } failure:^(NSError *error) {
                                                    NSLog(@"Fetch Access Token Error: %@", error.localizedDescription);
@@ -107,76 +110,32 @@ static NSString *YahooAPIV2OAuthEndpoint = @"https://api.login.yahoo.com/oauth/v
 }
 
 - (void)refreshAccessToken {
-    [self refreshAccessTokenWithAccessToken:self.oAuthSessionManager.requestSerializer.accessToken
-                                    success:^(BDBOAuth1Credential *accessToken) {
-                                        [self saveAccessToken:accessToken];
-                                    } failure:^(NSError *error) {
-                                        NSLog(@"Refresh Access Token Error: %@", error.localizedDescription);
-                                    }];
+    CDOAuth1Credential *accessToken = self.oAuthSessionManager.requestSerializer.accessToken;
+    NSDictionary *parameters = @{
+                                 @"oauth_session_handle": accessToken.userInfo[@"oauth_session_handle"]
+                                 };
+    [self.oAuthSessionManager refreshAccessTokenWithPath:@"get_token"
+                                              parameters:parameters
+                                                  method:@"POST"
+                                             accessToken:accessToken
+                                                 success:^(CDOAuth1Credential *accessToken) {
+                                                     [self saveAccessToken:accessToken];
+                                                 } failure:^(NSError *error) {
+                                                     NSLog(@"Refresh Access Token Error: %@", error.localizedDescription);
+    }];
 }
 
-- (void)refreshAccessTokenWithAccessToken:(BDBOAuth1Credential *)accessToken
-                                  success:(void (^)(BDBOAuth1Credential *accessToken))success
-                                  failure:(void (^)(NSError *error))failure {
-    
-    if (!accessToken.token) {
-        NSError *error = [[NSError alloc] initWithDomain:BDBOAuth1ErrorDomain
-                                                    code:NSURLErrorBadServerResponse
-                                                userInfo:@{NSLocalizedFailureReasonErrorKey:@"Invalid OAuth response received from server."}];
-        
-        failure(error);
-        
-        return;
-    }
-    
-    AFHTTPResponseSerializer *defaultSerializer = self.oAuthSessionManager.responseSerializer;
-    self.oAuthSessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
-    NSMutableDictionary *parameters = @{
-                                        @"oauth_session_handle": accessToken.userInfo[@"oauth_session_handle"]
-                                        };
-    
-    NSString *URLString = [[NSURL URLWithString:@"get_token" relativeToURL:self.oAuthSessionManager.baseURL] absoluteString];
-    NSError *error;
-    NSMutableURLRequest *request = [self.oAuthSessionManager.requestSerializer requestWithMethod:@"POST" URLString:URLString parameters:parameters error:&error];
-    
-    if (error) {
-        failure(error);
-        
-        return;
-    }
-    
-    void (^completionBlock)(NSURLResponse * __unused, id, NSError *) = ^(NSURLResponse * __unused response, id responseObject, NSError *completionError) {
-        self.oAuthSessionManager.responseSerializer = defaultSerializer;
-        self.oAuthSessionManager.requestSerializer.requestToken = nil;
-        
-        if (completionError) {
-            failure(completionError);
-            
-            return;
-        }
-        
-        BDBOAuth1Credential *accessToken = [BDBOAuth1Credential credentialWithQueryString:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]];
-        [self.oAuthSessionManager.requestSerializer saveAccessToken:accessToken];
-        
-        success(accessToken);
-    };
-    
-    NSURLSessionDataTask *task = [self.oAuthSessionManager dataTaskWithRequest:request completionHandler:completionBlock];
-    [task resume];
-}
-
-- (void)saveAccessToken:(BDBOAuth1Credential *)accessToken {
+- (void)saveAccessToken:(CDOAuth1Credential *)accessToken {
     accessToken.expiration = [NSDate dateWithTimeIntervalSinceNow:[(NSString *)self.oAuthSessionManager.requestSerializer.accessToken.userInfo[@"oauth_expires_in"] intValue]];
     [self.oAuthSessionManager.requestSerializer saveAccessToken:accessToken];
 }
 
 - (NSString *)userGuid {
-    BDBOAuth1Credential *accessToken = self.oAuthSessionManager.requestSerializer.accessToken;
+    CDOAuth1Credential *accessToken = self.oAuthSessionManager.requestSerializer.accessToken;
     return accessToken.userInfo[@"xoauth_yahoo_guid"] ? accessToken.userInfo[@"xoauth_yahoo_guid"] : @"";
 }
 
-- (BDBOAuth1RequestSerializer *)requestSerializer {
+- (CDOAuth1RequestSerializer *)requestSerializer {
     return self.oAuthSessionManager.requestSerializer;
 }
 

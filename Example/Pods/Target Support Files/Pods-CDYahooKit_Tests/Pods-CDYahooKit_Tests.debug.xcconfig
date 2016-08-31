@@ -1,7 +1,7 @@
-FRAMEWORK_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking" "$PODS_CONFIGURATION_BUILD_DIR/BDBOAuth1Manager" "$PODS_CONFIGURATION_BUILD_DIR/CDYahooKit" "$PODS_CONFIGURATION_BUILD_DIR/Mantle" "$PODS_CONFIGURATION_BUILD_DIR/Overcoat"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking" "$PODS_CONFIGURATION_BUILD_DIR/CDOAuth1Kit" "$PODS_CONFIGURATION_BUILD_DIR/CDYahooKit" "$PODS_CONFIGURATION_BUILD_DIR/Mantle" "$PODS_CONFIGURATION_BUILD_DIR/Overcoat"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking/AFNetworking.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/BDBOAuth1Manager/BDBOAuth1Manager.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/CDYahooKit/CDYahooKit.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Mantle/Mantle.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Overcoat/Overcoat.framework/Headers"
+OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking/AFNetworking.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/CDOAuth1Kit/CDOAuth1Kit.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/CDYahooKit/CDYahooKit.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Mantle/Mantle.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Overcoat/Overcoat.framework/Headers"
 PODS_BUILD_DIR = $BUILD_DIR
 PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_ROOT = ${SRCROOT}/Pods
