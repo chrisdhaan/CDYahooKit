@@ -14,16 +14,16 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - CDOAuth1Kit (0.9.1):
+  - CDOAuth1Kit (0.9.2):
     - AFNetworking (~> 3.0)
-  - CDYahooKit (0.9.5):
-    - CDYahooKit/Core (= 0.9.5)
-    - CDYahooKit/OAuth (= 0.9.5)
-  - CDYahooKit/Core (0.9.5):
+  - CDYahooKit (0.9.6):
+    - CDYahooKit/Core (= 0.9.6)
+    - CDYahooKit/OAuth (= 0.9.6)
+  - CDYahooKit/Core (0.9.6):
     - CDYahooKit/OAuth
     - Overcoat (~> 4.0.0-beta.2)
-  - CDYahooKit/OAuth (0.9.5):
-    - CDOAuth1Kit (~> 0.9)
+  - CDYahooKit/OAuth (0.9.6):
+    - CDOAuth1Kit
   - Mantle (2.0.7):
     - Mantle/extobjc (= 2.0.7)
   - Mantle/extobjc (2.0.7)
@@ -41,8 +41,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  CDOAuth1Kit: 4472fed8570f148be7cf59c97da0b2174cb00f0e
-  CDYahooKit: 816c2093e7a71a3787993057a2b7bddda18a59e6
+  CDOAuth1Kit: acbc8f1f5e95ea1d3c0f8bc87451d5ac6114e4e6
+  CDYahooKit: 9606b54f0e9e506d2368cea63e4e0dd4ef1a92b2
   Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9
   Overcoat: 2ddaa6d66edebc375f3e24a37974631d5aff7ebe
 
