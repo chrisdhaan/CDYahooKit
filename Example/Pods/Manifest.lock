@@ -23,7 +23,7 @@ PODS:
     - CDYahooKit/OAuth
     - Overcoat (~> 4.0.0-beta.2)
   - CDYahooKit/OAuth (0.9.4):
-    - CDOAuth1Kit
+    - CDOAuth1Kit (~> 0.9)
   - Mantle (2.0.7):
     - Mantle/extobjc (= 2.0.7)
   - Mantle/extobjc (2.0.7)
@@ -42,7 +42,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   CDOAuth1Kit: 4472fed8570f148be7cf59c97da0b2174cb00f0e
-  CDYahooKit: 10d160a463b6a92e4e03ca82d8c557562ef7f0b2
+  CDYahooKit: ba5f73ac4609c4de8848320b2bc21580c65b4a25
   Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9
   Overcoat: 2ddaa6d66edebc375f3e24a37974631d5aff7ebe
 

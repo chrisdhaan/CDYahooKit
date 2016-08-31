@@ -39,7 +39,7 @@
       "source_files": "CDYahooKit/Classes/OAuth",
       "dependencies": {
         "CDOAuth1Kit": [
-
+          "~> 0.9"
         ]
       }
     }
