@@ -63,7 +63,7 @@ github "chrisdhaan/CDYahooKit
 Afterwards, run the following command:
 
 ```ruby
-pod carthage
+carthage update
 ```
 
 ---
