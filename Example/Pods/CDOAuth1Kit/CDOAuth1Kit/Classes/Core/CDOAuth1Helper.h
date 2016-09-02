@@ -1,8 +1,8 @@
 //
-//  NSString+CDOAuth1Kit.h
+//  CDOAuth1Helper.h
 //  Pods
 //
-//  Created by Christopher de Haan on 8/28/16.
+//  Created by Christopher de Haan on 9/1/16.
 //
 //  Copyright (c) 2016 Christopher de Haan <contact@christopherdehaan.me>
 //
@@ -27,46 +27,26 @@
 
 #import <Foundation/Foundation.h>
 
-/**
- *  Additions to NSString.
- */
-@interface NSString (CDOAuth1Kit)
+@interface CDOAuth1Helper : NSObject
 
 /**
  *  ---------------------------------------------------------------------------------------
- * @name URL Encoding/Decoding
+ * @name Authorization Callback
  *  ---------------------------------------------------------------------------------------
  */
-
-#pragma mark - URL Encoding/Decoding
-
-/**
- *  Returns a properly URL-decoded representation of the given string.
- *
- *  See http://cybersam.com/ios-dev/proper-url-percent-encoding-in-ios for more details.
- *
- *  @return URL-decoded string
- */
-- (NSString *)cd_URLDecode;
+#pragma mark - Authorization Callback
 
 /**
- *  Returns a properly URL-encoded representation of the given string.
+ *  Check if an authorization callback opened the application.
  *
- *  See http://cybersam.com/ios-dev/proper-url-percent-encoding-in-ios for more details.
+ *  @param url                  URL that opened the application.
+ *  @param callbackURLScheme    URL scheme for oauth_callback.
+ *  @param callbackURLHost      URL host for oauth_callback.
  *
- *  @return URL-encoded string
+ *  @return Whether or not a successful authorization callback URL was recieved.
  */
-
-- (NSString *)cd_URLEncode;
-
-
-/**
- *  Returns the given string with the '/' and '?' characters URL-encoded.
- *
- *  AFNetworking 2.6 no longer encodes '/' and '?' characters. See https://github.com/AFNetworking/AFNetworking/pull/2908
- *
- *  @return '?' and '/' URL-encoded string
- */
-- (NSString *)cd_URLEncodeSlashesAndQuestionMarks;
++ (BOOL)isAuthorizationCallbackURL:(NSURL *)url
+                 callbackURLScheme:(NSString *)callbackURLScheme
+                   callbackURLHost:(NSString *)callbackURLHost;
 
 @end

@@ -4,7 +4,7 @@
 //
 //  Created by Christopher de Haan on 8/28/16.
 //
-//  Copyright (c) 2016 Christopher de Haan <chrisdhaan@gmail.com>
+//  Copyright (c) 2016 Christopher de Haan <contact@christopherdehaan.me>
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,7 @@
 //
 
 #import "CDOAuth1SessionManager.h"
+#import "NSDictionary+CDOAuth1Kit.h"
 
 @implementation CDOAuth1SessionManager
 

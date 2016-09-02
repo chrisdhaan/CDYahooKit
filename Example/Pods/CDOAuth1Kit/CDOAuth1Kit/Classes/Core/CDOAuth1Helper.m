@@ -1,8 +1,8 @@
 //
-//  CDOAuth1Kit.h
+//  CDOAuth1Helper.m
 //  Pods
 //
-//  Created by Christopher de Haan on 8/28/16.
+//  Created by Christopher de Haan on 9/1/16.
 //
 //  Copyright (c) 2016 Christopher de Haan <contact@christopherdehaan.me>
 //
@@ -25,8 +25,17 @@
 //  THE SOFTWARE.
 //
 
-#import "CDOAuth1Credential.h"
-#import "CDOAuth1RequestSerializer.h"
-#import "CDOAuth1SessionManager.h"
-#import "NSDictionary+CDOAuth1Kit.h"
-#import "NSString+CDOAuth1Kit.h"
+#import "CDOAuth1Helper.h"
+
+@implementation CDOAuth1Helper
+
+#pragma mark - Authorization Callback
+
++ (BOOL)isAuthorizationCallbackURL:(NSURL *)url
+                 callbackURLScheme:(NSString *)callbackURLScheme
+                   callbackURLHost:(NSString *)callbackURLHost {
+    
+    return [url.scheme isEqualToString:callbackURLScheme] && [url.host isEqualToString:callbackURLHost];
+}
+
+@end
