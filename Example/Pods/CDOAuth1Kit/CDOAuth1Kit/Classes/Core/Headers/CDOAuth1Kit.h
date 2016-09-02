@@ -26,6 +26,7 @@
 //
 
 #import "CDOAuth1Credential.h"
+#import "CDOAuth1Helper.h"
 #import "CDOAuth1RequestSerializer.h"
 #import "CDOAuth1SessionManager.h"
 #import "NSDictionary+CDOAuth1Kit.h"
