@@ -122,7 +122,7 @@ static NSString *YahooAPIV2OAuthEndpoint = @"https://api.login.yahoo.com/oauth/v
                                                      [self saveAccessToken:accessToken];
                                                  } failure:^(NSError *error) {
                                                      NSLog(@"Refresh Access Token Error: %@", error.localizedDescription);
-    }];
+                                                 }];
 }
 
 - (void)saveAccessToken:(CDOAuth1Credential *)accessToken {
