@@ -49,6 +49,7 @@
 - (void)fetchRequestToken;
 - (void)parseAuthenticationResponse:(NSURLRequest *)authenticationRequest;
 - (void)refreshAccessToken;
+- (void)refreshAccessTokenWithCompletionBlock:(void (^)(BOOL successful, NSError * error))block;
 - (NSString *)userGuid;
 - (CDOAuth1RequestSerializer *)requestSerializer;
 

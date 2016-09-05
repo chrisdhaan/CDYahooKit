@@ -86,6 +86,8 @@ static NSString *YahooAPIV2OAuthEndpoint = @"https://api.login.yahoo.com/oauth/v
                                                     NSString *authURL = [NSString stringWithFormat:@"%@request_auth?oauth_token=%@", YahooAPIV2OAuthEndpoint, requestToken.token];
                                                     if (self.delegate) {
                                                         [self.delegate didReceiveAuthorization:[NSURL URLWithString:authURL]];
+                                                    } else {
+                                                        NSLog(@"CDYahooOAuthManager delegate property has not been set.");
                                                     }
                                                 } failure:^(NSError *error) {
                                                     NSLog(@"Fetch Request Token Error: %@", error.localizedDescription);
@@ -122,6 +124,24 @@ static NSString *YahooAPIV2OAuthEndpoint = @"https://api.login.yahoo.com/oauth/v
                                                      [self saveAccessToken:accessToken];
                                                  } failure:^(NSError *error) {
                                                      NSLog(@"Refresh Access Token Error: %@", error.localizedDescription);
+                                                 }];
+}
+
+- (void)refreshAccessTokenWithCompletionBlock:(void (^)(BOOL, NSError *))block {
+    CDOAuth1Credential *accessToken = self.oAuthSessionManager.requestSerializer.accessToken;
+    NSDictionary *parameters = @{
+                                 @"oauth_session_handle": accessToken.userInfo[@"oauth_session_handle"]
+                                 };
+    [self.oAuthSessionManager refreshAccessTokenWithPath:@"get_token"
+                                              parameters:parameters
+                                                  method:@"POST"
+                                             accessToken:accessToken
+                                                 success:^(CDOAuth1Credential *accessToken) {
+                                                     [self saveAccessToken:accessToken];
+                                                     block(YES, nil);
+                                                 } failure:^(NSError *error) {
+                                                     NSLog(@"Refresh Access Token Error: %@", error.localizedDescription);
+                                                     block(NO, error);
                                                  }];
 }
 
