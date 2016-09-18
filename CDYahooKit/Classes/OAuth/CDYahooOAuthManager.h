@@ -29,6 +29,8 @@
 
 #import <CDOAuth1Kit/CDOAuth1RequestSerializer.h>
 
+FOUNDATION_EXPORT NSString * const CDYahooReceivedAccessTokenNotification;
+
 @protocol CDYahooOAuthManagerDelegate <NSObject>
 
 @required
@@ -49,7 +51,6 @@
 - (void)fetchRequestToken;
 - (void)parseAuthenticationResponse:(NSURLRequest *)authenticationRequest;
 - (void)refreshAccessToken;
-- (void)refreshAccessTokenWithCompletionBlock:(void (^)(BOOL successful, NSError * error))block;
 - (NSString *)userGuid;
 - (CDOAuth1RequestSerializer *)requestSerializer;
 

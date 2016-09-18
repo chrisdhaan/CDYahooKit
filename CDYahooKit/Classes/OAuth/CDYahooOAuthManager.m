@@ -29,6 +29,9 @@
 
 #import "CDYahooOAuthManager.h"
 
+// Exported
+NSString * const CDYahooReceivedAccessTokenNotification = @"received_access_token_notification";
+
 static NSString *YahooAPIV2OAuthEndpoint = @"https://api.login.yahoo.com/oauth/v2/";
 
 @interface CDYahooOAuthManager ()
@@ -106,6 +109,7 @@ static NSString *YahooAPIV2OAuthEndpoint = @"https://api.login.yahoo.com/oauth/v
                                           requestToken:requestToken
                                                success:^(CDOAuth1Credential *accessToken) {
                                                    [self saveAccessToken:accessToken];
+                                                   [[NSNotificationCenter defaultCenter] postNotificationName:CDYahooReceivedAccessTokenNotification object:nil];
                                                } failure:^(NSError *error) {
                                                    NSLog(@"Fetch Access Token Error: %@", error.localizedDescription);
                                                }];
@@ -122,26 +126,9 @@ static NSString *YahooAPIV2OAuthEndpoint = @"https://api.login.yahoo.com/oauth/v
                                              accessToken:accessToken
                                                  success:^(CDOAuth1Credential *accessToken) {
                                                      [self saveAccessToken:accessToken];
+                                                     [[NSNotificationCenter defaultCenter] postNotificationName:CDYahooReceivedAccessTokenNotification object:nil];
                                                  } failure:^(NSError *error) {
                                                      NSLog(@"Refresh Access Token Error: %@", error.localizedDescription);
-                                                 }];
-}
-
-- (void)refreshAccessTokenWithCompletionBlock:(void (^)(BOOL, NSError *))block {
-    CDOAuth1Credential *accessToken = self.oAuthSessionManager.requestSerializer.accessToken;
-    NSDictionary *parameters = @{
-                                 @"oauth_session_handle": accessToken.userInfo[@"oauth_session_handle"]
-                                 };
-    [self.oAuthSessionManager refreshAccessTokenWithPath:@"get_token"
-                                              parameters:parameters
-                                                  method:@"POST"
-                                             accessToken:accessToken
-                                                 success:^(CDOAuth1Credential *accessToken) {
-                                                     [self saveAccessToken:accessToken];
-                                                     block(YES, nil);
-                                                 } failure:^(NSError *error) {
-                                                     NSLog(@"Refresh Access Token Error: %@", error.localizedDescription);
-                                                     block(NO, error);
                                                  }];
 }
 
