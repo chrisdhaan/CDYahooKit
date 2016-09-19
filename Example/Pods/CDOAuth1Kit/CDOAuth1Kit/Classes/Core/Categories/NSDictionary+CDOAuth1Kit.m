@@ -26,6 +26,7 @@
 //
 
 #import "NSDictionary+CDOAuth1Kit.h"
+
 #import "NSString+CDOAuth1Kit.h"
 
 @implementation NSDictionary (CDOAuth1Kit)

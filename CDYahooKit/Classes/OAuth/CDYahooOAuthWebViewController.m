@@ -42,6 +42,8 @@
 - (id)initWithFrame:(CGRect)frame
 andAuthorizationURL:(NSURL *)authorizationURL {
     
+    NSAssert(authorizationURL != nil, @"An authorization URL is required to complete the OAuth 1.0 process for CDYahooKit.");
+    
     if (self = [super init]) {
         // Set controller background color for when web view is hidden
         [self.view setBackgroundColor:[UIColor whiteColor]];

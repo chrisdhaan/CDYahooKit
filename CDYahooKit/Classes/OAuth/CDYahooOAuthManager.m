@@ -50,6 +50,10 @@ static NSString *YahooAPIV2OAuthEndpoint = @"https://api.login.yahoo.com/oauth/v
            consumerSecret:(NSString *)consumerSecret
               callbackURL:(NSURL *)callbackURL {
     
+    NSAssert(consumerKey != nil && ![consumerKey isEqualToString:@""], @"A consumer key must be provided to complete the OAuth 1.0 process for CDYahooKit.");
+    NSAssert(consumerSecret != nil && ![consumerSecret isEqualToString:@""], @"A consumer secret must be provided to complete the OAuth 1.0 process for CDYahooKit.");
+    NSAssert(callbackURL != nil, @"A callback URL must be provided to complete the OAuth 1.0 process for CDYahooKit.");
+    
     if (self = [super init]) {
         
         self.oAuthSessionManager = [[CDOAuth1SessionManager alloc] initWithBaseURL:[NSURL URLWithString:YahooAPIV2OAuthEndpoint]
@@ -98,6 +102,8 @@ static NSString *YahooAPIV2OAuthEndpoint = @"https://api.login.yahoo.com/oauth/v
 }
 
 - (void)parseAuthenticationResponse:(NSURLRequest *)authenticationRequest {
+    NSAssert(authenticationRequest != nil, @"An authentication request is required to complete the OAuth 1.0 process for CDYahooKit.");
+    
     NSString *requestQueryString = authenticationRequest.URL.query;
     CDOAuth1Credential *requestToken = [CDOAuth1Credential credentialWithQueryString:requestQueryString];
     [self fetchAccessTokenWithRequestToken:requestToken];

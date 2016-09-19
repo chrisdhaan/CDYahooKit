@@ -37,6 +37,10 @@
            consumerSecret:(NSString *)consumerSecret
               callbackURL:(NSURL *)callbackURL {
     
+    NSAssert(consumerKey != nil && ![consumerKey isEqualToString:@""], @"A consumer key must be provided to utilize CDYahooKit.");
+    NSAssert(consumerSecret != nil && ![consumerSecret isEqualToString:@""], @"A consumer secret must be provided to utilize CDYahooKit.");
+    NSAssert(callbackURL != nil, @"A callback URL must be provided to utilize CDYahooKit.");
+    
     if (self = [super init]) {
         self.oAuthManager = [[CDYahooOAuthManager alloc] initWithConsumerKey:consumerKey
                                                               consumerSecret:consumerSecret

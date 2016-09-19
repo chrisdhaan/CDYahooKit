@@ -25,10 +25,7 @@
 //  THE SOFTWARE.
 //
 
-#import "CDOAuth1Credential.h"
-#import "CDOAuth1ErrorCode.h"
-#import "CDOAuth1Helper.h"
-#import "CDOAuth1RequestSerializer.h"
-#import "CDOAuth1SessionManager.h"
-#import "NSDictionary+CDOAuth1Kit.h"
-#import "NSString+CDOAuth1Kit.h"
+typedef enum CDOAuth1ErrorCode : NSInteger {
+    CDOAuth1BadRequestTokenErrorCode    = -69691,
+    CDOAuth1BadAccessTokenErrorCode     = -69692
+} CDOAuth1ErrorCode;

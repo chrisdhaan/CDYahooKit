@@ -26,6 +26,7 @@
 //
 
 #import "CDOAuth1Credential.h"
+
 #import "NSDictionary+CDOAuth1Kit.h"
 
 // Exported

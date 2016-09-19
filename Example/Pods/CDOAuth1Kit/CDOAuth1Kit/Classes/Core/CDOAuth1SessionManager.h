@@ -29,6 +29,11 @@
 #import <CDOAuth1Kit/CDOAuth1Credential.h>
 #import <CDOAuth1Kit/CDOAuth1RequestSerializer.h>
 
+FOUNDATION_EXPORT NSString * const CDOAuth1BadRequestTokenErrorKey;
+FOUNDATION_EXPORT NSString * const CDOAuth1BadRequestTokenErrorDescription;
+FOUNDATION_EXPORT NSString * const CDOAuth1BadAccessTokenErrorKey;
+FOUNDATION_EXPORT NSString * const CDOAuth1BadAccessTokenErrorDescription;
+
 @interface CDOAuth1SessionManager : AFHTTPSessionManager
 
 /**

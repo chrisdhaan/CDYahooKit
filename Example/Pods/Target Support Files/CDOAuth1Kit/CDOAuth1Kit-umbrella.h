@@ -3,6 +3,7 @@
 #import "NSDictionary+CDOAuth1Kit.h"
 #import "NSString+CDOAuth1Kit.h"
 #import "CDOAuth1Credential.h"
+#import "CDOAuth1ErrorCode.h"
 #import "CDOAuth1Helper.h"
 #import "CDOAuth1RequestSerializer.h"
 #import "CDOAuth1SessionManager.h"
