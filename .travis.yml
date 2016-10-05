@@ -25,6 +25,7 @@ env:
     - DESTINATION="OS=9.3,name=iPhone 4s"       SCHEME="$IOS_FRAMEWORK_SCHEME"  SDK="$IOS_SDK"  BUILD_FRAMEWORK="YES"   BUILD_EXAMPLE="YES" RUN_TESTS="YES" POD_LINT="NO"
 before_install:
   - gem install cocoapods --pre --no-rdoc --no-ri --no-document --quiet
+  - pod repo update --silent
   - pod install --project-directory=Example
 script:
   - set -o pipefail
