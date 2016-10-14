@@ -1,4 +1,6 @@
+#ifdef __OBJC__
 #import <UIKit/UIKit.h>
+#endif
 
 #import "NSDictionary+CDOAuth1Kit.h"
 #import "NSString+CDOAuth1Kit.h"

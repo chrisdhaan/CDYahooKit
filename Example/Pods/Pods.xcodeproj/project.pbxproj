@@ -49,7 +49,7 @@
 		54280DECFA767EB363A4437C361833E8 /* CDOAuth1ErrorCode.h in Headers */ = {isa = PBXBuildFile; fileRef = D1097FDAC49E1B36F7224116130CD3BD /* CDOAuth1ErrorCode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		543ACFA4AF9BE39E30C2CB4A06AD438E /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B3BF33F3F1E6E0074008CC3B9BF0F6C /* Mantle.framework */; };
 		560698A4D707DCBCC1C8F98BC9B89B23 /* AFURLSessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 30E29063D0DDED915B896E69F19382E7 /* AFURLSessionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		571BF058F37CCFE556F36EEEB91EDD34 /* Pods-CDYahooKit_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAE7ABD5CC839468B7EA8BE8ECAA78 /* Pods-CDYahooKit_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		571BF058F37CCFE556F36EEEB91EDD34 /* Pods-CDYahooKit_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CE79DCB63DFB0C88EDF4EC123D41FF8 /* Pods-CDYahooKit_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5808B477EFF509D810B5CDCFDC944F80 /* AFImageDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 40C9F8FFC07A64C84E4A37AC30D22334 /* AFImageDownloader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		583143AA05B23EC8CA291D0646EC0C0B /* NSString+CDOAuth1Kit.h in Headers */ = {isa = PBXBuildFile; fileRef = BA20F93C2354C5574FAEF0132D2CDB0F /* NSString+CDOAuth1Kit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5A99C4B0FEA3805EA417DA462080E95E /* NSDictionary+MTLJSONKeyPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 80DF6144F066375857176241DCE53952 /* NSDictionary+MTLJSONKeyPath.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -80,10 +80,8 @@
 		86C02F5D7D352914BBA4368DD75AF8C6 /* OVCResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DE436499CAEB46385527A403566C9F7 /* OVCResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		88D8C71D390140C311BE308910B8B7AD /* NSValueTransformer+MTLPredefinedTransformerAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FAC96216AE12E81D7DF123B0098ECB /* NSValueTransformer+MTLPredefinedTransformerAdditions.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		8909F2FA2CD0DDEB091F5C60172B013C /* NSDictionary+Overcoat.h in Headers */ = {isa = PBXBuildFile; fileRef = F035875648107BA2E8EA0C4A21085619 /* NSDictionary+Overcoat.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8BA67EA9CFC44F7E9B3957EAC391BCAF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8817221B8FF4FDD62411EFC3BECE2E92 /* Foundation.framework */; };
 		92AA5D1C504E8BEC42C113D1147C338B /* MTLReflection.m in Sources */ = {isa = PBXBuildFile; fileRef = FC5736534034EEC8BC80460FB2DCC448 /* MTLReflection.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		93C2ED0E6E62B6F301DFC562ABE1A07C /* CDYahooKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 479A112AB10FBA211D528F9891F5749E /* CDYahooKit-dummy.m */; };
-		9460C743D3FF8532E4C4DDE7761995BF /* Pods-CDYahooKit_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1927ADDEC12CC8C1CAB9E21C418D3692 /* Pods-CDYahooKit_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		94A00548FE7BE5CEF2811E72C53A97F0 /* NSArray+MTLManipulationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D16D80766FEA0C68955AFB04CCDC0B /* NSArray+MTLManipulationAdditions.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		9590F055951376818F0244F238876FAF /* CDOAuth1Helper.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CB2B7C5E6632C9D231D94CFA2EE5A82 /* CDOAuth1Helper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		96F513B60E4E5B0C91EB45D38792F9FB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C022DE410D29881C8A80EB3E7FD2F9C /* CoreLocation.framework */; };
@@ -93,13 +91,12 @@
 		A462945883F7729B185B64B679A6BFBE /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = EF883A8A7B80B3A1BD84380D8D120F15 /* UIWebView+AFNetworking.m */; };
 		A6C6019D45BE62C61210A9CC619368EF /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EB38382B9772CA31E9A04453772DD4E7 /* AFNetworkActivityIndicatorManager.m */; };
 		A87DA4529AA9156F1B13FBA65C51E1F3 /* CDYahooOAuthManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 25799D70F5520520EA0EDEAEEAEC22F3 /* CDYahooOAuthManager.m */; };
-		A88AF21FFEBC462B3B295AEC6C24D37E /* Pods-CDYahooKit_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FABEB35A978CBB85BF3E5C4AD3CD9BB7 /* Pods-CDYahooKit_Example-dummy.m */; };
+		A88AF21FFEBC462B3B295AEC6C24D37E /* Pods-CDYahooKit_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBD4A006BCD98C75349A07FCB21966E /* Pods-CDYahooKit_Example-dummy.m */; };
 		AB39AC9746E7575D7449700475E41B0B /* AFHTTPSessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A83CD79AC2940EEF5AA6326261549271 /* AFHTTPSessionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ABFC3F9D8C42CAA6984686D5026D8A17 /* OVCResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E92078D932E472966D90E4FBF47B05D7 /* OVCResponse.m */; };
 		AE2A07407FB50BA249984DC0620E84C0 /* UIWebView+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 11E1AB2426C437B09FC389C4E7CB23FD /* UIWebView+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AE831CE5FC12150666012E46451C9C98 /* NSDictionary+Overcoat.m in Sources */ = {isa = PBXBuildFile; fileRef = F2A9BBF14D10EBEB304B2B8A35642EFD /* NSDictionary+Overcoat.m */; };
 		AF03C11A1FAC8132AD3749D8F541701A /* UIButton+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D0EE654B4BAD76FCF426317167F3CA9 /* UIButton+AFNetworking.m */; };
-		AF83F5ACF41E5857943002226D62AF71 /* Pods-CDYahooKit_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DB61643B24A348DC4803F0AA8C6A06 /* Pods-CDYahooKit_Tests-dummy.m */; };
 		B3381B7E14A2BF9875FF0384BF2A9B88 /* NSValueTransformer+MTLInversionAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F0EBFB92D0F4EFAC665661B21108A0D /* NSValueTransformer+MTLInversionAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B57AFBC5B67430D22AAABAD57174C1DA /* OVCHTTPSessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 30DBE91D0BCFCC90FCD27C494024C88F /* OVCHTTPSessionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B5852322ADE88AAD56EE042B80BA81E4 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = A620C97717A98F99F9601DFE5BE6762E /* AFURLResponseSerialization.m */; };
@@ -233,22 +230,20 @@
 
 /* Begin PBXFileReference section */
 		08F32AFF6C89172061A08DD79AEDE6C4 /* Mantle-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Mantle-umbrella.h"; sourceTree = "<group>"; };
-		09322E6805AC3F921C1B9AAE7653FF9E /* Pods-CDYahooKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CDYahooKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		0AA5011C32DF5326521A51DC492963F5 /* AFSecurityPolicy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFSecurityPolicy.m; path = AFNetworking/AFSecurityPolicy.m; sourceTree = "<group>"; };
 		0AD68B084AFDE6491739EDEDD09665B7 /* CDYahooOAuthWebViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = CDYahooOAuthWebViewController.m; sourceTree = "<group>"; };
 		0B1309CCEDAD84461DE66DC877DDBBC5 /* CDOAuth1SessionManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CDOAuth1SessionManager.m; path = CDOAuth1Kit/Classes/Core/CDOAuth1SessionManager.m; sourceTree = "<group>"; };
 		0B6B283459897E56167793AD5D934BC6 /* OVCURLMatcher.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OVCURLMatcher.m; path = sources/Core/OVCURLMatcher.m; sourceTree = "<group>"; };
-		0DBE81283B2013379202F2916805E8D9 /* Pods-CDYahooKit_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CDYahooKit_Example.release.xcconfig"; sourceTree = "<group>"; };
+		0DEF2778D29A0E904FD32BBD38293839 /* Pods-CDYahooKit_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CDYahooKit_Example.release.xcconfig"; sourceTree = "<group>"; };
 		0EAF2AB7ACD17018AD759264EBCAF2FF /* NSDictionary+MTLManipulationAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+MTLManipulationAdditions.m"; path = "Mantle/NSDictionary+MTLManipulationAdditions.m"; sourceTree = "<group>"; };
 		11E1AB2426C437B09FC389C4E7CB23FD /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIWebView+AFNetworking.h"; path = "UIKit+AFNetworking/UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
 		1239817AE5800BEA08D4CC59201ACDC4 /* MTLJSONAdapter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MTLJSONAdapter.m; path = Mantle/MTLJSONAdapter.m; sourceTree = "<group>"; };
 		14771282A410B8E7A2F52EFB532F1783 /* AFNetworking-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AFNetworking-prefix.pch"; sourceTree = "<group>"; };
 		17A48D36A195ACD0F9508656B382E039 /* UIButton+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIButton+AFNetworking.h"; path = "UIKit+AFNetworking/UIButton+AFNetworking.h"; sourceTree = "<group>"; };
-		1927ADDEC12CC8C1CAB9E21C418D3692 /* Pods-CDYahooKit_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CDYahooKit_Tests-umbrella.h"; sourceTree = "<group>"; };
 		19EACF70D095136FC82DFDADF95D6A5D /* UIImage+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+AFNetworking.h"; path = "UIKit+AFNetworking/UIImage+AFNetworking.h"; sourceTree = "<group>"; };
+		1A32E0437A8F0C8F52CDB8BA154F2545 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1C022DE410D29881C8A80EB3E7FD2F9C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/CoreLocation.framework; sourceTree = DEVELOPER_DIR; };
 		1C91274193163403FA7F92F24A96B41E /* MTLJSONAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MTLJSONAdapter.h; path = Mantle/MTLJSONAdapter.h; sourceTree = "<group>"; };
-		1E15E63A8EE252C9CADA70103F633BB8 /* Mantle.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Mantle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F0EBFB92D0F4EFAC665661B21108A0D /* NSValueTransformer+MTLInversionAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSValueTransformer+MTLInversionAdditions.h"; path = "Mantle/NSValueTransformer+MTLInversionAdditions.h"; sourceTree = "<group>"; };
 		22CF06BF40C36671A5625051E648B6D1 /* CDOAuth1RequestSerializer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CDOAuth1RequestSerializer.h; path = CDOAuth1Kit/Classes/Core/CDOAuth1RequestSerializer.h; sourceTree = "<group>"; };
 		241B4DB15749C73515DA706DF4F0977D /* CDOAuth1Credential.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CDOAuth1Credential.h; path = CDOAuth1Kit/Classes/Core/CDOAuth1Credential.h; sourceTree = "<group>"; };
@@ -257,8 +252,8 @@
 		2602DE1C93E837812FF55310330F2B39 /* UIProgressView+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIProgressView+AFNetworking.h"; path = "UIKit+AFNetworking/UIProgressView+AFNetworking.h"; sourceTree = "<group>"; };
 		269C22C847A7313B92962DF3330C9876 /* AFNetworking-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AFNetworking-umbrella.h"; sourceTree = "<group>"; };
 		26D16D80766FEA0C68955AFB04CCDC0B /* NSArray+MTLManipulationAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSArray+MTLManipulationAdditions.m"; path = "Mantle/NSArray+MTLManipulationAdditions.m"; sourceTree = "<group>"; };
+		277C80EB69E16089F1E0D19ED66B03DE /* Pods-CDYahooKit_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-CDYahooKit_Example.modulemap"; sourceTree = "<group>"; };
 		28CE48607543684FDF4519C2281B3F96 /* Overcoat.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Overcoat.modulemap; sourceTree = "<group>"; };
-		28DB61643B24A348DC4803F0AA8C6A06 /* Pods-CDYahooKit_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CDYahooKit_Tests-dummy.m"; sourceTree = "<group>"; };
 		2A2248DB85D7D61609B8B60FF3FFE4A3 /* AFSecurityPolicy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFSecurityPolicy.h; path = AFNetworking/AFSecurityPolicy.h; sourceTree = "<group>"; };
 		2AE300842ED59D4B18CFD6D3E7C27A8A /* AFAutoPurgingImageCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFAutoPurgingImageCache.h; path = "UIKit+AFNetworking/AFAutoPurgingImageCache.h"; sourceTree = "<group>"; };
 		2B3BF33F3F1E6E0074008CC3B9BF0F6C /* Mantle.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Mantle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -270,15 +265,13 @@
 		328D117AD8018F5E48D8C8313AAAEDF1 /* NSValueTransformer+MTLPredefinedTransformerAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSValueTransformer+MTLPredefinedTransformerAdditions.h"; path = "Mantle/NSValueTransformer+MTLPredefinedTransformerAdditions.h"; sourceTree = "<group>"; };
 		32BBBF51C0738726A45EAC5B4C58994C /* AFAutoPurgingImageCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFAutoPurgingImageCache.m; path = "UIKit+AFNetworking/AFAutoPurgingImageCache.m"; sourceTree = "<group>"; };
 		34412DA8254895F18FCD1EC8ABFC94E1 /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFNetworkReachabilityManager.m; path = AFNetworking/AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
-		37C0581C429F2901CE7783019BAD2F51 /* CDYahooKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CDYahooKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		383B94CC553958D086DC5AFA78215A2C /* AFNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AFNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		383E74C3F40A24C6FE2CA1631CC79539 /* Pods-CDYahooKit_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CDYahooKit_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		39E0D91568259040D08F0D46B1036018 /* NSError+OVCResponse.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSError+OVCResponse.h"; path = "sources/Core/NSError+OVCResponse.h"; sourceTree = "<group>"; };
-		3A54F03E42B735C8F05C9EF56D7BA5B9 /* Pods-CDYahooKit_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CDYahooKit_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
-		3B7D5F1096EC5CDA5B24D176E6B66958 /* Pods-CDYahooKit_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CDYahooKit_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		3DE1854E329BE0BC8FD1D5EE8DE9BA9A /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		40C9F8FFC07A64C84E4A37AC30D22334 /* AFImageDownloader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFImageDownloader.h; path = "UIKit+AFNetworking/AFImageDownloader.h"; sourceTree = "<group>"; };
 		479A112AB10FBA211D528F9891F5749E /* CDYahooKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CDYahooKit-dummy.m"; sourceTree = "<group>"; };
 		49E3670E600146ACD064FA8E4296BAA1 /* AFNetworking-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "AFNetworking-dummy.m"; sourceTree = "<group>"; };
-		4ADDCE4E77B90ACA8061CE83E55796A4 /* Pods-CDYahooKit_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CDYahooKit_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		4D57C4B68B9A54AF67DDB627C47C971D /* UIProgressView+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIProgressView+AFNetworking.m"; path = "UIKit+AFNetworking/UIProgressView+AFNetworking.m"; sourceTree = "<group>"; };
 		4E83C2A4BE3AB08B75EACAA77DB9E448 /* NSDictionary+CDOAuth1Kit.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+CDOAuth1Kit.m"; path = "CDOAuth1Kit/Classes/Core/Categories/NSDictionary+CDOAuth1Kit.m"; sourceTree = "<group>"; };
 		4F34B09516A215ED141FDD5F55A51956 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -287,20 +280,19 @@
 		53AFF7E23EF8ECC0EB55A8987AA48032 /* CDOAuth1Kit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CDOAuth1Kit-prefix.pch"; sourceTree = "<group>"; };
 		53C071A5F396BAFDD5296A1951597F5E /* CDOAuth1Kit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CDOAuth1Kit-umbrella.h"; sourceTree = "<group>"; };
 		54B3D2F6AD7B41F847A2A5644F13A7FB /* UIActivityIndicatorView+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIActivityIndicatorView+AFNetworking.h"; path = "UIKit+AFNetworking/UIActivityIndicatorView+AFNetworking.h"; sourceTree = "<group>"; };
-		5AA4D3974D303353CE76FC057730EB46 /* Pods-CDYahooKit_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CDYahooKit_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		5F42D6EB72B3F299819D8C475D0980DE /* CDOAuth1Kit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CDOAuth1Kit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		60FBD49EFE1308957C9F3620605E7803 /* Pods-CDYahooKit_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-CDYahooKit_Tests-resources.sh"; sourceTree = "<group>"; };
+		5A019CB48FAE3427ED30DFC5C60120C7 /* Pods-CDYahooKit_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CDYahooKit_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		628C5B66C82BF464055239BFAA467E5C /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworkActivityIndicatorManager.h; path = "UIKit+AFNetworking/AFNetworkActivityIndicatorManager.h"; sourceTree = "<group>"; };
 		66AD3C5B9DBB37CB64AAFE829B2CD8F3 /* NSValueTransformer+MTLInversionAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSValueTransformer+MTLInversionAdditions.m"; path = "Mantle/NSValueTransformer+MTLInversionAdditions.m"; sourceTree = "<group>"; };
-		66B6F00FF3C6B34E475F94ABE0D13EAB /* AFNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AFNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		676B9B1516C5084F71B79AC557261986 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworkReachabilityManager.h; path = AFNetworking/AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
 		698BA2727C780B1F773EA318B317AA1B /* MTLModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MTLModel.h; path = Mantle/MTLModel.h; sourceTree = "<group>"; };
 		69B46102956244C6CF7C7F74C64D3C95 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFURLRequestSerialization.h; path = AFNetworking/AFURLRequestSerialization.h; sourceTree = "<group>"; };
 		6A77F0D89A24A609FB54CC44F73596E4 /* CDYahooKit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CDYahooKit.xcconfig; sourceTree = "<group>"; };
 		6B3ADE98A50D2CCCEB8A210474F2BE90 /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLRequestSerialization.m; path = AFNetworking/AFURLRequestSerialization.m; sourceTree = "<group>"; };
+		6C36A7C71E16BA86F34DDACBFC8B9ECD /* Pods-CDYahooKit_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-CDYahooKit_Example-resources.sh"; sourceTree = "<group>"; };
 		6DD88F8F2DDEC486DEC32DFD78553260 /* NSError+MTLModelException.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSError+MTLModelException.m"; path = "Mantle/NSError+MTLModelException.m"; sourceTree = "<group>"; };
 		7141BAE876D4966F4FF6087B1D7C1DA5 /* CDOAuth1Kit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CDOAuth1Kit.xcconfig; sourceTree = "<group>"; };
 		71B4DCFFB7F308355981A4DFAE857733 /* NSObject+MTLComparisonAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSObject+MTLComparisonAdditions.m"; path = "Mantle/NSObject+MTLComparisonAdditions.m"; sourceTree = "<group>"; };
+		72A82DE1B26A6D2A03586151A495FDE6 /* Pods-CDYahooKit_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CDYahooKit_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		761F24E6DE5975C0177EDCF0CB53654E /* metamacros.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = metamacros.h; path = Mantle/extobjc/metamacros.h; sourceTree = "<group>"; };
 		7691C8361C9CAE9AE7D033DC2B240C1C /* CDOAuth1Kit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CDOAuth1Kit-dummy.m"; sourceTree = "<group>"; };
 		771CACDB172B76A5FE336B8CE6A2996C /* Mantle.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Mantle.h; path = Mantle/Mantle.h; sourceTree = "<group>"; };
@@ -317,9 +309,9 @@
 		8817221B8FF4FDD62411EFC3BECE2E92 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		884286DA82E9C63C80DDDF11981C4834 /* EXTKeyPathCoding.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EXTKeyPathCoding.h; path = Mantle/extobjc/EXTKeyPathCoding.h; sourceTree = "<group>"; };
 		8863F0B987390ACCA2A52A153C612605 /* NSDictionary+MTLMappingAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+MTLMappingAdditions.m"; path = "Mantle/NSDictionary+MTLMappingAdditions.m"; sourceTree = "<group>"; };
-		88DFC78BAF78FA51F061EE95E94351D6 /* Pods-CDYahooKit_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-CDYahooKit_Example.modulemap"; sourceTree = "<group>"; };
 		8AC80B270B785BA2B37AF8076AEC061D /* AFNetworking.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AFNetworking.xcconfig; sourceTree = "<group>"; };
 		8EED4ECC778770ED6FBF4ED00DFFA9E6 /* NSDictionary+MTLJSONKeyPath.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+MTLJSONKeyPath.m"; path = "Mantle/NSDictionary+MTLJSONKeyPath.m"; sourceTree = "<group>"; };
+		912BCE9AF595337CE9AC405B38CFC1C1 /* Pods-CDYahooKit_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-CDYahooKit_Example-frameworks.sh"; sourceTree = "<group>"; };
 		92A858063E38C205FD4C5F9CDBA186F9 /* CDYahooOAuthManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = CDYahooOAuthManager.h; sourceTree = "<group>"; };
 		92C1A27F12E1A4C6F7790ABE417554C6 /* UIKit+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIKit+AFNetworking.h"; path = "UIKit+AFNetworking/UIKit+AFNetworking.h"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -327,12 +319,16 @@
 		940D31C9A3EF95B8601EA36D464841C2 /* NSDictionary+MTLManipulationAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+MTLManipulationAdditions.h"; path = "Mantle/NSDictionary+MTLManipulationAdditions.h"; sourceTree = "<group>"; };
 		967944FF6B01EDE646D1B210E65D64D9 /* EXTScope.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EXTScope.h; path = Mantle/extobjc/EXTScope.h; sourceTree = "<group>"; };
 		980DD10D06C3169D6B06CCAF34FC133B /* CDYahooKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = CDYahooKit.modulemap; sourceTree = "<group>"; };
+		9CBD4A006BCD98C75349A07FCB21966E /* Pods-CDYahooKit_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CDYahooKit_Example-dummy.m"; sourceTree = "<group>"; };
+		9CE79DCB63DFB0C88EDF4EC123D41FF8 /* Pods-CDYahooKit_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CDYahooKit_Example-umbrella.h"; sourceTree = "<group>"; };
 		9D0EE654B4BAD76FCF426317167F3CA9 /* UIButton+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIButton+AFNetworking.m"; path = "UIKit+AFNetworking/UIButton+AFNetworking.m"; sourceTree = "<group>"; };
 		9D7A197C83274D446224C5AD4570AA01 /* MTLModel+NSCoding.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "MTLModel+NSCoding.h"; path = "Mantle/MTLModel+NSCoding.h"; sourceTree = "<group>"; };
 		9E0EC13BC1154D0A07451C1492BA80E8 /* CDOAuth1Kit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CDOAuth1Kit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F2E14B6D011A6077CF8BB8B9DF87706 /* CDYahooKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CDYahooKit-umbrella.h"; sourceTree = "<group>"; };
+		9FB990B12A49D94DADE76EAE2DB05637 /* CDOAuth1Kit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CDOAuth1Kit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A076C0BEF694E21862683E0D2C64827F /* NSString+CDOAuth1Kit.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSString+CDOAuth1Kit.m"; path = "CDOAuth1Kit/Classes/Core/Categories/NSString+CDOAuth1Kit.m"; sourceTree = "<group>"; };
 		A20150EC20241BAE8851121E130E651B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		A39A01265D346707396ED475EAA5432D /* Mantle.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Mantle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A440C8962637E56B270B14CBAAAEB832 /* MTLModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MTLModel.m; path = Mantle/MTLModel.m; sourceTree = "<group>"; };
 		A620C97717A98F99F9601DFE5BE6762E /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLResponseSerialization.m; path = AFNetworking/AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		A6854FEE515CD3E6579D0515DC29A424 /* NSObject+MTLComparisonAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSObject+MTLComparisonAdditions.h"; path = "Mantle/NSObject+MTLComparisonAdditions.h"; sourceTree = "<group>"; };
@@ -342,23 +338,18 @@
 		AA3C88C174090AD5B38E0C2F6DFC0650 /* OVCHTTPSessionManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OVCHTTPSessionManager.m; path = sources/Core/OVCHTTPSessionManager.m; sourceTree = "<group>"; };
 		AB190D3637E78F78209BD46B5513FB52 /* CDYahooKitManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = CDYahooKitManager.m; sourceTree = "<group>"; };
 		ABF8D5B7FA4213245C04CA43092D0740 /* CDOAuth1Credential.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CDOAuth1Credential.m; path = CDOAuth1Kit/Classes/Core/CDOAuth1Credential.m; sourceTree = "<group>"; };
-		AE7B60300C96E092FA0FC52B7C2C51D5 /* Pods-CDYahooKit_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-CDYahooKit_Tests-frameworks.sh"; sourceTree = "<group>"; };
 		AF598EDE83B3FA7617BC2892D4897085 /* Mantle-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Mantle-dummy.m"; sourceTree = "<group>"; };
 		B0681C4474748A9F01BF5A79B1DA7684 /* NSDictionary+MTLMappingAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+MTLMappingAdditions.h"; path = "Mantle/NSDictionary+MTLMappingAdditions.h"; sourceTree = "<group>"; };
 		B0FAC96216AE12E81D7DF123B0098ECB /* NSValueTransformer+MTLPredefinedTransformerAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSValueTransformer+MTLPredefinedTransformerAdditions.m"; path = "Mantle/NSValueTransformer+MTLPredefinedTransformerAdditions.m"; sourceTree = "<group>"; };
 		B630EE813E5F7BDF9920958DCCEE59B7 /* UIActivityIndicatorView+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIActivityIndicatorView+AFNetworking.m"; path = "UIKit+AFNetworking/UIActivityIndicatorView+AFNetworking.m"; sourceTree = "<group>"; };
-		B6CAE7ABD5CC839468B7EA8BE8ECAA78 /* Pods-CDYahooKit_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CDYahooKit_Example-umbrella.h"; sourceTree = "<group>"; };
 		B6F971B5B7C6DA073115642E3D9DB00D /* Mantle-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Mantle-prefix.pch"; sourceTree = "<group>"; };
-		B70A59AEAAEEEE90A287FD2D41E0738A /* Pods-CDYahooKit_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-CDYahooKit_Tests.modulemap"; sourceTree = "<group>"; };
 		B7E03ECA4D304BFC366BF38072667C5D /* MTLModel+NSCoding.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "MTLModel+NSCoding.m"; path = "Mantle/MTLModel+NSCoding.m"; sourceTree = "<group>"; };
 		B9F87073D624C5F6ECDC3B428EED2844 /* Mantle.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Mantle.modulemap; sourceTree = "<group>"; };
 		BA20F93C2354C5574FAEF0132D2CDB0F /* NSString+CDOAuth1Kit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSString+CDOAuth1Kit.h"; path = "CDOAuth1Kit/Classes/Core/Categories/NSString+CDOAuth1Kit.h"; sourceTree = "<group>"; };
 		BC4B2BE15F42957AA83AB41C059F09D6 /* EXTRuntimeExtensions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EXTRuntimeExtensions.h; path = Mantle/extobjc/EXTRuntimeExtensions.h; sourceTree = "<group>"; };
 		BEF676A27E5E2AB5C28143C20BF61C5F /* CDOAuth1Kit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CDOAuth1Kit.h; path = CDOAuth1Kit/Classes/Core/Headers/CDOAuth1Kit.h; sourceTree = "<group>"; };
-		BF1DFD0369D71CB5B8857469910627DD /* Pods_CDYahooKit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CDYahooKit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF224379F81AC09B3C7B0249BC95B44B /* CDYahooOAuthWebViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = CDYahooOAuthWebViewController.h; sourceTree = "<group>"; };
 		C1AB5A102B9EB39F75B7CFAF827DA52D /* UIRefreshControl+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIRefreshControl+AFNetworking.h"; path = "UIKit+AFNetworking/UIRefreshControl+AFNetworking.h"; sourceTree = "<group>"; };
-		C232246AFEF9514116748A6F7DDA8126 /* Pods-CDYahooKit_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-CDYahooKit_Example-frameworks.sh"; sourceTree = "<group>"; };
 		C271E35684F53BB5085C27ECB3A12ABD /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C2D807504D7904AF6AC96C3E5F1B5550 /* MTLReflection.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MTLReflection.h; path = Mantle/MTLReflection.h; sourceTree = "<group>"; };
 		C42D1084988E6F9B9409A0B245A65A8D /* CDYahooKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CDYahooKit-prefix.pch"; sourceTree = "<group>"; };
@@ -366,22 +357,19 @@
 		C4BB1CD1431C34C0C998329FFE954CE3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		C4C92C9A5B0F407B4327C51690E5F40B /* NSError+MTLModelException.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSError+MTLModelException.h"; path = "Mantle/NSError+MTLModelException.h"; sourceTree = "<group>"; };
 		C6C0338B835CA95B9BF3B2EAC415527B /* CDOAuth1Helper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CDOAuth1Helper.m; path = CDOAuth1Kit/Classes/Core/CDOAuth1Helper.m; sourceTree = "<group>"; };
-		C7DFBF91E1A721EAE96B2081DE3C7A87 /* Pods-CDYahooKit_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-CDYahooKit_Example-resources.sh"; sourceTree = "<group>"; };
 		C89658A91F309E7FECE86811C0CE65E6 /* NSDictionary+CDOAuth1Kit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+CDOAuth1Kit.h"; path = "CDOAuth1Kit/Classes/Core/Categories/NSDictionary+CDOAuth1Kit.h"; sourceTree = "<group>"; };
-		C910A8E56D71A5CAA056174472B94D26 /* Overcoat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Overcoat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CBAF2A56B5B142927352489EA4241FF6 /* Pods-CDYahooKit_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CDYahooKit_Example-acknowledgements.plist"; sourceTree = "<group>"; };
-		CC517E58C442DE03AB1BB35A912F57FC /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CCAF6FCB83F2FA3A84D9B6119DC19408 /* AFNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AFNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEF37896407E6D66C852C9AD42193AA5 /* CDYahooKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CDYahooKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D043BF4EF3E261078FB2B6C29A70C125 /* MTLTransformerErrorHandling.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MTLTransformerErrorHandling.m; path = Mantle/MTLTransformerErrorHandling.m; sourceTree = "<group>"; };
 		D0E18DC64E6123205AC9EDC7B851AC3A /* Overcoat.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Overcoat.xcconfig; sourceTree = "<group>"; };
 		D1097FDAC49E1B36F7224116130CD3BD /* CDOAuth1ErrorCode.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CDOAuth1ErrorCode.h; path = CDOAuth1Kit/Classes/Core/CDOAuth1ErrorCode.h; sourceTree = "<group>"; };
 		D4C458A0CB7DB34E94B9EDE3B479BDF1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		D55D16C802C0F623BDE7D253D229810A /* EXTScope.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = EXTScope.m; path = Mantle/extobjc/EXTScope.m; sourceTree = "<group>"; };
-		D8C3BBB49E1849ADE1AB75BEC0BAAD56 /* Pods_CDYahooKit_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CDYahooKit_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9F5C48A1A38525C988044CE6A29D2E6 /* Overcoat-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Overcoat-umbrella.h"; sourceTree = "<group>"; };
 		E0023F92576A97AD5F67ECFFB95FDF5C /* Mantle.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Mantle.xcconfig; sourceTree = "<group>"; };
 		E2847DCB7351A23CD7512CFF190A5E06 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+AFNetworking.m"; path = "UIKit+AFNetworking/UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		E683AA339F7E4AE07976FA7B246B136A /* Overcoat.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Overcoat.h; path = sources/Core/Overcoat.h; sourceTree = "<group>"; };
+		E691B0A139892D1BA466218FFD39B3B0 /* Pods_CDYahooKit_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CDYahooKit_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7138108891329530BDDD0F523317390 /* MTLValueTransformer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MTLValueTransformer.h; path = Mantle/MTLValueTransformer.h; sourceTree = "<group>"; };
 		E81F9B50C52C1A43C7B98A5F1B6DE2C7 /* AFNetworking.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = AFNetworking.modulemap; sourceTree = "<group>"; };
 		E92078D932E472966D90E4FBF47B05D7 /* OVCResponse.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OVCResponse.m; path = sources/Core/OVCResponse.m; sourceTree = "<group>"; };
@@ -389,7 +377,6 @@
 		EB38382B9772CA31E9A04453772DD4E7 /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFNetworkActivityIndicatorManager.m; path = "UIKit+AFNetworking/AFNetworkActivityIndicatorManager.m"; sourceTree = "<group>"; };
 		EB767FF6B6F651EA242DB82B79E30DB9 /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIRefreshControl+AFNetworking.m"; path = "UIKit+AFNetworking/UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
 		EBF8C89668DB4BCAA3A60BD73D273301 /* AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworking.h; path = AFNetworking/AFNetworking.h; sourceTree = "<group>"; };
-		EC9790FB356341D2CAB2BDADBB86A6EB /* Pods-CDYahooKit_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CDYahooKit_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		EC9A7E8CE0A281DEE38243AD54512677 /* CDOAuth1Kit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = CDOAuth1Kit.modulemap; sourceTree = "<group>"; };
 		EDD2B34D99C509B2D0983802C0F03B4C /* CDOAuth1RequestSerializer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CDOAuth1RequestSerializer.m; path = CDOAuth1Kit/Classes/Core/CDOAuth1RequestSerializer.m; sourceTree = "<group>"; };
 		EF883A8A7B80B3A1BD84380D8D120F15 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIWebView+AFNetworking.m"; path = "UIKit+AFNetworking/UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
@@ -397,11 +384,10 @@
 		F2A9BBF14D10EBEB304B2B8A35642EFD /* NSDictionary+Overcoat.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+Overcoat.m"; path = "sources/Core/NSDictionary+Overcoat.m"; sourceTree = "<group>"; };
 		F4777CDA7BA89FB0D77E374716E45B93 /* OVCModelResponseSerializer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OVCModelResponseSerializer.m; path = sources/Core/OVCModelResponseSerializer.m; sourceTree = "<group>"; };
 		F4C500D284C7F14AEB26744B8BBC9C1A /* AFURLSessionManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLSessionManager.m; path = AFNetworking/AFURLSessionManager.m; sourceTree = "<group>"; };
-		F8CABC289F2DCF56632488F910ECD874 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FABEB35A978CBB85BF3E5C4AD3CD9BB7 /* Pods-CDYahooKit_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CDYahooKit_Example-dummy.m"; sourceTree = "<group>"; };
 		FBAE096F1657CB05CCD55990ED104BC5 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FC5736534034EEC8BC80460FB2DCC448 /* MTLReflection.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MTLReflection.m; path = Mantle/MTLReflection.m; sourceTree = "<group>"; };
 		FD12D1DC90A4C8D5A97185DA85C67519 /* MTLValueTransformer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MTLValueTransformer.m; path = Mantle/MTLValueTransformer.m; sourceTree = "<group>"; };
+		FD344001E7266DAB1835A76142485DD7 /* Overcoat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Overcoat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -462,14 +448,6 @@
 				29D2FC9D1143523215D81F47817BD610 /* AFNetworking.framework in Frameworks */,
 				834A601831D409D5E100D69E94FA079E /* Foundation.framework in Frameworks */,
 				543ACFA4AF9BE39E30C2CB4A06AD438E /* Mantle.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FDF45E5D96433B389F0ABFF8625D71B0 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8BA67EA9CFC44F7E9B3957EAC391BCAF /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -563,6 +541,27 @@
 			path = "../Target Support Files/CDOAuth1Kit";
 			sourceTree = "<group>";
 		};
+		1BBB13A18F7E1C62D1C711F2192CBE91 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				7576540CF853A4A2BF249634ED9F2542 /* Pods-CDYahooKit_Example */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		21E8AB33027B2D17F9D2D11C85E6B5D6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				383B94CC553958D086DC5AFA78215A2C /* AFNetworking.framework */,
+				9FB990B12A49D94DADE76EAE2DB05637 /* CDOAuth1Kit.framework */,
+				CEF37896407E6D66C852C9AD42193AA5 /* CDYahooKit.framework */,
+				A39A01265D346707396ED475EAA5432D /* Mantle.framework */,
+				FD344001E7266DAB1835A76142485DD7 /* Overcoat.framework */,
+				E691B0A139892D1BA466218FFD39B3B0 /* Pods_CDYahooKit_Example.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		3526BFF9F7DE8F465F8A02E211DB6D0E /* Overcoat */ = {
 			isa = PBXGroup;
 			children = (
@@ -641,6 +640,24 @@
 			path = ../..;
 			sourceTree = "<group>";
 		};
+		7576540CF853A4A2BF249634ED9F2542 /* Pods-CDYahooKit_Example */ = {
+			isa = PBXGroup;
+			children = (
+				1A32E0437A8F0C8F52CDB8BA154F2545 /* Info.plist */,
+				277C80EB69E16089F1E0D19ED66B03DE /* Pods-CDYahooKit_Example.modulemap */,
+				72A82DE1B26A6D2A03586151A495FDE6 /* Pods-CDYahooKit_Example-acknowledgements.markdown */,
+				5A019CB48FAE3427ED30DFC5C60120C7 /* Pods-CDYahooKit_Example-acknowledgements.plist */,
+				9CBD4A006BCD98C75349A07FCB21966E /* Pods-CDYahooKit_Example-dummy.m */,
+				912BCE9AF595337CE9AC405B38CFC1C1 /* Pods-CDYahooKit_Example-frameworks.sh */,
+				6C36A7C71E16BA86F34DDACBFC8B9ECD /* Pods-CDYahooKit_Example-resources.sh */,
+				9CE79DCB63DFB0C88EDF4EC123D41FF8 /* Pods-CDYahooKit_Example-umbrella.h */,
+				383E74C3F40A24C6FE2CA1631CC79539 /* Pods-CDYahooKit_Example.debug.xcconfig */,
+				0DEF2778D29A0E904FD32BBD38293839 /* Pods-CDYahooKit_Example.release.xcconfig */,
+			);
+			name = "Pods-CDYahooKit_Example";
+			path = "Target Support Files/Pods-CDYahooKit_Example";
+			sourceTree = "<group>";
+		};
 		78035FCCED518063BC3E0C019973C60D /* CDOAuth1Kit */ = {
 			isa = PBXGroup;
 			children = (
@@ -670,8 +687,8 @@
 				0C4A375786E792230180A3610E41289C /* Development Pods */,
 				A08910A22B9CC3C3C361EA252177F8A2 /* Frameworks */,
 				0F5C81A5C42995123362AB53A07547E4 /* Pods */,
-				96D8D746B31D7C865767C8EF47766A9C /* Products */,
-				C8E14B8F7F362E1B154FA0FECD8D0C5F /* Targets Support Files */,
+				21E8AB33027B2D17F9D2D11C85E6B5D6 /* Products */,
+				1BBB13A18F7E1C62D1C711F2192CBE91 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
@@ -708,20 +725,6 @@
 				761F24E6DE5975C0177EDCF0CB53654E /* metamacros.h */,
 			);
 			name = extobjc;
-			sourceTree = "<group>";
-		};
-		96D8D746B31D7C865767C8EF47766A9C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				66B6F00FF3C6B34E475F94ABE0D13EAB /* AFNetworking.framework */,
-				5F42D6EB72B3F299819D8C475D0980DE /* CDOAuth1Kit.framework */,
-				37C0581C429F2901CE7783019BAD2F51 /* CDYahooKit.framework */,
-				1E15E63A8EE252C9CADA70103F633BB8 /* Mantle.framework */,
-				C910A8E56D71A5CAA056174472B94D26 /* Overcoat.framework */,
-				D8C3BBB49E1849ADE1AB75BEC0BAAD56 /* Pods_CDYahooKit_Example.framework */,
-				BF1DFD0369D71CB5B8857469910627DD /* Pods_CDYahooKit_Tests.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		A08910A22B9CC3C3C361EA252177F8A2 /* Frameworks */ = {
@@ -763,24 +766,6 @@
 			name = UIKit;
 			sourceTree = "<group>";
 		};
-		A5EDD455F3123B2E6C4F4F86180A80F1 /* Pods-CDYahooKit_Example */ = {
-			isa = PBXGroup;
-			children = (
-				F8CABC289F2DCF56632488F910ECD874 /* Info.plist */,
-				88DFC78BAF78FA51F061EE95E94351D6 /* Pods-CDYahooKit_Example.modulemap */,
-				3B7D5F1096EC5CDA5B24D176E6B66958 /* Pods-CDYahooKit_Example-acknowledgements.markdown */,
-				CBAF2A56B5B142927352489EA4241FF6 /* Pods-CDYahooKit_Example-acknowledgements.plist */,
-				FABEB35A978CBB85BF3E5C4AD3CD9BB7 /* Pods-CDYahooKit_Example-dummy.m */,
-				C232246AFEF9514116748A6F7DDA8126 /* Pods-CDYahooKit_Example-frameworks.sh */,
-				C7DFBF91E1A721EAE96B2081DE3C7A87 /* Pods-CDYahooKit_Example-resources.sh */,
-				B6CAE7ABD5CC839468B7EA8BE8ECAA78 /* Pods-CDYahooKit_Example-umbrella.h */,
-				EC9790FB356341D2CAB2BDADBB86A6EB /* Pods-CDYahooKit_Example.debug.xcconfig */,
-				0DBE81283B2013379202F2916805E8D9 /* Pods-CDYahooKit_Example.release.xcconfig */,
-			);
-			name = "Pods-CDYahooKit_Example";
-			path = "Target Support Files/Pods-CDYahooKit_Example";
-			sourceTree = "<group>";
-		};
 		A6C83ABB8FE1D99B2B2F03F1B5D3D4BB /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -809,24 +794,6 @@
 			path = "../Target Support Files/Mantle";
 			sourceTree = "<group>";
 		};
-		BAB269BA1A6EA5EB823068A2A2FC2DCC /* Pods-CDYahooKit_Tests */ = {
-			isa = PBXGroup;
-			children = (
-				CC517E58C442DE03AB1BB35A912F57FC /* Info.plist */,
-				B70A59AEAAEEEE90A287FD2D41E0738A /* Pods-CDYahooKit_Tests.modulemap */,
-				4ADDCE4E77B90ACA8061CE83E55796A4 /* Pods-CDYahooKit_Tests-acknowledgements.markdown */,
-				3A54F03E42B735C8F05C9EF56D7BA5B9 /* Pods-CDYahooKit_Tests-acknowledgements.plist */,
-				28DB61643B24A348DC4803F0AA8C6A06 /* Pods-CDYahooKit_Tests-dummy.m */,
-				AE7B60300C96E092FA0FC52B7C2C51D5 /* Pods-CDYahooKit_Tests-frameworks.sh */,
-				60FBD49EFE1308957C9F3620605E7803 /* Pods-CDYahooKit_Tests-resources.sh */,
-				1927ADDEC12CC8C1CAB9E21C418D3692 /* Pods-CDYahooKit_Tests-umbrella.h */,
-				5AA4D3974D303353CE76FC057730EB46 /* Pods-CDYahooKit_Tests.debug.xcconfig */,
-				09322E6805AC3F921C1B9AAE7653FF9E /* Pods-CDYahooKit_Tests.release.xcconfig */,
-			);
-			name = "Pods-CDYahooKit_Tests";
-			path = "Target Support Files/Pods-CDYahooKit_Tests";
-			sourceTree = "<group>";
-		};
 		C4D59E82252FF2063231A3CAFD13EE0B /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -838,15 +805,6 @@
 				C4BB1CD1431C34C0C998329FFE954CE3 /* SystemConfiguration.framework */,
 			);
 			name = iOS;
-			sourceTree = "<group>";
-		};
-		C8E14B8F7F362E1B154FA0FECD8D0C5F /* Targets Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				A5EDD455F3123B2E6C4F4F86180A80F1 /* Pods-CDYahooKit_Example */,
-				BAB269BA1A6EA5EB823068A2A2FC2DCC /* Pods-CDYahooKit_Tests */,
-			);
-			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
 		D34F32663737D869FA598C74379D1FCE /* Support Files */ = {
@@ -970,14 +928,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4041F117B45249AF5E411987BC66E65E /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9460C743D3FF8532E4C4DDE7761995BF /* Pods-CDYahooKit_Tests-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		6F79AB60DAB6B815FDBB761104BF7BAD /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -1048,7 +998,7 @@
 			);
 			name = AFNetworking;
 			productName = AFNetworking;
-			productReference = 66B6F00FF3C6B34E475F94ABE0D13EAB /* AFNetworking.framework */;
+			productReference = 383B94CC553958D086DC5AFA78215A2C /* AFNetworking.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		2589946F6C78261CAF0C4E73503CFAEF /* Pods-CDYahooKit_Example */ = {
@@ -1070,7 +1020,7 @@
 			);
 			name = "Pods-CDYahooKit_Example";
 			productName = "Pods-CDYahooKit_Example";
-			productReference = D8C3BBB49E1849ADE1AB75BEC0BAAD56 /* Pods_CDYahooKit_Example.framework */;
+			productReference = E691B0A139892D1BA466218FFD39B3B0 /* Pods_CDYahooKit_Example.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		3EC5DBA6C2CC91DF4130B4CAF14CDA3F /* CDYahooKit */ = {
@@ -1091,24 +1041,7 @@
 			);
 			name = CDYahooKit;
 			productName = CDYahooKit;
-			productReference = 37C0581C429F2901CE7783019BAD2F51 /* CDYahooKit.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		5D88F48F6C90D016EA40932E499FC503 /* Pods-CDYahooKit_Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = DAC6637F6BAD18B500663DAEF658A338 /* Build configuration list for PBXNativeTarget "Pods-CDYahooKit_Tests" */;
-			buildPhases = (
-				0CA5CF475A7BFA0DC0FD270265458CED /* Sources */,
-				FDF45E5D96433B389F0ABFF8625D71B0 /* Frameworks */,
-				4041F117B45249AF5E411987BC66E65E /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Pods-CDYahooKit_Tests";
-			productName = "Pods-CDYahooKit_Tests";
-			productReference = BF1DFD0369D71CB5B8857469910627DD /* Pods_CDYahooKit_Tests.framework */;
+			productReference = CEF37896407E6D66C852C9AD42193AA5 /* CDYahooKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		691575ED81F2DCC693CCBF7B0168DD96 /* Mantle */ = {
@@ -1125,7 +1058,7 @@
 			);
 			name = Mantle;
 			productName = Mantle;
-			productReference = 1E15E63A8EE252C9CADA70103F633BB8 /* Mantle.framework */;
+			productReference = A39A01265D346707396ED475EAA5432D /* Mantle.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		8559601881DBE2797C6DE6D72E25CAB0 /* Overcoat */ = {
@@ -1144,7 +1077,7 @@
 			);
 			name = Overcoat;
 			productName = Overcoat;
-			productReference = C910A8E56D71A5CAA056174472B94D26 /* Overcoat.framework */;
+			productReference = FD344001E7266DAB1835A76142485DD7 /* Overcoat.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		91FC329AA10D64BC1C32A0E9F7CC9667 /* CDOAuth1Kit */ = {
@@ -1162,7 +1095,7 @@
 			);
 			name = CDOAuth1Kit;
 			productName = CDOAuth1Kit;
-			productReference = 5F42D6EB72B3F299819D8C475D0980DE /* CDOAuth1Kit.framework */;
+			productReference = 9FB990B12A49D94DADE76EAE2DB05637 /* CDOAuth1Kit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -1182,7 +1115,7 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 96D8D746B31D7C865767C8EF47766A9C /* Products */;
+			productRefGroup = 21E8AB33027B2D17F9D2D11C85E6B5D6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -1192,20 +1125,11 @@
 				691575ED81F2DCC693CCBF7B0168DD96 /* Mantle */,
 				8559601881DBE2797C6DE6D72E25CAB0 /* Overcoat */,
 				2589946F6C78261CAF0C4E73503CFAEF /* Pods-CDYahooKit_Example */,
-				5D88F48F6C90D016EA40932E499FC503 /* Pods-CDYahooKit_Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		0CA5CF475A7BFA0DC0FD270265458CED /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AF83F5ACF41E5857943002226D62AF71 /* Pods-CDYahooKit_Tests-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		1F17F426378DF5EC8DFB10304B8C4BA4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1442,7 +1366,7 @@
 		};
 		74621F9D86D135C59815EAD495419070 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EC9790FB356341D2CAB2BDADBB86A6EB /* Pods-CDYahooKit_Example.debug.xcconfig */;
+			baseConfigurationReference = 383E74C3F40A24C6FE2CA1631CC79539 /* Pods-CDYahooKit_Example.debug.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1621,41 +1545,6 @@
 			};
 			name = Debug;
 		};
-		A01E05F32684C6A2315BC65F9A6BDED2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5AA4D3974D303353CE76FC057730EB46 /* Pods-CDYahooKit_Tests.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-CDYahooKit_Tests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-CDYahooKit_Tests/Pods-CDYahooKit_Tests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_CDYahooKit_Tests;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		A7CAB99A4D031B27AD4DA4FD9E08B52D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D0E18DC64E6123205AC9EDC7B851AC3A /* Overcoat.xcconfig */;
@@ -1686,41 +1575,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
-		};
-		AF453CFB22D2F893814203AE34823F1E /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 09322E6805AC3F921C1B9AAE7653FF9E /* Pods-CDYahooKit_Tests.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-CDYahooKit_Tests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-CDYahooKit_Tests/Pods-CDYahooKit_Tests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_CDYahooKit_Tests;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
 		};
 		B0CE8AF978C4EA1000F960A53DB67C4F /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -1879,7 +1733,7 @@
 		};
 		F3E78CA96D499ECB0E2249DEB6F446E2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0DBE81283B2013379202F2916805E8D9 /* Pods-CDYahooKit_Example.release.xcconfig */;
+			baseConfigurationReference = 0DEF2778D29A0E904FD32BBD38293839 /* Pods-CDYahooKit_Example.release.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1974,15 +1828,6 @@
 			buildConfigurations = (
 				A7CAB99A4D031B27AD4DA4FD9E08B52D /* Debug */,
 				80C0A2C120539925D0DB83EABB39DA0E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		DAC6637F6BAD18B500663DAEF658A338 /* Build configuration list for PBXNativeTarget "Pods-CDYahooKit_Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A01E05F32684C6A2315BC65F9A6BDED2 /* Debug */,
-				AF453CFB22D2F893814203AE34823F1E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
