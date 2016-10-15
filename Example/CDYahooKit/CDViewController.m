@@ -8,9 +8,7 @@
 
 #import "CDViewController.h"
 
-#import "CDYahooKitManager.h"
-#import "CDYahooOAuthManager.h"
-#import "CDYahooOAuthWebViewController.h"
+#import "CDYahooKit.h"
 
 @interface CDViewController () <CDYahooOAuthManagerDelegate, UIWebViewDelegate>
 
@@ -85,7 +83,10 @@
                                                                                  andAuthorizationURL:authorizationUrl];
     [self.oAuthWebVC.authorizationWebView setDelegate:self];
     [self.oAuthWebVC loadRequest];
-    [self presentViewController:self.oAuthWebVC animated:true completion:nil];
+    
+    CDYahooOAuthNavigationController *oAuthNC = [[CDYahooOAuthNavigationController alloc] initWithRootViewController:self.oAuthWebVC];
+    
+    [self presentViewController:oAuthNC animated:true completion:nil];
 }
 
 @end

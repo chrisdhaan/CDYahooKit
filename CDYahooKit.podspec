@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'CDYahooKit'
-  s.version          = '0.9.19'
+  s.version          = '0.9.20'
   s.summary          = 'An extensive Objective C wrapper for the Yahoo Developers Social and Fantasy Football APIs.'
   s.description      = <<-DESC
 This Objective C wrapper covers all possible network endpoints and responses for the Yahoo Developers Social and Fantasy Football API's.
@@ -23,14 +23,14 @@ This Objective C wrapper covers all possible network endpoints and responses for
   s.requires_arc = true
 
   s.subspec 'Core' do |core|
-    core.source_files = 'CDYahooKit/Classes/Core'
+    core.source_files = 'CDYahooKit/Classes/Core/**/*.{h,m}'
     core.frameworks = 'CoreLocation'
     core.dependency 'Overcoat', '~> 4.0.0-beta.2'
     core.dependency 'CDYahooKit/OAuth'
   end
 
   s.subspec 'OAuth' do |oauth|
-    oauth.source_files = 'CDYahooKit/Classes/OAuth'
+    oauth.source_files = 'CDYahooKit/Classes/OAuth/**/*.{h,m}'
     oauth.dependency 'CDOAuth1Kit'
   end
 end
