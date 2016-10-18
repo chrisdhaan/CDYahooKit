@@ -31,7 +31,7 @@
 
 @property (strong, nonatomic) NSURLRequest *authorizationRequest;
 
-@property (strong, nonatomic) UIActivityIndicatorView *activityIndicatorView;
+@property (weak, nonatomic) UIActivityIndicatorView *activityIndicatorView;
 
 @end
 
@@ -59,22 +59,36 @@ andAuthorizationURL:(NSURL *)authorizationURL {
         self.navigationItem.leftBarButtonItem = cancelBarButtonItem;
         
         // Create loading indicator and start loading animation
-        self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 64, 64)];
-        self.activityIndicatorView.center = CGPointMake(frame.size.width/2, frame.size.height/2);
-        [self.activityIndicatorView setColor:[UIColor colorWithRed:(33.0/255.0) green:(28.0/255.0) blue:(86.0/255.0) alpha:1.0]];
-        [self.activityIndicatorView startAnimating];
-        [self.view addSubview:self.activityIndicatorView];
+        UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 64, 64)];
+        activityIndicatorView.center = CGPointMake(frame.size.width/2, frame.size.height/2);
+        [activityIndicatorView setColor:[UIColor colorWithRed:(33.0/255.0) green:(28.0/255.0) blue:(86.0/255.0) alpha:1.0]];
+        [activityIndicatorView startAnimating];
+        [self.view addSubview:activityIndicatorView];
+        self.activityIndicatorView = activityIndicatorView;
         
         // Create web view, hide web view, and load request
-        self.authorizationWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 64, frame.size.width, frame.size.height - 64)];
-        self.authorizationWebView.alpha = 0;
-        self.authorizationRequest = [NSURLRequest requestWithURL:authorizationURL];
-        [self.view addSubview:self.authorizationWebView];
+        UIWebView *authorizationWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 64, frame.size.width, frame.size.height - 64)];
+        authorizationWebView.alpha = 0;
+        [self.view addSubview:authorizationWebView];
+        self.authorizationWebView = authorizationWebView;
+        
+        NSURLRequest *authorizationRequest = [NSURLRequest requestWithURL:authorizationURL];
+        self.authorizationRequest = authorizationRequest;
     }
     return self;
 }
 
-- (UIStatusBarStyle) preferredStatusBarStyle {
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
 
