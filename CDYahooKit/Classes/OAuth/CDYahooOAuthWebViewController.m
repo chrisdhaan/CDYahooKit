@@ -27,6 +27,8 @@
 
 #import "CDYahooOAuthWebViewController.h"
 
+#import "CDYahooColor+Brand.h"
+
 @interface CDYahooOAuthWebViewController ()
 
 @property (strong, nonatomic) NSURLRequest *authorizationRequest;
@@ -61,7 +63,7 @@ andAuthorizationURL:(NSURL *)authorizationURL {
         // Create loading indicator and start loading animation
         UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 64, 64)];
         activityIndicatorView.center = CGPointMake(frame.size.width/2, frame.size.height/2);
-        [activityIndicatorView setColor:[UIColor colorWithRed:(33.0/255.0) green:(28.0/255.0) blue:(86.0/255.0) alpha:1.0]];
+        [activityIndicatorView setColor:[UIColor yahooPurple]];
         [activityIndicatorView startAnimating];
         [self.view addSubview:activityIndicatorView];
         self.activityIndicatorView = activityIndicatorView;

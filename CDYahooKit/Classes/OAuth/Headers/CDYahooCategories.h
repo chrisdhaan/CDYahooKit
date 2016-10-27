@@ -1,8 +1,8 @@
 //
-//  CDYahooOAuthNavigationController.m
+//  CDYahooCategories.h
 //  Pods
 //
-//  Created by Christopher de Haan on 10/15/16.
+//  Created by Christopher de Haan on 10/26/16.
 //
 //  Copyright (c) 2016 Christopher de Haan <contact@christopherdehaan.me>
 //
@@ -25,32 +25,4 @@
 //  THE SOFTWARE.
 //
 
-#import "CDYahooOAuthNavigationController.h"
-
 #import "CDYahooColor+Brand.h"
-
-@interface CDYahooOAuthNavigationController ()
-
-@end
-
-@implementation CDYahooOAuthNavigationController
-
-#pragma mark - Initialization Methods
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    self.navigationBar.barTintColor = [UIColor yahooPurple];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
-@end

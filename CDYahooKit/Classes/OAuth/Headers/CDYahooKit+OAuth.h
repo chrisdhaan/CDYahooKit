@@ -25,6 +25,7 @@
 //  THE SOFTWARE.
 //
 
+#import "CDYahooCategories.h"
 #import "CDYahooOAuthManager.h"
 #import "CDYahooOAuthNavigationController.h"
 #import "CDYahooOAuthWebViewController.h"
