@@ -1,0 +1,67 @@
+name: "CDYahooKit CI"
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - ".github/workflows/**"
+      - "Package.swift"
+      - "Source/**"
+      - "Tests/**"
+  pull_request:
+    paths:
+      - ".github/workflows/**"
+      - "Package.swift"
+      - "Source/**"
+      - "Tests/**"
+
+concurrency:
+  group: ${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  SPM:
+    name: Test with SPM
+    runs-on: macos-15
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
+      - name: Install xcbeautify
+        run: brew install xcbeautify
+      - name: swift test
+        run: set -o pipefail && swift test -c debug 2>&1 | xcbeautify --renderer github-actions
+
+  swiftlint:
+    name: SwiftLint
+    runs-on: macos-15
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install SwiftLint
+        run: brew install swiftlint
+      - name: Lint
+        run: swiftlint lint --strict
+
+  swiftformat:
+    name: SwiftFormat
+    runs-on: macos-15
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install SwiftFormat
+        run: |
+          brew update
+          brew upgrade swiftformat || brew install swiftformat
+      - name: Verify pinned SwiftFormat version
+        run: |
+          installed="$(swiftformat --version)"
+          pinned="$(cat .swiftformat-version)"
+          if [ "$installed" != "$pinned" ]; then
+            echo "::error::Installed SwiftFormat $installed does not match the pinned version $pinned in .swiftformat-version."
+            exit 1
+          fi
+      - name: Check formatting
+        run: swiftformat Source Tests --lint

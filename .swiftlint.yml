@@ -1,0 +1,17 @@
+included:
+  - Source
+  - Example/Source
+
+file_length: 300
+function_body_length: 60
+identifier_name:
+  excluded:
+    - id
+    - to
+    - url
+line_length:
+  error: 200
+  ignores_comments: true
+  ignores_function_declarations: true
+  warning: 149
+type_body_length: 200
