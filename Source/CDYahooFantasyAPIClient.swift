@@ -69,4 +69,10 @@ public final class CDYahooFantasyAPIClient {
         let request = try await authorizedRequest(.scoreboard(leagueKey: leagueKey, week: week))
         return try await session.perform(request)
     }
+
+    /// Fetches a league's transaction history (adds, drops, trades, waiver claims).
+    public func fetchLeagueTransactions(leagueKey: String) async throws -> CDYahooLeagueTransactionsResponse {
+        let request = try await authorizedRequest(.transactions(leagueKey: leagueKey))
+        return try await session.perform(request)
+    }
 }

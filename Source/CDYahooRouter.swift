@@ -14,6 +14,7 @@ enum CDYahooRouter {
     case roster(teamKey: String, week: Int?)
     case players(leagueKey: String, start: Int?)
     case scoreboard(leagueKey: String, week: Int?)
+    case transactions(leagueKey: String)
 
     var path: String {
         switch self {
@@ -41,6 +42,8 @@ enum CDYahooRouter {
             } else {
                 "league/\(leagueKey)/scoreboard"
             }
+        case let .transactions(leagueKey):
+            "league/\(leagueKey)/transactions"
         }
     }
 

@@ -161,4 +161,24 @@ struct CDYahooFantasyAPIClientTests {
         #expect(matchup.teams.count == 2)
         #expect(matchup.teams.first?.totalPoints == 112.5)
     }
+
+    @Test("fetchLeagueTransactions decodes transactions and the players they moved")
+    func fetchLeagueTransactionsDecodesFixture() async throws {
+        let client = makeClient()
+        stubTokenEndpoint()
+        try await client.oAuthClient.authorize(withCode: "code", codeVerifier: "verifier")
+
+        CDYahooMockURLProtocol.register(
+            stub: .init(statusCode: 200, data: try fixtureData("LeagueTransactions")),
+            for: URL(string: "https://fantasysports.yahooapis.com/fantasy/v2/league/449.l.12345/transactions")!
+        )
+
+        let response = try await client.fetchLeagueTransactions(leagueKey: "449.l.12345")
+        #expect(response.transactions.count == 1)
+
+        let transaction = try #require(response.transactions.first)
+        #expect(transaction.type == "add/drop")
+        #expect(transaction.players.first?.fullName == "Sam Lee")
+        #expect(transaction.players.first?.transactionType == "add")
+    }
 }
