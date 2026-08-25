@@ -124,4 +124,21 @@ struct CDYahooFantasyAPIClientTests {
         let benched = response.players[1]
         #expect(benched.selectedPosition == "BN")
     }
+
+    @Test("fetchLeaguePlayers decodes the league's player pool")
+    func fetchLeaguePlayersDecodesFixture() async throws {
+        let client = makeClient()
+        stubTokenEndpoint()
+        try await client.oAuthClient.authorize(withCode: "code", codeVerifier: "verifier")
+
+        CDYahooMockURLProtocol.register(
+            stub: .init(statusCode: 200, data: try fixtureData("LeaguePlayers")),
+            for: URL(string: "https://fantasysports.yahooapis.com/fantasy/v2/league/449.l.12345/players")!
+        )
+
+        let response = try await client.fetchLeaguePlayers(leagueKey: "449.l.12345", start: nil)
+        #expect(response.players.count == 2)
+        #expect(response.players.first?.status == "ACT")
+        #expect(response.players.last?.status == nil)
+    }
 }

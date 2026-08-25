@@ -56,4 +56,11 @@ public final class CDYahooFantasyAPIClient {
         let request = try await authorizedRequest(.roster(teamKey: teamKey, week: week))
         return try await session.perform(request)
     }
+
+    /// Fetches a league's player pool. Pass `start` (a zero-based offset) to page through results
+    /// beyond Yahoo's default page size; pass `nil` for the first page.
+    public func fetchLeaguePlayers(leagueKey: String, start: Int?) async throws -> CDYahooLeaguePlayersResponse {
+        let request = try await authorizedRequest(.players(leagueKey: leagueKey, start: start))
+        return try await session.perform(request)
+    }
 }
