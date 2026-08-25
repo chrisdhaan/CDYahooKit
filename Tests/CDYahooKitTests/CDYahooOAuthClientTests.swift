@@ -50,6 +50,7 @@ struct CDYahooOAuthClientTests {
     func authorizeStoresToken() async throws {
         let client = makeClient()
         client.unauthorize()
+        defer { client.unauthorize() }
 
         CDYahooMockURLProtocol.register(
             stub: .init(statusCode: 200, data: Data("""
