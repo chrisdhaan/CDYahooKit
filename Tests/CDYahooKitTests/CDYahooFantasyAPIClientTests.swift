@@ -81,4 +81,25 @@ struct CDYahooFantasyAPIClientTests {
         #expect(response.league.scoringType == "head")
         #expect(response.league.currentWeek == 8)
     }
+
+    @Test("fetchLeagueStandings decodes ranked teams with outcome totals")
+    func fetchLeagueStandingsDecodesFixture() async throws {
+        let client = makeClient()
+        stubTokenEndpoint()
+        try await client.oAuthClient.authorize(withCode: "code", codeVerifier: "verifier")
+
+        CDYahooMockURLProtocol.register(
+            stub: .init(statusCode: 200, data: try fixtureData("LeagueStandings")),
+            for: URL(string: "https://fantasysports.yahooapis.com/fantasy/v2/league/449.l.12345/standings")!
+        )
+
+        let response = try await client.fetchLeagueStandings(leagueKey: "449.l.12345")
+        #expect(response.teams.count == 2)
+
+        let first = try #require(response.teams.first)
+        #expect(first.name == "Team Alpha")
+        #expect(first.rank == 1)
+        #expect(first.outcomeTotals?.wins == 8)
+        #expect(first.pointsFor == 1234.5)
+    }
 }

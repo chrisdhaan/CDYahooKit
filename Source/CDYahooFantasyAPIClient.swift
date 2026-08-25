@@ -43,4 +43,10 @@ public final class CDYahooFantasyAPIClient {
         let request = try await authorizedRequest(.league(leagueKey: leagueKey))
         return try await session.perform(request)
     }
+
+    /// Fetches a league's current standings, ranked by team.
+    public func fetchLeagueStandings(leagueKey: String) async throws -> CDYahooLeagueStandingsResponse {
+        let request = try await authorizedRequest(.standings(leagueKey: leagueKey))
+        return try await session.perform(request)
+    }
 }
