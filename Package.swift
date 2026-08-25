@@ -13,14 +13,19 @@ let package = Package(
     platforms: [.iOS(.v15), .macOS(.v12), .tvOS(.v15), .watchOS(.v8), .visionOS(.v1)],
     products: [
         .library(name: "CDYahooKit", targets: ["CDYahooKit"]),
-        .library(name: "CDYahooKitDynamic", type: .dynamic, targets: ["CDYahooKit"])
+        .library(name: "CDYahooKitDynamic", type: .dynamic, targets: ["CDYahooKit"]),
+        .library(name: "CDYahooKitTesting", targets: ["CDYahooKitTesting"])
     ],
     targets: [
         .target(name: "CDYahooKit",
                 path: "Source",
+                exclude: ["Testing"],
+                swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
+        .target(name: "CDYahooKitTesting",
+                path: "Source/Testing",
                 swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
         .testTarget(name: "CDYahooKitTests",
-                    dependencies: ["CDYahooKit"],
+                    dependencies: ["CDYahooKit", "CDYahooKitTesting"],
                     path: "Tests/CDYahooKitTests")
     ],
     swiftLanguageModes: [.v6]
