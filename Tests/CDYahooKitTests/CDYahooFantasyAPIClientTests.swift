@@ -102,4 +102,26 @@ struct CDYahooFantasyAPIClientTests {
         #expect(first.outcomeTotals?.wins == 8)
         #expect(first.pointsFor == 1234.5)
     }
+
+    @Test("fetchTeamRoster decodes players with their selected position")
+    func fetchTeamRosterDecodesFixture() async throws {
+        let client = makeClient()
+        stubTokenEndpoint()
+        try await client.oAuthClient.authorize(withCode: "code", codeVerifier: "verifier")
+
+        CDYahooMockURLProtocol.register(
+            stub: .init(statusCode: 200, data: try fixtureData("TeamRoster")),
+            for: URL(string: "https://fantasysports.yahooapis.com/fantasy/v2/team/449.l.12345.t.1/roster;week=8")!
+        )
+
+        let response = try await client.fetchTeamRoster(teamKey: "449.l.12345.t.1", week: 8)
+        #expect(response.players.count == 2)
+
+        let quarterback = try #require(response.players.first)
+        #expect(quarterback.fullName == "Jane Doe")
+        #expect(quarterback.selectedPosition == "QB")
+
+        let benched = response.players[1]
+        #expect(benched.selectedPosition == "BN")
+    }
 }

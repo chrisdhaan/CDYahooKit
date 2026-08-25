@@ -49,4 +49,11 @@ public final class CDYahooFantasyAPIClient {
         let request = try await authorizedRequest(.standings(leagueKey: leagueKey))
         return try await session.perform(request)
     }
+
+    /// Fetches a team's roster. Pass `week` to see the roster as it was set for a specific week;
+    /// pass `nil` for the current roster.
+    public func fetchTeamRoster(teamKey: String, week: Int?) async throws -> CDYahooTeamRosterResponse {
+        let request = try await authorizedRequest(.roster(teamKey: teamKey, week: week))
+        return try await session.perform(request)
+    }
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fantasy_content xml:lang="en-US" time="1.23">
+    <team>
+        <team_key>449.l.12345.t.1</team_key>
+        <name>Team Alpha</name>
+        <roster>
+            <players count="2">
+                <player>
+                    <player_key>449.p.30123</player_key>
+                    <player_id>30123</player_id>
+                    <name>
+                        <full>Jane Doe</full>
+                    </name>
+                    <editorial_team_abbr>SF</editorial_team_abbr>
+                    <display_position>QB</display_position>
+                    <selected_position>
+                        <position>QB</position>
+                    </selected_position>
+                </player>
+                <player>
+                    <player_key>449.p.30456</player_key>
+                    <player_id>30456</player_id>
+                    <name>
+                        <full>John Roe</full>
+                    </name>
+                    <editorial_team_abbr>DAL</editorial_team_abbr>
+                    <display_position>RB</display_position>
+                    <selected_position>
+                        <position>BN</position>
+                    </selected_position>
+                </player>
+            </players>
+        </roster>
+    </team>
+</fantasy_content>
