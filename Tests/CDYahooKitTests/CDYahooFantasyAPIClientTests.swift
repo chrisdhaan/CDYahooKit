@@ -8,9 +8,14 @@ import Testing
 @testable import CDYahooKit
 import CDYahooKitTesting
 
-// .serialized for the same reason as CDYahooOAuthClientTests (Task 11): every test here also
-// stubs the fixed OAuth token endpoint URL via stubTokenEndpoint() before exercising a Fantasy
-// API call.
+// Nested inside CDYahooOAuthClientTests (not just independently .serialized) because both
+// suites share the real, process-global Keychain via fixed key names in CDYahooKeychain — two
+// independently-.serialized top-level suites can still run concurrently WITH each other and
+// race on that shared state (one suite's unauthorize() landing between the other's own
+// authorize() and its next assertion). Swift Testing's .serialized trait cascades to nested
+// sub-suites, so nesting here closes that gap; two independent top-level suites would not.
+extension CDYahooOAuthClientTests {
+
 @MainActor
 @Suite("CDYahooFantasyAPIClient", .serialized)
 struct CDYahooFantasyAPIClientTests {
@@ -181,4 +186,6 @@ struct CDYahooFantasyAPIClientTests {
         #expect(transaction.players.first?.fullName == "Sam Lee")
         #expect(transaction.players.first?.transactionType == "add")
     }
+}
+
 }
