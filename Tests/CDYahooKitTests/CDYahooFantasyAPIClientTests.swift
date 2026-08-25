@@ -141,4 +141,24 @@ struct CDYahooFantasyAPIClientTests {
         #expect(response.players.first?.status == "ACT")
         #expect(response.players.last?.status == nil)
     }
+
+    @Test("fetchLeagueScoreboard decodes matchups with each team's points")
+    func fetchLeagueScoreboardDecodesFixture() async throws {
+        let client = makeClient()
+        stubTokenEndpoint()
+        try await client.oAuthClient.authorize(withCode: "code", codeVerifier: "verifier")
+
+        CDYahooMockURLProtocol.register(
+            stub: .init(statusCode: 200, data: try fixtureData("LeagueScoreboard")),
+            for: URL(string: "https://fantasysports.yahooapis.com/fantasy/v2/league/449.l.12345/scoreboard;week=8")!
+        )
+
+        let response = try await client.fetchLeagueScoreboard(leagueKey: "449.l.12345", week: 8)
+        #expect(response.matchups.count == 1)
+
+        let matchup = try #require(response.matchups.first)
+        #expect(matchup.week == 8)
+        #expect(matchup.teams.count == 2)
+        #expect(matchup.teams.first?.totalPoints == 112.5)
+    }
 }

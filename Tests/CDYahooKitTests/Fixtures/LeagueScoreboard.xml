@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fantasy_content xml:lang="en-US" time="1.23">
+    <league>
+        <league_key>449.l.12345</league_key>
+        <scoreboard>
+            <matchups count="1">
+                <matchup>
+                    <week>8</week>
+                    <status>postevent</status>
+                    <teams count="2">
+                        <team>
+                            <team_key>449.l.12345.t.1</team_key>
+                            <name>Team Alpha</name>
+                            <team_points>
+                                <total>112.5</total>
+                            </team_points>
+                        </team>
+                        <team>
+                            <team_key>449.l.12345.t.2</team_key>
+                            <name>Team Beta</name>
+                            <team_points>
+                                <total>98.4</total>
+                            </team_points>
+                        </team>
+                    </teams>
+                </matchup>
+            </matchups>
+        </scoreboard>
+    </league>
+</fantasy_content>

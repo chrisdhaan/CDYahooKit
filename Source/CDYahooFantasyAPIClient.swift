@@ -63,4 +63,10 @@ public final class CDYahooFantasyAPIClient {
         let request = try await authorizedRequest(.players(leagueKey: leagueKey, start: start))
         return try await session.perform(request)
     }
+
+    /// Fetches a league's scoreboard (every matchup) for a week. Pass `nil` for the current week.
+    public func fetchLeagueScoreboard(leagueKey: String, week: Int?) async throws -> CDYahooLeagueScoreboardResponse {
+        let request = try await authorizedRequest(.scoreboard(leagueKey: leagueKey, week: week))
+        return try await session.perform(request)
+    }
 }
