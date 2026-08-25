@@ -26,7 +26,8 @@ let package = Package(
                 swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
         .testTarget(name: "CDYahooKitTests",
                     dependencies: ["CDYahooKit", "CDYahooKitTesting"],
-                    path: "Tests/CDYahooKitTests")
+                    path: "Tests/CDYahooKitTests",
+                    resources: [.process("Fixtures")])
     ],
     swiftLanguageModes: [.v6]
 )
