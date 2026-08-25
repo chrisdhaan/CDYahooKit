@@ -9,11 +9,14 @@ import Foundation
 /// Every case is a read-only `GET` for v1.
 enum CDYahooRouter {
     case userGames(gameCode: String)
+    case league(leagueKey: String)
 
     var path: String {
         switch self {
         case let .userGames(gameCode):
             "users;use_login=1/games;game_codes=\(gameCode)/leagues"
+        case let .league(leagueKey):
+            "league/\(leagueKey)"
         }
     }
 

@@ -37,4 +37,10 @@ public final class CDYahooFantasyAPIClient {
         let request = try await authorizedRequest(.userGames(gameCode: gameCode))
         return try await session.perform(request)
     }
+
+    /// Fetches a league's metadata and settings.
+    public func fetchLeague(leagueKey: String) async throws -> CDYahooLeagueResponse {
+        let request = try await authorizedRequest(.league(leagueKey: leagueKey))
+        return try await session.perform(request)
+    }
 }

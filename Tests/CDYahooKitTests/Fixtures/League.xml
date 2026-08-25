@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fantasy_content xml:lang="en-US" time="1.23">
+    <league>
+        <league_key>449.l.12345</league_key>
+        <league_id>12345</league_id>
+        <name>My Fantasy League</name>
+        <url>https://football.fantasysports.yahoo.com/f1/12345</url>
+        <num_teams>10</num_teams>
+        <scoring_type>head</scoring_type>
+        <current_week>8</current_week>
+        <season>2025</season>
+    </league>
+</fantasy_content>
