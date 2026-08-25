@@ -36,7 +36,11 @@ private final class InlineStubProtocol: URLProtocol, @unchecked Sendable {
     override func stopLoading() {}
 }
 
-@Suite("CDYahooURLSession")
+// .serialized: every test in this suite shares InlineStubProtocol's process-global static
+// state (statusCode, body, requestCount) — a temporary inline stub scoped to this task alone,
+// superseded by the thread-safe CDYahooMockURLProtocol in Task 8. Serializing this suite stops
+// its own tests from racing each other and reading/resetting each other's stub state mid-flight.
+@Suite("CDYahooURLSession", .serialized)
 struct CDYahooURLSessionTests {
 
     private func makeSession(retryConfiguration: CDYahooRetryConfiguration = .disabled,
