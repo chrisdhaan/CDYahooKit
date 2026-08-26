@@ -9,6 +9,12 @@ public struct CDYahooMatchupTeamScore: CDYahooXMLDecodable, Sendable, Equatable 
     public let name: String
     public let totalPoints: Double?
 
+    public init(teamKey: String, name: String, totalPoints: Double?) {
+        self.teamKey = teamKey
+        self.name = name
+        self.totalPoints = totalPoints
+    }
+
     init(node: CDYahooXMLNode) throws {
         guard let teamKey = node.text("team_key"), let name = node.text("name") else {
             throw CDYahooXMLDecodingError.missingField("team")
@@ -25,6 +31,12 @@ public struct CDYahooMatchup: CDYahooXMLDecodable, Sendable, Equatable {
     public let status: String
     public let teams: [CDYahooMatchupTeamScore]
 
+    public init(week: Int, status: String, teams: [CDYahooMatchupTeamScore]) {
+        self.week = week
+        self.status = status
+        self.teams = teams
+    }
+
     init(node: CDYahooXMLNode) throws {
         self.week = node.int("week") ?? 0
         self.status = node.text("status") ?? ""
@@ -37,6 +49,11 @@ public struct CDYahooMatchup: CDYahooXMLDecodable, Sendable, Equatable {
 public struct CDYahooLeagueScoreboardResponse: CDYahooXMLDecodable, Sendable {
     public let leagueKey: String
     public let matchups: [CDYahooMatchup]
+
+    public init(leagueKey: String, matchups: [CDYahooMatchup]) {
+        self.leagueKey = leagueKey
+        self.matchups = matchups
+    }
 
     init(node: CDYahooXMLNode) throws {
         guard let leagueNode = node.child("league"), let leagueKey = leagueNode.text("league_key") else {

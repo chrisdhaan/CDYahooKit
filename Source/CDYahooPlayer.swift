@@ -13,6 +13,17 @@ public struct CDYahooPlayer: CDYahooXMLDecodable, Sendable, Equatable {
     public let selectedPosition: String?
     public let status: String?
 
+    public init(playerKey: String, playerId: String, fullName: String, editorialTeamAbbr: String?,
+                displayPosition: String?, selectedPosition: String?, status: String?) {
+        self.playerKey = playerKey
+        self.playerId = playerId
+        self.fullName = fullName
+        self.editorialTeamAbbr = editorialTeamAbbr
+        self.displayPosition = displayPosition
+        self.selectedPosition = selectedPosition
+        self.status = status
+    }
+
     init(node: CDYahooXMLNode) throws {
         guard let playerKey = node.text("player_key"), let playerId = node.text("player_id"),
               let fullName = node.child("name")?.text("full") else {

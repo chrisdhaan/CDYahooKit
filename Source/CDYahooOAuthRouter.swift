@@ -21,17 +21,16 @@ enum CDYahooOAuthRouter {
         let credentialsData = Data("\(clientId):\(clientSecret)".utf8)
         request.setValue("Basic \(credentialsData.base64EncodedString())", forHTTPHeaderField: "Authorization")
 
-        let params: [String: String]
-        switch self {
+        let params: [String: String] = switch self {
         case let .authorize(code, redirectUrl, codeVerifier):
-            params = ["grant_type": "authorization_code",
-                      "redirect_uri": redirectUrl,
-                      "code": code,
-                      "code_verifier": codeVerifier]
+            ["grant_type": "authorization_code",
+             "redirect_uri": redirectUrl,
+             "code": code,
+             "code_verifier": codeVerifier]
         case let .refresh(refreshToken, redirectUrl):
-            params = ["grant_type": "refresh_token",
-                      "redirect_uri": redirectUrl,
-                      "refresh_token": refreshToken]
+            ["grant_type": "refresh_token",
+             "redirect_uri": redirectUrl,
+             "refresh_token": refreshToken]
         }
 
         var allowedCharacters = CharacterSet.urlQueryAllowed

@@ -8,7 +8,8 @@ import UIKit
 
 /// Demonstrates the full Sign In With Yahoo authorization code + PKCE flow: a single button
 /// kicks off `CDYahooAuthSession`, exchanges the resulting code for tokens via
-/// `CDYahooOAuthClient`, then fetches and prints the signed-in user's fantasy leagues.
+/// `CDYahooOAuthClient`, then pushes a `LeagueListViewController` for the signed-in user's
+/// fantasy leagues.
 final class ViewController: UIViewController {
 
     private let client: CDYahooFantasyAPIClient = {
@@ -53,7 +54,7 @@ final class ViewController: UIViewController {
             let codeChallenge = CDYahooPKCE.codeChallenge(for: codeVerifier)
             let state = UUID().uuidString
 
-            let authorizationURL = try client.oAuthClient.authorizationURL(codeChallenge: codeChallenge, state: state)
+            let authorizationURL = try await client.oAuthClient.authorizationURL(codeChallenge: codeChallenge, state: state)
 
             let session = CDYahooAuthSession(presentationAnchor: self.view.window!)
             authSession = session

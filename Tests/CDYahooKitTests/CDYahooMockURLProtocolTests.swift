@@ -3,17 +3,17 @@
 //  CDYahooKitTests
 //
 
+import CDYahooKitTesting
 import Foundation
 import Testing
 @testable import CDYahooKit
-import CDYahooKitTesting
 
 @Suite("CDYahooMockURLProtocol")
 struct CDYahooMockURLProtocolTests {
 
     @Test("register(stub:for:) serves the stub to any request for that URL")
     func registeredStubIsServed() async throws {
-        let url = URL(string: "https://example.com/CDYahooMockURLProtocolTests/registered")!
+        let url = try #require(URL(string: "https://example.com/CDYahooMockURLProtocolTests/registered"))
         CDYahooMockURLProtocol.register(stub: .init(statusCode: 200, data: Data("ok".utf8)), for: url)
 
         let session = CDYahooMockURLProtocol.makeSession()
@@ -25,7 +25,7 @@ struct CDYahooMockURLProtocolTests {
 
     @Test("register(stubs:for:) serves stubs in order, then repeats the last one")
     func stubSequenceRepeatsLastEntry() async throws {
-        let url = URL(string: "https://example.com/CDYahooMockURLProtocolTests/sequence")!
+        let url = try #require(URL(string: "https://example.com/CDYahooMockURLProtocolTests/sequence"))
         CDYahooMockURLProtocol.register(stubs: [.init(statusCode: 500), .init(statusCode: 200)], for: url)
 
         let session = CDYahooMockURLProtocol.makeSession()

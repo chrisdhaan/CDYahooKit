@@ -15,7 +15,8 @@ public enum CDYahooPKCE {
     /// padding) — within RFC 7636's required 43-128 character range.
     public static func makeCodeVerifier() -> String {
         var bytes = [UInt8](repeating: 0, count: 32)
-        _ = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
+        let status = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
+        precondition(status == errSecSuccess, "SecRandomCopyBytes failed with status \(status); cannot generate a secure PKCE verifier.")
         return base64URLEncode(Data(bytes))
     }
 

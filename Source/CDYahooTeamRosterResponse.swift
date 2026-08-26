@@ -9,6 +9,12 @@ public struct CDYahooTeamRosterResponse: CDYahooXMLDecodable, Sendable {
     public let name: String
     public let players: [CDYahooPlayer]
 
+    public init(teamKey: String, name: String, players: [CDYahooPlayer]) {
+        self.teamKey = teamKey
+        self.name = name
+        self.players = players
+    }
+
     init(node: CDYahooXMLNode) throws {
         guard let teamNode = node.child("team"), let teamKey = teamNode.text("team_key"), let name = teamNode.text("name") else {
             throw CDYahooXMLDecodingError.missingField("team")

@@ -10,6 +10,13 @@ public struct CDYahooLeagueSummary: CDYahooXMLDecodable, Sendable, Equatable {
     public let name: String
     public let numTeams: Int?
 
+    public init(leagueKey: String, leagueId: String, name: String, numTeams: Int?) {
+        self.leagueKey = leagueKey
+        self.leagueId = leagueId
+        self.name = name
+        self.numTeams = numTeams
+    }
+
     init(node: CDYahooXMLNode) throws {
         guard let leagueKey = node.text("league_key"), let leagueId = node.text("league_id"), let name = node.text("name") else {
             throw CDYahooXMLDecodingError.missingField("league")
@@ -30,6 +37,15 @@ public struct CDYahooGame: CDYahooXMLDecodable, Sendable, Equatable {
     public let code: String
     public let season: String
     public let leagues: [CDYahooLeagueSummary]
+
+    public init(gameKey: String, gameId: String, name: String, code: String, season: String, leagues: [CDYahooLeagueSummary]) {
+        self.gameKey = gameKey
+        self.gameId = gameId
+        self.name = name
+        self.code = code
+        self.season = season
+        self.leagues = leagues
+    }
 
     init(node: CDYahooXMLNode) throws {
         guard let gameKey = node.text("game_key"), let gameId = node.text("game_id"), let name = node.text("name"),

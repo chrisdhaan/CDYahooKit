@@ -14,6 +14,18 @@ public struct CDYahooLeague: CDYahooXMLDecodable, Sendable, Equatable {
     public let currentWeek: Int?
     public let season: String?
 
+    public init(leagueKey: String, leagueId: String, name: String, url: String?, numTeams: Int?,
+                scoringType: String?, currentWeek: Int?, season: String?) {
+        self.leagueKey = leagueKey
+        self.leagueId = leagueId
+        self.name = name
+        self.url = url
+        self.numTeams = numTeams
+        self.scoringType = scoringType
+        self.currentWeek = currentWeek
+        self.season = season
+    }
+
     init(node: CDYahooXMLNode) throws {
         guard let leagueKey = node.text("league_key"), let leagueId = node.text("league_id"), let name = node.text("name") else {
             throw CDYahooXMLDecodingError.missingField("league")

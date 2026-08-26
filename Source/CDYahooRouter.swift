@@ -19,32 +19,41 @@ enum CDYahooRouter {
     var path: String {
         switch self {
         case let .userGames(gameCode):
-            "users;use_login=1/games;game_codes=\(gameCode)/leagues"
+            "users;use_login=1/games;game_codes=\(Self.percentEncodedPathSegment(gameCode))/leagues"
         case let .league(leagueKey):
-            "league/\(leagueKey)"
+            "league/\(Self.percentEncodedPathSegment(leagueKey))"
         case let .standings(leagueKey):
-            "league/\(leagueKey)/standings"
+            "league/\(Self.percentEncodedPathSegment(leagueKey))/standings"
         case let .roster(teamKey, week):
             if let week {
-                "team/\(teamKey)/roster;week=\(week)"
+                "team/\(Self.percentEncodedPathSegment(teamKey))/roster;week=\(week)"
             } else {
-                "team/\(teamKey)/roster"
+                "team/\(Self.percentEncodedPathSegment(teamKey))/roster"
             }
         case let .players(leagueKey, start):
             if let start {
-                "league/\(leagueKey)/players;start=\(start)"
+                "league/\(Self.percentEncodedPathSegment(leagueKey))/players;start=\(start)"
             } else {
-                "league/\(leagueKey)/players"
+                "league/\(Self.percentEncodedPathSegment(leagueKey))/players"
             }
         case let .scoreboard(leagueKey, week):
             if let week {
-                "league/\(leagueKey)/scoreboard;week=\(week)"
+                "league/\(Self.percentEncodedPathSegment(leagueKey))/scoreboard;week=\(week)"
             } else {
-                "league/\(leagueKey)/scoreboard"
+                "league/\(Self.percentEncodedPathSegment(leagueKey))/scoreboard"
             }
         case let .transactions(leagueKey):
-            "league/\(leagueKey)/transactions"
+            "league/\(Self.percentEncodedPathSegment(leagueKey))/transactions"
         }
+    }
+
+    /// Percent-encodes a value that gets interpolated directly into a URL path segment (a league
+    /// key, team key, or game code) so a value containing `?`/`#`/`/` can't silently reshape the
+    /// URL — it either encodes cleanly or the request fails, rather than hitting the wrong route.
+    private static func percentEncodedPathSegment(_ value: String) -> String {
+        var allowed = CharacterSet.alphanumerics
+        allowed.insert(charactersIn: "-._~")
+        return value.addingPercentEncoding(withAllowedCharacters: allowed) ?? value
     }
 
     func asURLRequest(accessToken: String) throws -> URLRequest {

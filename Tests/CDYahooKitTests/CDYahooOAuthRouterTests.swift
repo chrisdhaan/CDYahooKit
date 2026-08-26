@@ -22,7 +22,7 @@ struct CDYahooOAuthRouterTests {
         let expectedCredentials = Data("client-id:client-secret".utf8).base64EncodedString()
         #expect(request.value(forHTTPHeaderField: "Authorization") == "Basic \(expectedCredentials)")
 
-        let bodyString = String(data: try #require(request.httpBody), encoding: .utf8) ?? ""
+        let bodyString = try String(data: #require(request.httpBody), encoding: .utf8) ?? ""
         #expect(bodyString.contains("grant_type=authorization_code"))
         #expect(bodyString.contains("code=abc123"))
         #expect(bodyString.contains("code_verifier=verifier-value"))
@@ -34,7 +34,7 @@ struct CDYahooOAuthRouterTests {
         let request = try CDYahooOAuthRouter.refresh(refreshToken: "refresh-abc", redirectUrl: "myapp://callback")
             .asURLRequest(clientId: "client-id", clientSecret: "client-secret")
 
-        let bodyString = String(data: try #require(request.httpBody), encoding: .utf8) ?? ""
+        let bodyString = try String(data: #require(request.httpBody), encoding: .utf8) ?? ""
         #expect(bodyString.contains("grant_type=refresh_token"))
         #expect(bodyString.contains("refresh_token=refresh-abc"))
     }

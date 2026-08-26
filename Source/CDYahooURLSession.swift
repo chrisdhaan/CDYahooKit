@@ -43,24 +43,78 @@ final class CDYahooURLSession: Sendable {
 
         var attempt = 0
         while true {
-            for monitor in eventMonitors { monitor.willSend(adaptedRequest) }
-            do {
-                let (data, response) = try await session.data(for: adaptedRequest)
-                guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
-                    throw CDYahooKitError.invalidRequest(underlying: URLError(.badServerResponse))
-                }
-                for monitor in eventMonitors { monitor.didReceive(response, data: data, error: nil) }
-                if isCacheable {
-                    await cache.store(data, forKey: cacheKey)
-                }
-                return try Self.decode(data)
-            } catch {
-                for monitor in eventMonitors { monitor.didReceive(nil, data: nil, error: error) }
-                attempt += 1
-                guard attempt <= retryConfiguration.maximumRetryCount else { throw error }
-                let delay = retryConfiguration.baseDelay * pow(2.0, Double(attempt - 1))
-                try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+            for monitor in eventMonitors {
+                monitor.willSend(adaptedRequest)
             }
+            do {
+                return try await attemptOnce(adaptedRequest, isCacheable: isCacheable, cacheKey: cacheKey)
+            } catch {
+                let (thrown, isTransient) = Self.unwrap(error)
+                for monitor in eventMonitors {
+                    monitor.didReceive(nil, data: nil, error: thrown)
+                }
+                attempt += 1
+                guard isTransient, attempt <= retryConfiguration.maximumRetryCount else { throw thrown }
+                let delay = retryConfiguration.baseDelay * pow(2.0, Double(attempt - 1))
+                // `try` (not `try?`) so a cancelled task's `CancellationError` propagates instead
+                // of being swallowed, which would otherwise let the remaining retries fire back
+                // to back after cancellation.
+                try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+            }
+        }
+    }
+
+    /// Sends one request attempt, checks the HTTP status (surfacing Yahoo's `<error>` envelope on
+    /// non-2xx before falling back to a generic `invalidRequest`), caches the body on success, and
+    /// decodes it as `T`. Every thrown error is a `CDYahooAttemptFailure` tagged with whether
+    /// `perform`'s retry loop should retry it.
+    private func attemptOnce<T: CDYahooXMLDecodable>(_ request: URLRequest, isCacheable: Bool, cacheKey: String) async throws -> T {
+        let (data, response) = try await session.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw CDYahooKitError.invalidRequest(underlying: URLError(.badServerResponse))
+        }
+        for monitor in eventMonitors {
+            monitor.didReceive(response, data: data, error: nil)
+        }
+        guard (200 ..< 300).contains(httpResponse.statusCode) else {
+            throw Self.attemptFailure(forNon2xxResponse: httpResponse, data: data)
+        }
+        if isCacheable {
+            await cache.store(data, forKey: cacheKey)
+        }
+        do {
+            return try Self.decode(data)
+        } catch {
+            // A malformed/unexpected response body can never be fixed by retrying.
+            throw CDYahooAttemptFailure(underlying: error, isTransient: false)
+        }
+    }
+
+    /// Builds the error to throw for a non-2xx HTTP response, tagged with whether it's transient
+    /// (safe to retry). Yahoo returns its `<error>` envelope WITH non-2xx status codes, so the
+    /// body is parsed even on failure and its `<description>` is surfaced via `apiError` before
+    /// falling back to a generic `invalidRequest`. An `apiError` is never transient — Yahoo is
+    /// telling us definitively what's wrong, and retrying the same request won't change that —
+    /// otherwise only 5xx/429 are treated as transient, since a 4xx can never succeed on retry.
+    private static func attemptFailure(forNon2xxResponse httpResponse: HTTPURLResponse, data: Data) -> CDYahooAttemptFailure {
+        if let node = try? CDYahooXMLTreeBuilder.parse(data), node.name == "error" {
+            let underlying = CDYahooKitError.apiError(node.text("description") ?? "Yahoo Fantasy API returned an error.")
+            return CDYahooAttemptFailure(underlying: underlying, isTransient: false)
+        }
+        let isTransient = httpResponse.statusCode == 429 || (500 ..< 600).contains(httpResponse.statusCode)
+        let underlying = CDYahooKitError.invalidRequest(underlying: URLError(.badServerResponse))
+        return CDYahooAttemptFailure(underlying: underlying, isTransient: isTransient)
+    }
+
+    /// Unwraps a caught error into the error to surface to the caller and whether the attempt
+    /// that produced it is safe to retry. An error that isn't a `CDYahooAttemptFailure` came
+    /// directly from `session.data(for:)` — a transport-level failure with no HTTP response at
+    /// all — which is safe to retry.
+    private static func unwrap(_ error: any Error) -> (thrown: any Error, isTransient: Bool) {
+        if let failure = error as? CDYahooAttemptFailure {
+            (failure.underlying, failure.isTransient)
+        } else {
+            (error, true)
         }
     }
 
@@ -75,4 +129,13 @@ final class CDYahooURLSession: Sendable {
         }
         return try T(node: root)
     }
+}
+
+/// Wraps an error thrown mid-attempt together with whether the retry loop should treat it as
+/// transient (network/transport failures and HTTP 5xx/429) versus non-transient (4xx responses,
+/// Yahoo's `<error>` envelope, or a malformed/undecodable body) — none of which can succeed by
+/// simply retrying the same request.
+private struct CDYahooAttemptFailure: Error {
+    let underlying: any Error
+    let isTransient: Bool
 }

@@ -10,6 +10,13 @@ public struct CDYahooTransactionPlayer: CDYahooXMLDecodable, Sendable, Equatable
     public let transactionType: String?
     public let destinationTeamKey: String?
 
+    public init(playerKey: String, fullName: String, transactionType: String?, destinationTeamKey: String?) {
+        self.playerKey = playerKey
+        self.fullName = fullName
+        self.transactionType = transactionType
+        self.destinationTeamKey = destinationTeamKey
+    }
+
     init(node: CDYahooXMLNode) throws {
         guard let playerKey = node.text("player_key"), let fullName = node.child("name")?.text("full") else {
             throw CDYahooXMLDecodingError.missingField("player")
@@ -30,6 +37,14 @@ public struct CDYahooTransaction: CDYahooXMLDecodable, Sendable, Equatable {
     public let status: String
     public let players: [CDYahooTransactionPlayer]
 
+    public init(transactionKey: String, transactionId: String, type: String, status: String, players: [CDYahooTransactionPlayer]) {
+        self.transactionKey = transactionKey
+        self.transactionId = transactionId
+        self.type = type
+        self.status = status
+        self.players = players
+    }
+
     init(node: CDYahooXMLNode) throws {
         guard let transactionKey = node.text("transaction_key"), let transactionId = node.text("transaction_id"),
               let type = node.text("type"), let status = node.text("status") else {
@@ -48,6 +63,11 @@ public struct CDYahooTransaction: CDYahooXMLDecodable, Sendable, Equatable {
 public struct CDYahooLeagueTransactionsResponse: CDYahooXMLDecodable, Sendable {
     public let leagueKey: String
     public let transactions: [CDYahooTransaction]
+
+    public init(leagueKey: String, transactions: [CDYahooTransaction]) {
+        self.leagueKey = leagueKey
+        self.transactions = transactions
+    }
 
     init(node: CDYahooXMLNode) throws {
         guard let leagueNode = node.child("league"), let leagueKey = leagueNode.text("league_key") else {

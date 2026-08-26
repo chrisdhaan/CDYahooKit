@@ -13,7 +13,7 @@ struct CDYahooAuthSessionTests {
 
     @Test("mapCallback returns the callback URL when there's no error")
     func mapCallbackReturnsURL() throws {
-        let url = URL(string: "myapp://callback?code=abc&state=xyz")!
+        let url = try #require(URL(string: "myapp://callback?code=abc&state=xyz"))
         #expect(try CDYahooAuthSession.mapCallback(url: url, error: nil) == url)
     }
 
@@ -38,21 +38,21 @@ struct CDYahooAuthSessionTests {
 
     @Test("extractCode returns the code when state matches")
     func extractCodeReturnsCodeOnMatchingState() throws {
-        let url = URL(string: "myapp://callback?code=abc123&state=xyz")!
+        let url = try #require(URL(string: "myapp://callback?code=abc123&state=xyz"))
         #expect(try CDYahooAuthSession.extractCode(from: url, expectedState: "xyz") == "abc123")
     }
 
     @Test("extractCode throws invalidCredentials when state doesn't match")
-    func extractCodeThrowsOnStateMismatch() {
-        let url = URL(string: "myapp://callback?code=abc123&state=wrong")!
+    func extractCodeThrowsOnStateMismatch() throws {
+        let url = try #require(URL(string: "myapp://callback?code=abc123&state=wrong"))
         #expect(throws: CDYahooKitError.self) {
             _ = try CDYahooAuthSession.extractCode(from: url, expectedState: "xyz")
         }
     }
 
     @Test("extractCode throws invalidCredentials when the code is missing")
-    func extractCodeThrowsWhenCodeMissing() {
-        let url = URL(string: "myapp://callback?state=xyz")!
+    func extractCodeThrowsWhenCodeMissing() throws {
+        let url = try #require(URL(string: "myapp://callback?state=xyz"))
         #expect(throws: CDYahooKitError.self) {
             _ = try CDYahooAuthSession.extractCode(from: url, expectedState: "xyz")
         }

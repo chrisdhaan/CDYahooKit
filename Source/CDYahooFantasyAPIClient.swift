@@ -20,10 +20,10 @@ public final class CDYahooFantasyAPIClient {
                 requestAdapters: [any CDYahooRequestAdapter] = [],
                 cacheConfiguration: CDYahooCacheConfiguration = .disabled) {
         self.oAuthClient = CDYahooOAuthClient(clientId: clientId, clientSecret: clientSecret, redirectUrl: redirectUrl,
-                                               urlSession: urlSession)
+                                              urlSession: urlSession)
         self.session = CDYahooURLSession(session: urlSession, retryConfiguration: retryConfiguration,
-                                          eventMonitors: eventMonitors, requestAdapters: requestAdapters,
-                                          cacheConfiguration: cacheConfiguration)
+                                         eventMonitors: eventMonitors, requestAdapters: requestAdapters,
+                                         cacheConfiguration: cacheConfiguration)
     }
 
     private func authorizedRequest(_ route: CDYahooRouter) async throws -> URLRequest {

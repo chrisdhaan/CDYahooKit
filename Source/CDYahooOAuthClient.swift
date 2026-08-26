@@ -8,12 +8,20 @@ import Foundation
 /// Manages the Sign In With Yahoo OAuth 2.0 / PKCE authorization code flow: builds the
 /// authorization URL, exchanges a code for a token pair, refreshes silently when the access
 /// token has expired, and stores everything in the Keychain via ``CDYahooKeychain``.
-public final class CDYahooOAuthClient: Sendable {
+///
+/// An `actor` (not a plain `Sendable` class) so concurrent calls to ``validAccessToken()`` near
+/// token expiry can't each read the same expired token and each fire their own refresh: Yahoo
+/// rotates refresh tokens on every use, so two concurrent refreshes would race to consume the
+/// same refresh token, and the loser would fail with `invalid_grant`. Actor isolation plus the
+/// cached in-flight `refreshTask` in ``validAccessToken()`` makes every concurrent caller await
+/// the *same* single refresh instead.
+public actor CDYahooOAuthClient {
 
     private let session: URLSession
     public let clientId: String
     public let clientSecret: String
     public let redirectUrl: String
+    private var refreshTask: Task<String, any Error>?
 
     public init(clientId: String, clientSecret: String, redirectUrl: String,
                 urlSession: URLSession = URLSession(configuration: .default)) {
@@ -54,28 +62,51 @@ public final class CDYahooOAuthClient: Sendable {
         store(credential)
     }
 
+    /// Whether there's a currently-usable session: either the access token hasn't expired yet, or
+    /// a refresh token is stored that can silently mint a new one. Synchronous and non-refreshing
+    /// by design — it's a cheap "should I show a Sign In button?" check, not a network call.
     public func isAuthorized() -> Bool {
-        CDYahooKeychain.string(forKey: CDYahooDefaults.accessToken) != nil
+        if isAccessTokenValid() {
+            return true
+        }
+        return CDYahooKeychain.string(forKey: CDYahooDefaults.refreshToken) != nil
+    }
+
+    private func isAccessTokenValid() -> Bool {
+        guard let expiryString = CDYahooKeychain.string(forKey: CDYahooDefaults.tokenExpiry),
+              let expiry = Double(expiryString),
+              Date().timeIntervalSince1970 < expiry,
+              CDYahooKeychain.string(forKey: CDYahooDefaults.accessToken) != nil else {
+            return false
+        }
+        return true
     }
 
     /// Returns a currently-valid access token, silently refreshing it first if it has expired.
+    /// Concurrent callers that arrive while a refresh is already in flight await that same
+    /// refresh rather than each starting their own — see the type-level doc comment for why.
     /// - Throws: ``CDYahooKitError/invalidCredentials(_:)`` if no refresh token is stored — the
     ///   caller must re-run the `ASWebAuthenticationSession` authorization flow.
     public func validAccessToken() async throws -> String {
-        if let expiryString = CDYahooKeychain.string(forKey: CDYahooDefaults.tokenExpiry),
-           let expiry = Double(expiryString),
-           Date().timeIntervalSince1970 < expiry,
-           let token = CDYahooKeychain.string(forKey: CDYahooDefaults.accessToken) {
+        if isAccessTokenValid(), let token = CDYahooKeychain.string(forKey: CDYahooDefaults.accessToken) {
             return token
         }
-        guard let refreshToken = CDYahooKeychain.string(forKey: CDYahooDefaults.refreshToken) else {
-            throw CDYahooKitError.invalidCredentials("No refresh token stored; re-authorize with Sign In With Yahoo.")
+        if let refreshTask {
+            return try await refreshTask.value
         }
-        let request = try CDYahooOAuthRouter.refresh(refreshToken: refreshToken, redirectUrl: redirectUrl)
-            .asURLRequest(clientId: clientId, clientSecret: clientSecret)
-        let credential = try await performTokenRequest(request)
-        store(credential)
-        return credential.accessToken
+        let task = Task<String, any Error> {
+            guard let refreshToken = CDYahooKeychain.string(forKey: CDYahooDefaults.refreshToken) else {
+                throw CDYahooKitError.invalidCredentials("No refresh token stored; re-authorize with Sign In With Yahoo.")
+            }
+            let request = try CDYahooOAuthRouter.refresh(refreshToken: refreshToken, redirectUrl: redirectUrl)
+                .asURLRequest(clientId: clientId, clientSecret: clientSecret)
+            let credential = try await performTokenRequest(request)
+            store(credential)
+            return credential.accessToken
+        }
+        refreshTask = task
+        defer { refreshTask = nil }
+        return try await task.value
     }
 
     /// Clears all stored tokens, e.g. on user sign-out.
@@ -87,7 +118,16 @@ public final class CDYahooOAuthClient: Sendable {
 
     private func performTokenRequest(_ request: URLRequest) async throws -> CDYahooOAuthCredential {
         let (data, response) = try await session.data(for: request)
-        guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
+        guard let httpResponse = response as? HTTPURLResponse, (200 ..< 300).contains(httpResponse.statusCode) else {
+            if let tokenError = try? JSONDecoder().decode(CDYahooOAuthTokenErrorResponse.self, from: data) {
+                if tokenError.error == "invalid_grant" {
+                    // The refresh token itself is dead (revoked/rotated away) — clear stored
+                    // credentials so isAuthorized() stops lying and the caller knows to re-run
+                    // Sign In With Yahoo, instead of retrying a dead refresh token forever.
+                    unauthorize()
+                }
+                throw CDYahooKitError.invalidCredentials(tokenError.errorDescription ?? tokenError.error)
+            }
             throw CDYahooKitError.invalidCredentials("Yahoo's OAuth token endpoint returned a non-2xx response.")
         }
         do {
@@ -106,5 +146,17 @@ public final class CDYahooOAuthClient: Sendable {
         // than used and rejected.
         let expiry = Date().timeIntervalSince1970 + Double(credential.expiresIn) - 60
         CDYahooKeychain.set(String(expiry), forKey: CDYahooDefaults.tokenExpiry)
+    }
+}
+
+/// The JSON error body Yahoo's OAuth 2.0 token endpoint returns on a non-2xx response, e.g.
+/// `{"error":"invalid_grant","error_description":"..."}`.
+private struct CDYahooOAuthTokenErrorResponse: Decodable {
+    let error: String
+    let errorDescription: String?
+
+    enum CodingKeys: String, CodingKey {
+        case error
+        case errorDescription = "error_description"
     }
 }

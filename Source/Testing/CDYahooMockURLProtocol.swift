@@ -81,8 +81,12 @@ public final class CDYahooMockURLProtocol: URLProtocol, @unchecked Sendable {
         return URLSession(configuration: configuration)
     }
 
-    override public static func canInit(with request: URLRequest) -> Bool { true }
-    override public static func canonicalRequest(for request: URLRequest) -> URLRequest { request }
+    override public static func canInit(with request: URLRequest) -> Bool {
+        true
+    }
+    override public static func canonicalRequest(for request: URLRequest) -> URLRequest {
+        request
+    }
 
     override public func startLoading() {
         guard let stub = (URLProtocol.property(forKey: Self.stubPropertyKey, in: request) as? Stub)

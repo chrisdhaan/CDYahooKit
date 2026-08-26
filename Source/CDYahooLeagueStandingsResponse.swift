@@ -10,6 +10,13 @@ public struct CDYahooTeamOutcomeTotals: CDYahooXMLDecodable, Sendable, Equatable
     public let ties: Int
     public let percentage: String
 
+    public init(wins: Int, losses: Int, ties: Int, percentage: String) {
+        self.wins = wins
+        self.losses = losses
+        self.ties = ties
+        self.percentage = percentage
+    }
+
     init(node: CDYahooXMLNode) throws {
         self.wins = node.int("wins") ?? 0
         self.losses = node.int("losses") ?? 0
@@ -27,6 +34,17 @@ public struct CDYahooTeamStanding: CDYahooXMLDecodable, Sendable, Equatable {
     public let outcomeTotals: CDYahooTeamOutcomeTotals?
     public let pointsFor: Double?
     public let pointsAgainst: Double?
+
+    public init(teamKey: String, teamId: String, name: String, rank: Int?, outcomeTotals: CDYahooTeamOutcomeTotals?,
+                pointsFor: Double?, pointsAgainst: Double?) {
+        self.teamKey = teamKey
+        self.teamId = teamId
+        self.name = name
+        self.rank = rank
+        self.outcomeTotals = outcomeTotals
+        self.pointsFor = pointsFor
+        self.pointsAgainst = pointsAgainst
+    }
 
     init(node: CDYahooXMLNode) throws {
         guard let teamKey = node.text("team_key"), let teamId = node.text("team_id"), let name = node.text("name") else {
@@ -47,6 +65,11 @@ public struct CDYahooTeamStanding: CDYahooXMLDecodable, Sendable, Equatable {
 public struct CDYahooLeagueStandingsResponse: CDYahooXMLDecodable, Sendable {
     public let leagueKey: String
     public let teams: [CDYahooTeamStanding]
+
+    public init(leagueKey: String, teams: [CDYahooTeamStanding]) {
+        self.leagueKey = leagueKey
+        self.teams = teams
+    }
 
     init(node: CDYahooXMLNode) throws {
         guard let leagueNode = node.child("league"), let leagueKey = leagueNode.text("league_key") else {
