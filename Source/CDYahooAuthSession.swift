@@ -15,7 +15,7 @@ import Foundation
 /// let verifier = CDYahooPKCE.makeCodeVerifier()
 /// let challenge = CDYahooPKCE.codeChallenge(for: verifier)
 /// let state = UUID().uuidString
-/// let authURL = try oAuthClient.authorizationURL(codeChallenge: challenge, state: state)
+/// let authURL = try await oAuthClient.authorizationURL(codeChallenge: challenge, state: state)
 /// let callback = try await CDYahooAuthSession(presentationAnchor: view.window!)
 ///     .authorize(authorizationURL: authURL, callbackScheme: "myapp")
 /// let code = try CDYahooAuthSession.extractCode(from: callback, expectedState: state)
