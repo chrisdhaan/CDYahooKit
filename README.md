@@ -66,8 +66,11 @@ checked into this repository. To run the example yourself:
 ## Scope
 
 CDYahooKit wraps the Yahoo Fantasy Sports API only. Every other Yahoo developer API this
-library once targeted (Social, YQL, Weather, Finance, BOSS) has since been shut down — see
-`docs/superpowers/specs/2026-08-24-cdyahookit-fantasy-sports-rewrite-design.md` for the audit.
+library once targeted has since been shut down: YQL and the Yahoo Weather API (retired
+2019-01-03), the Social Directory / Contacts API (EOL'd 2020-06-30), the official Yahoo Finance
+API (killed 2017-05-15), and BOSS Search (shut down 2016-03-31). The only consumer-facing
+surface left on `developer.yahoo.com` is the Fantasy Sports API and Sign In With Yahoo — this
+library wraps both.
 
 ## Author
 

@@ -25,8 +25,9 @@ playground.xcworkspace
 # Swift Package Manager
 .build/
 
-# Jazzy documentation
-docs/undocumented.json
+# Local planning documents
+docs/superpowers/
+.superpowers/
 
 # Example app secrets
 Example/Secrets.xcconfig
