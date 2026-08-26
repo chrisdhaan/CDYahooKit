@@ -108,8 +108,12 @@ struct CDYahooURLSessionTests {
         InlineStubProtocol.body = Data("Internal Server Error".utf8)
         let session = makeSession()
 
-        await #expect(throws: CDYahooKitError.self) {
+        let thrown = try await #require(throws: CDYahooKitError.self) {
             let _: StubResponse = try await session.perform(URLRequest(url: #require(URL(string: "https://example.com/e"))))
+        }
+        guard case .invalidRequest = thrown else {
+            Issue.record("Expected .invalidRequest, got \(thrown)")
+            return
         }
     }
 

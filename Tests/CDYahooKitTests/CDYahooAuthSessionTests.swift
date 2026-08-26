@@ -30,9 +30,13 @@ struct CDYahooAuthSessionTests {
     }
 
     @Test("mapCallback throws responseDecodingFailed when both url and error are nil")
-    func mapCallbackThrowsWhenBothNil() {
-        #expect(throws: CDYahooKitError.self) {
+    func mapCallbackThrowsWhenBothNil() throws {
+        let thrown = try #require(throws: CDYahooKitError.self) {
             _ = try CDYahooAuthSession.mapCallback(url: nil, error: nil)
+        }
+        guard case .responseDecodingFailed = thrown else {
+            Issue.record("Expected .responseDecodingFailed, got \(thrown)")
+            return
         }
     }
 
@@ -45,16 +49,24 @@ struct CDYahooAuthSessionTests {
     @Test("extractCode throws invalidCredentials when state doesn't match")
     func extractCodeThrowsOnStateMismatch() throws {
         let url = try #require(URL(string: "myapp://callback?code=abc123&state=wrong"))
-        #expect(throws: CDYahooKitError.self) {
+        let thrown = try #require(throws: CDYahooKitError.self) {
             _ = try CDYahooAuthSession.extractCode(from: url, expectedState: "xyz")
+        }
+        guard case .invalidCredentials = thrown else {
+            Issue.record("Expected .invalidCredentials, got \(thrown)")
+            return
         }
     }
 
     @Test("extractCode throws invalidCredentials when the code is missing")
     func extractCodeThrowsWhenCodeMissing() throws {
         let url = try #require(URL(string: "myapp://callback?state=xyz"))
-        #expect(throws: CDYahooKitError.self) {
+        let thrown = try #require(throws: CDYahooKitError.self) {
             _ = try CDYahooAuthSession.extractCode(from: url, expectedState: "xyz")
+        }
+        guard case .invalidCredentials = thrown else {
+            Issue.record("Expected .invalidCredentials, got \(thrown)")
+            return
         }
     }
 }

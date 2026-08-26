@@ -44,9 +44,13 @@ struct CDYahooXMLTreeBuilderTests {
     }
 
     @Test("malformed XML throws xmlParsingFailed")
-    func malformedXMLThrows() {
-        #expect(throws: CDYahooKitError.self) {
+    func malformedXMLThrows() throws {
+        let thrown = try #require(throws: CDYahooKitError.self) {
             _ = try CDYahooXMLTreeBuilder.parse(Data("<not><closed>".utf8))
+        }
+        guard case .xmlParsingFailed = thrown else {
+            Issue.record("Expected .xmlParsingFailed, got \(thrown)")
+            return
         }
     }
 }
