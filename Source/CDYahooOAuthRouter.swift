@@ -18,9 +18,7 @@ enum CDYahooOAuthRouter {
         request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
 
-        guard let credentialsData = "\(clientId):\(clientSecret)".data(using: .utf8) else {
-            throw CDYahooKitError.invalidCredentials("clientId/clientSecret could not be encoded.")
-        }
+        let credentialsData = Data("\(clientId):\(clientSecret)".utf8)
         request.setValue("Basic \(credentialsData.base64EncodedString())", forHTTPHeaderField: "Authorization")
 
         let params: [String: String]
