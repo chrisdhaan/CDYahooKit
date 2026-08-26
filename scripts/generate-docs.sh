@@ -9,6 +9,11 @@ swift package --disable-sandbox generate-documentation \
     --transform-for-static-hosting \
     --hosting-base-path CDYahooKit
 
+# generate-documentation's --output-path clears the whole docs/ directory, which also holds
+# this repo's committed docs/superpowers/ (specs and implementation plans) — restore it from
+# git so this script never silently deletes tracked, non-DocC content.
+git checkout -- docs/superpowers
+
 touch docs/.nojekyll
 
 cat > docs/index.html <<'EOF'
