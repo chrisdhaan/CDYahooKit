@@ -4,7 +4,7 @@
 //
 
 /// The response from `league/{league_key}/players` (optionally `;start={start}` for pagination).
-public struct CDYahooLeaguePlayersResponse: CDYahooXMLDecodable, Sendable {
+public struct CDYahooLeaguePlayersResponse: CDYahooXMLDecodable, Sendable, Equatable, Codable {
     public let leagueKey: String
     public let players: [CDYahooPlayer]
 

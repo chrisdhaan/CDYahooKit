@@ -41,6 +41,16 @@ struct CDYahooOAuthClientTests {
         #expect(query.contains { $0.name == "response_type" && $0.value == "code" })
         #expect(query.contains { $0.name == "state" && $0.value == "state-value" })
         #expect(query.contains { $0.name == "client_id" && $0.value == "client-id" })
+        #expect(query.contains { $0.name == "scope" } == false)
+    }
+
+    @Test("authorizationURL includes a scope query item when scope is passed")
+    func authorizationURLIncludesScopeWhenProvided() async throws {
+        let client = makeClient()
+        let url = try await client.authorizationURL(codeChallenge: "challenge-value", state: "state-value", scope: "openid fspt-r")
+        let query = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems ?? []
+
+        #expect(query.contains { $0.name == "scope" && $0.value == "openid fspt-r" })
     }
 
     @Test("isAuthorized is false before authorize(withCode:codeVerifier:) succeeds")

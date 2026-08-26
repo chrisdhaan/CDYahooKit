@@ -35,10 +35,13 @@ public actor CDYahooOAuthClient {
 
     /// The URL to present in an `ASWebAuthenticationSession` to begin the authorization code
     /// flow. `codeChallenge` comes from `CDYahooPKCE.codeChallenge(for:)`; `state` should be a
-    /// fresh random value checked against the callback to guard against CSRF.
-    public func authorizationURL(codeChallenge: String, state: String) throws -> URL {
+    /// fresh random value checked against the callback to guard against CSRF. `scope` is omitted
+    /// from the URL when `nil` (the default), preserving Yahoo's default scope grant for the app;
+    /// pass e.g. `"openid fspt-r"` to additionally request Sign In With Yahoo identity/userinfo
+    /// alongside fantasy sports access.
+    public func authorizationURL(codeChallenge: String, state: String, scope: String? = nil) throws -> URL {
         var components = URLComponents(string: CDYahooConstants.oauthAuthorizeURL)
-        components?.queryItems = [
+        var queryItems = [
             URLQueryItem(name: "client_id", value: clientId),
             URLQueryItem(name: "redirect_uri", value: redirectUrl),
             URLQueryItem(name: "response_type", value: "code"),
@@ -46,6 +49,10 @@ public actor CDYahooOAuthClient {
             URLQueryItem(name: "code_challenge_method", value: "S256"),
             URLQueryItem(name: "state", value: state)
         ]
+        if let scope {
+            queryItems.append(URLQueryItem(name: "scope", value: scope))
+        }
+        components?.queryItems = queryItems
         guard let url = components?.url else {
             throw CDYahooKitError.invalidRequest(underlying: URLError(.badURL))
         }

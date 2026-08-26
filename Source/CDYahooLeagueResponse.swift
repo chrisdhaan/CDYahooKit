@@ -4,7 +4,7 @@
 //
 
 /// The response from `league/{league_key}`.
-public struct CDYahooLeagueResponse: CDYahooXMLDecodable, Sendable {
+public struct CDYahooLeagueResponse: CDYahooXMLDecodable, Sendable, Equatable, Codable {
     public let league: CDYahooLeague
 
     public init(league: CDYahooLeague) {

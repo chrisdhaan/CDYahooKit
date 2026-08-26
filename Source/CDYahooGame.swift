@@ -4,7 +4,7 @@
 //
 
 /// A team's league within one fantasy game/season, as summarized inside `CDYahooGame`.
-public struct CDYahooLeagueSummary: CDYahooXMLDecodable, Sendable, Equatable {
+public struct CDYahooLeagueSummary: CDYahooXMLDecodable, Sendable, Equatable, Codable {
     public let leagueKey: String
     public let leagueId: String
     public let name: String
@@ -30,7 +30,7 @@ public struct CDYahooLeagueSummary: CDYahooXMLDecodable, Sendable, Equatable {
 
 /// A fantasy game (a sport + season, e.g. "Football" / "nfl" / 2025) the authenticated user has
 /// one or more leagues in.
-public struct CDYahooGame: CDYahooXMLDecodable, Sendable, Equatable {
+public struct CDYahooGame: CDYahooXMLDecodable, Sendable, Equatable, Codable {
     public let gameKey: String
     public let gameId: String
     public let name: String

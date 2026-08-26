@@ -35,7 +35,10 @@ final class CDYahooURLSession: Sendable {
         }
 
         let isCacheable = adaptedRequest.httpMethod == nil || adaptedRequest.httpMethod == "GET"
-        let cacheKey = adaptedRequest.url?.absoluteString ?? ""
+        // Including the Authorization header means a cache entry is automatically invalidated
+        // when a different access token is in play (different signed-in user, or a refreshed
+        // token) — without needing explicit cache-clearing coordination with the OAuth client.
+        let cacheKey = "\(adaptedRequest.url?.absoluteString ?? "")|\(adaptedRequest.value(forHTTPHeaderField: "Authorization") ?? "")"
 
         if isCacheable, let cachedData = await cache.data(forKey: cacheKey) {
             return try Self.decode(cachedData)

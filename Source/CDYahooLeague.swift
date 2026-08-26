@@ -4,7 +4,7 @@
 //
 
 /// A fantasy league's metadata and settings.
-public struct CDYahooLeague: CDYahooXMLDecodable, Sendable, Equatable {
+public struct CDYahooLeague: CDYahooXMLDecodable, Sendable, Equatable, Codable {
     public let leagueKey: String
     public let leagueId: String
     public let name: String

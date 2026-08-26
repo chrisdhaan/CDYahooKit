@@ -14,14 +14,27 @@ enum CDYahooKeychain {
     @discardableResult
     static func set(_ value: String, forKey key: String) -> Bool {
         guard let data = value.data(using: .utf8) else { return false }
-        delete(forKey: key)
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
-            kSecAttrAccount as String: key,
-            kSecValueData as String: data
+            kSecAttrAccount as String: key
         ]
-        return SecItemAdd(query as CFDictionary, nil) == errSecSuccess
+        // Accessible only after the device's first unlock (not `WhenUnlocked`, which would
+        // block background token refresh) and never migrates to a different device via
+        // backup/restore.
+        let updateAttributes: [String: Any] = [
+            kSecValueData as String: data,
+            kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
+        ]
+        let updateStatus = SecItemUpdate(query as CFDictionary, updateAttributes as CFDictionary)
+        if updateStatus == errSecSuccess {
+            return true
+        }
+        guard updateStatus == errSecItemNotFound else { return false }
+        var addQuery = query
+        addQuery[kSecValueData as String] = data
+        addQuery[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
+        return SecItemAdd(addQuery as CFDictionary, nil) == errSecSuccess
     }
 
     static func string(forKey key: String) -> String? {

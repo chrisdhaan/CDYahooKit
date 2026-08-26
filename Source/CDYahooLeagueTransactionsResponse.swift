@@ -4,7 +4,7 @@
 //
 
 /// A player as they appear inside one transaction, with the move that was made.
-public struct CDYahooTransactionPlayer: CDYahooXMLDecodable, Sendable, Equatable {
+public struct CDYahooTransactionPlayer: CDYahooXMLDecodable, Sendable, Equatable, Codable {
     public let playerKey: String
     public let fullName: String
     public let transactionType: String?
@@ -30,7 +30,7 @@ public struct CDYahooTransactionPlayer: CDYahooXMLDecodable, Sendable, Equatable
 }
 
 /// A single league transaction (add/drop, trade, or waiver claim).
-public struct CDYahooTransaction: CDYahooXMLDecodable, Sendable, Equatable {
+public struct CDYahooTransaction: CDYahooXMLDecodable, Sendable, Equatable, Codable {
     public let transactionKey: String
     public let transactionId: String
     public let type: String
@@ -60,7 +60,7 @@ public struct CDYahooTransaction: CDYahooXMLDecodable, Sendable, Equatable {
 }
 
 /// The response from `league/{league_key}/transactions`.
-public struct CDYahooLeagueTransactionsResponse: CDYahooXMLDecodable, Sendable {
+public struct CDYahooLeagueTransactionsResponse: CDYahooXMLDecodable, Sendable, Equatable, Codable {
     public let leagueKey: String
     public let transactions: [CDYahooTransaction]
 

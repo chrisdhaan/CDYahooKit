@@ -4,7 +4,7 @@
 //
 
 /// A player, as they appear on a team roster or in a league's player pool.
-public struct CDYahooPlayer: CDYahooXMLDecodable, Sendable, Equatable {
+public struct CDYahooPlayer: CDYahooXMLDecodable, Sendable, Equatable, Codable {
     public let playerKey: String
     public let playerId: String
     public let fullName: String

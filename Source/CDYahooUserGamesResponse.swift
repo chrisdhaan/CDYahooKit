@@ -5,7 +5,7 @@
 
 /// The response from `users;use_login=1/games;game_codes={code}/leagues` — every fantasy game
 /// and league the authenticated user has a team in for the requested game code.
-public struct CDYahooUserGamesResponse: CDYahooXMLDecodable, Sendable {
+public struct CDYahooUserGamesResponse: CDYahooXMLDecodable, Sendable, Equatable, Codable {
     public let games: [CDYahooGame]
 
     public init(games: [CDYahooGame]) {

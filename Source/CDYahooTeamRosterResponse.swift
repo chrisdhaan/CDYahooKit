@@ -4,7 +4,7 @@
 //
 
 /// The response from `team/{team_key}/roster` (optionally `;week={week}`).
-public struct CDYahooTeamRosterResponse: CDYahooXMLDecodable, Sendable {
+public struct CDYahooTeamRosterResponse: CDYahooXMLDecodable, Sendable, Equatable, Codable {
     public let teamKey: String
     public let name: String
     public let players: [CDYahooPlayer]

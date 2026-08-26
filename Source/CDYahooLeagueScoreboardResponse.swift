@@ -4,7 +4,7 @@
 //
 
 /// One team's score within a `CDYahooMatchup`.
-public struct CDYahooMatchupTeamScore: CDYahooXMLDecodable, Sendable, Equatable {
+public struct CDYahooMatchupTeamScore: CDYahooXMLDecodable, Sendable, Equatable, Codable {
     public let teamKey: String
     public let name: String
     public let totalPoints: Double?
@@ -26,7 +26,7 @@ public struct CDYahooMatchupTeamScore: CDYahooXMLDecodable, Sendable, Equatable 
 }
 
 /// One head-to-head matchup for a given week.
-public struct CDYahooMatchup: CDYahooXMLDecodable, Sendable, Equatable {
+public struct CDYahooMatchup: CDYahooXMLDecodable, Sendable, Equatable, Codable {
     public let week: Int
     public let status: String
     public let teams: [CDYahooMatchupTeamScore]
@@ -46,7 +46,7 @@ public struct CDYahooMatchup: CDYahooXMLDecodable, Sendable, Equatable {
 }
 
 /// The response from `league/{league_key}/scoreboard` (optionally `;week={week}`).
-public struct CDYahooLeagueScoreboardResponse: CDYahooXMLDecodable, Sendable {
+public struct CDYahooLeagueScoreboardResponse: CDYahooXMLDecodable, Sendable, Equatable, Codable {
     public let leagueKey: String
     public let matchups: [CDYahooMatchup]
 

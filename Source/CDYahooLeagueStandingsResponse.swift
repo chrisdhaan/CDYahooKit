@@ -4,7 +4,7 @@
 //
 
 /// A team's regular-season win/loss/tie record and points.
-public struct CDYahooTeamOutcomeTotals: CDYahooXMLDecodable, Sendable, Equatable {
+public struct CDYahooTeamOutcomeTotals: CDYahooXMLDecodable, Sendable, Equatable, Codable {
     public let wins: Int
     public let losses: Int
     public let ties: Int
@@ -26,7 +26,7 @@ public struct CDYahooTeamOutcomeTotals: CDYahooXMLDecodable, Sendable, Equatable
 }
 
 /// One team's row in a league's standings.
-public struct CDYahooTeamStanding: CDYahooXMLDecodable, Sendable, Equatable {
+public struct CDYahooTeamStanding: CDYahooXMLDecodable, Sendable, Equatable, Codable {
     public let teamKey: String
     public let teamId: String
     public let name: String
@@ -62,7 +62,7 @@ public struct CDYahooTeamStanding: CDYahooXMLDecodable, Sendable, Equatable {
 }
 
 /// The response from `league/{league_key}/standings`.
-public struct CDYahooLeagueStandingsResponse: CDYahooXMLDecodable, Sendable {
+public struct CDYahooLeagueStandingsResponse: CDYahooXMLDecodable, Sendable, Equatable, Codable {
     public let leagueKey: String
     public let teams: [CDYahooTeamStanding]
 
