@@ -66,9 +66,9 @@ final class ViewController: UIViewController {
             let code = try CDYahooAuthSession.extractCode(from: callbackURL, expectedState: state)
             try await client.oAuthClient.authorize(withCode: code, codeVerifier: codeVerifier)
 
-            let response = try await client.fetchUserGames()
-            let leagueNames = response.games.flatMap { $0.leagues.map(\.name) }
-            print("Signed in with Yahoo. Leagues: \(leagueNames)")
+            let leagueListViewController = LeagueListViewController()
+            leagueListViewController.client = client
+            navigationController?.pushViewController(leagueListViewController, animated: true)
         } catch {
             authSession = nil
             print("Sign In With Yahoo failed: \(error)")
