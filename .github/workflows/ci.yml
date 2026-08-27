@@ -320,6 +320,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Select Xcode
         run: sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
+      - name: List available simulators
+        run: xcrun simctl list
       - name: Install xcbeautify
         run: brew install xcbeautify
       - name: Create placeholder Secrets.xcconfig
