@@ -1,12 +1,12 @@
 # Getting Started
 
-Register an app at the [Yahoo Developer Network](https://developer.yahoo.com/apps/), then
-authenticate and fetch data.
+Register an app, then authenticate and fetch data.
 
 ## Registering Your App
 
-Create an app at `developer.yahoo.com/apps/`, request Fantasy Sports read access, and note
-your Client ID, Client Secret, and redirect URI (a custom URL scheme, e.g. `myapp://callback`).
+Create an app at the [Yahoo Developer Network](https://developer.yahoo.com/apps/), request
+Fantasy Sports read access, and note your Client ID, Client Secret, and redirect URI (a custom
+URL scheme, e.g. `myapp://callback`).
 
 ## Authenticating
 

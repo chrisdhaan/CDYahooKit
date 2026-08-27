@@ -7,7 +7,7 @@ import Foundation
 
 /// Manages the Sign In With Yahoo OAuth 2.0 / PKCE authorization code flow: builds the
 /// authorization URL, exchanges a code for a token pair, refreshes silently when the access
-/// token has expired, and stores everything in the Keychain via ``CDYahooKeychain``.
+/// token has expired, and stores everything in the Keychain.
 ///
 /// An `actor` (not a plain `Sendable` class) so concurrent calls to ``validAccessToken()`` near
 /// token expiry can't each read the same expired token and each fire their own refresh: Yahoo
