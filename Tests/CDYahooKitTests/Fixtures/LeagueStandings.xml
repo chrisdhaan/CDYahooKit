@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fantasy_content xml:lang="en-US" time="1.23">
+    <league>
+        <league_key>449.l.12345</league_key>
+        <name>My Fantasy League</name>
+        <standings>
+            <teams count="2">
+                <team>
+                    <team_key>449.l.12345.t.1</team_key>
+                    <team_id>1</team_id>
+                    <name>Team Alpha</name>
+                    <team_standings>
+                        <rank>1</rank>
+                        <outcome_totals>
+                            <wins>8</wins>
+                            <losses>3</losses>
+                            <ties>0</ties>
+                            <percentage>.727</percentage>
+                        </outcome_totals>
+                        <points_for>1234.5</points_for>
+                        <points_against>1100.2</points_against>
+                    </team_standings>
+                </team>
+                <team>
+                    <team_key>449.l.12345.t.2</team_key>
+                    <team_id>2</team_id>
+                    <name>Team Beta</name>
+                    <team_standings>
+                        <rank>2</rank>
+                        <outcome_totals>
+                            <wins>6</wins>
+                            <losses>5</losses>
+                            <ties>0</ties>
+                            <percentage>.545</percentage>
+                        </outcome_totals>
+                        <points_for>1150.0</points_for>
+                        <points_against>1120.8</points_against>
+                    </team_standings>
+                </team>
+            </teams>
+        </standings>
+    </league>
+</fantasy_content>

@@ -1,5 +1,0 @@
-use_frameworks!
-
-target 'CDYahooKit_Example' do
-  pod 'CDYahooKit', :path => '../'
-end

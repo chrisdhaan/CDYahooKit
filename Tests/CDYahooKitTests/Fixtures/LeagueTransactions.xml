@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fantasy_content xml:lang="en-US" time="1.23">
+    <league>
+        <league_key>449.l.12345</league_key>
+        <transactions count="1">
+            <transaction>
+                <transaction_key>449.l.12345.tr.1</transaction_key>
+                <transaction_id>1</transaction_id>
+                <type>add/drop</type>
+                <status>successful</status>
+                <players>
+                    <player>
+                        <player_key>449.p.30789</player_key>
+                        <name>
+                            <full>Sam Lee</full>
+                        </name>
+                        <transaction_data>
+                            <type>add</type>
+                            <destination_team_key>449.l.12345.t.1</destination_team_key>
+                        </transaction_data>
+                    </player>
+                </players>
+            </transaction>
+        </transactions>
+    </league>
+</fantasy_content>

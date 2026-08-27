@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fantasy_content xmlns="http://fantasysports.yahooapis.com/fantasy/v2/base.rng" xml:lang="en-US" time="1.23">
+    <users count="1">
+        <user>
+            <guid>ABCDEF123456</guid>
+            <games count="1">
+                <game>
+                    <game_key>449</game_key>
+                    <game_id>449</game_id>
+                    <name>Football</name>
+                    <code>nfl</code>
+                    <season>2025</season>
+                    <leagues count="1">
+                        <league>
+                            <league_key>449.l.12345</league_key>
+                            <league_id>12345</league_id>
+                            <name>My Fantasy League</name>
+                            <num_teams>10</num_teams>
+                        </league>
+                    </leagues>
+                </game>
+            </games>
+        </user>
+    </users>
+</fantasy_content>

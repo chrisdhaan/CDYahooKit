@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fantasy_content xml:lang="en-US" time="1.23">
+    <league>
+        <league_key>449.l.12345</league_key>
+        <players count="2">
+            <player>
+                <player_key>449.p.30123</player_key>
+                <player_id>30123</player_id>
+                <name>
+                    <full>Jane Doe</full>
+                </name>
+                <editorial_team_abbr>SF</editorial_team_abbr>
+                <display_position>QB</display_position>
+                <status>ACT</status>
+            </player>
+            <player>
+                <player_key>449.p.30789</player_key>
+                <player_id>30789</player_id>
+                <name>
+                    <full>Sam Lee</full>
+                </name>
+                <editorial_team_abbr>NYJ</editorial_team_abbr>
+                <display_position>WR</display_position>
+                <status/>
+            </player>
+        </players>
+    </league>
+</fantasy_content>
