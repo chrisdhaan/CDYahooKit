@@ -47,21 +47,16 @@ the full [API documentation](https://chrisdhaan.github.io/CDYahooKit/documentati
 
 ## Example App
 
-`Example/Source/` and `Example/Resources/` contain Swift source demonstrating the full Sign In
-With Yahoo + Fantasy Sports flow: OAuth 2.0 login, fetching the signed-in user's fantasy leagues,
-and displaying league standings.
+`Example/iOS Example.xcodeproj` is a real, buildable iOS app project demonstrating the full Sign
+In With Yahoo + Fantasy Sports flow: OAuth 2.0 login, fetching the signed-in user's fantasy
+leagues, and displaying league standings. It depends on CDYahooKit as a local Swift Package
+reference to this repository's root, so it builds standalone with no extra wiring.
 
-This source is not wired into a buildable Xcode project — no `.xcodeproj`/`.xcworkspace` is
-checked into this repository. To run the example yourself:
+To run it:
 
-1. Create a new iOS App project in Xcode.
-2. Add the files under `Example/Source/` and `Example/Resources/` to it.
-3. Add CDYahooKit as a local Swift Package dependency (File → Add Packages → Add Local...,
-   pointing at this repository's root).
-4. Copy `Example/Secrets.xcconfig.example` to `Example/Secrets.xcconfig` and fill in your own
-   `clientId`/`clientSecret`/`redirectUrl` from the [Yahoo Developer Network](https://developer.yahoo.com/apps/),
-   then reference that xcconfig from your new project's build settings (or wire the same values
-   in however your project reads configuration).
+1. Copy `Example/Secrets.xcconfig.example` to `Example/Secrets.xcconfig` and fill in your own
+   `clientId`/`clientSecret`/`redirectUrl` from the [Yahoo Developer Network](https://developer.yahoo.com/apps/).
+2. Open `Example/iOS Example.xcodeproj` in Xcode and run the `iOS Example` scheme.
 
 ## Scope
 
