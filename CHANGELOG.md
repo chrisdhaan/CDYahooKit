@@ -1,6 +1,8 @@
 # Changelog
 
-## [1.0.0] - 2026-08-26
+## [1.0.0](https://github.com/chrisdhaan/CDYahooKit/releases/tag/1.0.0)
+
+Released on 2026-08-26.
 
 ### Added
 - Complete Swift rewrite: Swift Package Manager, DocC documentation, GitHub Actions CI,
