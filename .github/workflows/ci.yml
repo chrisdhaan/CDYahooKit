@@ -322,6 +322,8 @@ jobs:
         run: sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
       - name: Install xcbeautify
         run: brew install xcbeautify
+      - name: Create placeholder Secrets.xcconfig
+        run: cp Example/Secrets.xcconfig.example Example/Secrets.xcconfig
       - name: iOS Example - Debug
         run: |
           set -o pipefail
