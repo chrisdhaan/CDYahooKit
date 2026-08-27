@@ -21,8 +21,13 @@ import Foundation
 /// let code = try CDYahooAuthSession.extractCode(from: callback, expectedState: state)
 /// try await oAuthClient.authorize(withCode: code, codeVerifier: verifier)
 /// ```
+/// `@unchecked Sendable`: the only mutable state is `activeSession`, written once synchronously
+/// before `session.start()` and cleared once from that session's own completion callback — never
+/// touched concurrently in normal use (one in-flight authorization per instance).
 @available(iOS 12.0, macOS 10.15, visionOS 1.0, *)
-public final class CDYahooAuthSession: NSObject {
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
+public final class CDYahooAuthSession: NSObject, @unchecked Sendable {
 
     private let presentationAnchorProvider: () -> ASPresentationAnchor
 
@@ -82,6 +87,8 @@ public final class CDYahooAuthSession: NSObject {
 }
 
 @available(iOS 12.0, macOS 10.15, visionOS 1.0, *)
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
 extension CDYahooAuthSession: ASWebAuthenticationPresentationContextProviding {
     public func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
         presentationAnchorProvider()
