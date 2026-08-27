@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## [1.0.0] - 2026-08-26
 
 ### Added
 - Complete Swift rewrite: Swift Package Manager, DocC documentation, GitHub Actions CI,

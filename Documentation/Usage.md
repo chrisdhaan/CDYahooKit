@@ -12,12 +12,9 @@ Or in Xcode: File → Add Packages → Enter `https://github.com/chrisdhaan/CDYa
 
 ## Scope
 
-CDYahooKit wraps the Yahoo Fantasy Sports API only — see the design spec
-(`docs/superpowers/specs/2026-08-24-cdyahookit-fantasy-sports-rewrite-design.md`) for why
-every other Yahoo developer API this library once targeted (Social, YQL, Weather, Finance,
-BOSS) has since been shut down.
-
-v1 is read-only. Write endpoints (roster/lineup changes, waiver claims, trades) aren't covered.
+CDYahooKit wraps the Yahoo Fantasy Sports API and Sign In With Yahoo — see the
+[README](../README.md#scope) for the full picture of what's covered. v1 is read-only: write
+endpoints (roster/lineup changes, waiver claims, trades) aren't covered.
 
 ## Authentication, Fetching Data, Testing
 
