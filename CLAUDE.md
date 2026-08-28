@@ -62,7 +62,8 @@ CDYahooKit/
 ├── Example/                          # Example iOS app
 │   ├── iOS Example.xcodeproj/        # References the framework via a LOCAL SPM package (relativePath = "..")
 │   ├── Secrets.xcconfig.example      # Copy to Secrets.xcconfig (gitignored); fill in Yahoo app credentials
-│   └── Source/                       # AppDelegate, SceneDelegate, ViewController, LeagueList / Standings VCs
+│   └── Source/                       # AppDelegate, SceneDelegate, CDYahooKitManager, ViewController (endpoint list),
+│                                     #   CDYahooKitXMLResponseViewController, XMLPrettyPrinter, XMLResponseRecorder (event monitor)
 ├── Documentation/                   # ARCHITECTURE.md, Usage.md
 ├── docs/                            # DocC-generated static site (committed only via release-tied docs commits)
 ├── scripts/generate-docs.sh         # DocC build + .nojekyll / index.html redirect / 404.html fixups
