@@ -1,11 +1,26 @@
-# CDYahooKit
+<p align="center">
+    <a href="https://github.com/chrisdhaan/CDYahooKit">
+        <img src="https://raw.githubusercontent.com/chrisdhaan/CDYahooKit/master/Documentation/cdyahookit.png" alt="CDYahooKit" width="850" />
+    </a>
+</p>
 
-[![CI Status](https://github.com/chrisdhaan/CDYahooKit/actions/workflows/ci.yml/badge.svg)](https://github.com/chrisdhaan/CDYahooKit/actions/workflows/ci.yml)
-[![Swift](https://img.shields.io/badge/Swift-6.0%2B-orange?style=flat)](https://swift.org)
-[![SPM](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat)](https://swift.org/package-manager/)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat)](LICENSE)
-
----
+<p align="center">
+    <a href="https://github.com/chrisdhaan/CDYahooKit/actions/workflows/ci.yml">
+        <img src="https://github.com/chrisdhaan/CDYahooKit/actions/workflows/ci.yml/badge.svg" alt="CI Status">
+    </a>
+    <a href="https://github.com/chrisdhaan/CDYahooKit/releases">
+        <img src="https://img.shields.io/github/release/chrisdhaan/CDYahooKit.svg" alt="GitHub Release">
+    </a>
+    <a href="https://www.swift.org">
+        <img src="https://img.shields.io/badge/Swift-6.0+-orange?style=flat" alt="Swift Versions">
+    </a>
+    <a href="https://www.swift.org/package-manager">
+        <img src="https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat" alt="Swift Package Manager Compatible">
+    </a>
+    <a href="https://github.com/chrisdhaan/CDYahooKit/blob/master/LICENSE">
+        <img src="https://img.shields.io/github/license/chrisdhaan/CDYahooKit.svg" alt="License">
+    </a>
+</p>
 
 A Swift wrapper for the Yahoo Fantasy Sports API, with Sign In With Yahoo (OAuth 2.0 / PKCE)
 for authentication. No external dependencies.
