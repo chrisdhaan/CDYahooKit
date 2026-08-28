@@ -63,9 +63,15 @@ the full [API documentation](https://chrisdhaan.github.io/CDYahooKit/documentati
 ## Example App
 
 `Example/iOS Example.xcodeproj` is a real, buildable iOS app project demonstrating the full Sign
-In With Yahoo + Fantasy Sports flow: OAuth 2.0 login, fetching the signed-in user's fantasy
-leagues, and displaying league standings. It depends on CDYahooKit as a local Swift Package
-reference to this repository's root, so it builds standalone with no extra wiring.
+In With Yahoo + Fantasy Sports flow: OAuth 2.0 + PKCE login, then a row per read-only endpoint —
+user games & leagues, league metadata, standings, team roster, league players, scoreboard, and
+transactions — each of which runs the request and pushes a viewer showing the raw, re-indented
+XML Yahoo returned (captured through a `CDYahooEventMonitor`). It depends on CDYahooKit as a
+local Swift Package reference to this repository's root, so it builds standalone with no extra
+wiring.
+
+This app builds its UI programmatically rather than from a storyboard — a deliberate choice,
+kept because there is no `.storyboard` XML to hand-maintain alongside the project file.
 
 To run it:
 

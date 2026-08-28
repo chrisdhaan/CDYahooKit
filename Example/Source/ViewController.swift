@@ -6,73 +6,189 @@
 import CDYahooKit
 import UIKit
 
-/// Demonstrates the full Sign In With Yahoo authorization code + PKCE flow: a single button
-/// kicks off `CDYahooAuthSession`, exchanges the resulting code for tokens via
-/// `CDYahooOAuthClient`, then pushes a `LeagueListViewController` for the signed-in user's
-/// fantasy leagues.
-final class ViewController: UIViewController {
+/// The Example's root screen: a list with a Sign In With Yahoo row and one row per read-only
+/// Fantasy Sports API resource. Tapping an endpoint row runs the request through
+/// ``CDYahooKitManager`` and pushes a ``CDYahooKitXMLResponseViewController`` showing the raw
+/// XML Yahoo returned; failures surface in an alert.
+final class ViewController: UITableViewController {
 
-    private let client: CDYahooFantasyAPIClient = {
-        let clientId = Bundle.main.object(forInfoDictionaryKey: "YAHOO_CLIENT_ID") as? String ?? ""
-        let clientSecret = Bundle.main.object(forInfoDictionaryKey: "YAHOO_CLIENT_SECRET") as? String ?? ""
-        let redirectUrl = Bundle.main.object(forInfoDictionaryKey: "YAHOO_REDIRECT_URL") as? String ?? ""
-        return CDYahooFantasyAPIClient(clientId: clientId, clientSecret: clientSecret, redirectUrl: redirectUrl)
-    }()
+    private enum Row: Int, CaseIterable {
+        case signIn
+        case userGames
+        case league
+        case standings
+        case teamRoster
+        case leaguePlayers
+        case scoreboard
+        case transactions
 
-    /// Retained for the lifetime of the in-flight authorization — `CDYahooAuthSession` itself
-    /// already retains its underlying `ASWebAuthenticationSession`, but we hold the wrapper too
-    /// so it isn't deallocated out from under that session while the user is in Safari.
-    private var authSession: CDYahooAuthSession?
+        var title: String {
+            switch self {
+            case .signIn: "Sign In With Yahoo"
+            case .userGames: "User Games & Leagues"
+            case .league: "League Metadata"
+            case .standings: "League Standings"
+            case .teamRoster: "Team Roster"
+            case .leaguePlayers: "League Players"
+            case .scoreboard: "League Scoreboard"
+            case .transactions: "League Transactions"
+            }
+        }
+
+        /// Every row except Sign In needs an access token first.
+        var requiresAuthorization: Bool { self != .signIn }
+    }
+
+    private static let cellReuseIdentifier = "CDYahooKitEndpointCell"
+
+    init() {
+        super.init(style: .insetGrouped)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .systemBackground
         title = "CDYahooKit Example"
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Self.cellReuseIdentifier)
 
-        let signInButton = UIButton(type: .system)
-        signInButton.setTitle("Sign In With Yahoo", for: .normal)
-        signInButton.titleLabel?.font = .preferredFont(forTextStyle: .headline)
-        signInButton.translatesAutoresizingMaskIntoConstraints = false
-        signInButton.addTarget(self, action: #selector(signInButtonTapped), for: .touchUpInside)
-        view.addSubview(signInButton)
-
-        NSLayoutConstraint.activate([
-            signInButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            signInButton.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
-        ])
-    }
-
-    @objc
-    private func signInButtonTapped() {
-        Task { await signIn() }
-    }
-
-    private func signIn() async {
-        do {
-            let codeVerifier = CDYahooPKCE.makeCodeVerifier()
-            let codeChallenge = CDYahooPKCE.codeChallenge(for: codeVerifier)
-            let state = UUID().uuidString
-
-            let authorizationURL = try await client.oAuthClient.authorizationURL(codeChallenge: codeChallenge, state: state)
-
-            let session = CDYahooAuthSession(presentationAnchor: self.view.window!)
-            authSession = session
-            let callbackURL = try await session.authorize(
-                authorizationURL: authorizationURL,
-                callbackScheme: "cdyahookitexample"
-            )
-            authSession = nil
-
-            let code = try CDYahooAuthSession.extractCode(from: callbackURL, expectedState: state)
-            try await client.oAuthClient.authorize(withCode: code, codeVerifier: codeVerifier)
-
-            let leagueListViewController = LeagueListViewController()
-            leagueListViewController.client = client
-            navigationController?.pushViewController(leagueListViewController, animated: true)
-        } catch {
-            authSession = nil
-            print("Sign In With Yahoo failed: \(error)")
+        Task {
+            await CDYahooKitManager.shared.start()
+            tableView.reloadData()
         }
+    }
+
+    // MARK: - UITableViewDataSource
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        Row.allCases.count
+    }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        "Fantasy Sports API"
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: Self.cellReuseIdentifier, for: indexPath)
+        guard let row = Row(rawValue: indexPath.row) else { return cell }
+
+        let signedIn = CDYahooKitManager.shared.isSignedIn
+        let enabled = !row.requiresAuthorization || signedIn
+
+        var content = cell.defaultContentConfiguration()
+        content.text = row == .signIn && signedIn ? "Sign Out" : row.title
+        content.textProperties.color = enabled ? .label : .tertiaryLabel
+        cell.contentConfiguration = content
+        cell.selectionStyle = enabled ? .default : .none
+        cell.accessoryType = row.requiresAuthorization ? .disclosureIndicator : .none
+
+        return cell
+    }
+
+    // MARK: - UITableViewDelegate
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        guard let row = Row(rawValue: indexPath.row) else { return }
+
+        switch row {
+        case .signIn:
+            if CDYahooKitManager.shared.isSignedIn {
+                signOut()
+            } else {
+                signIn()
+            }
+        default:
+            guard CDYahooKitManager.shared.isSignedIn else {
+                presentAlert(title: "Not Signed In", message: "Tap \"Sign In With Yahoo\" first.")
+                return
+            }
+            runEndpoint(row)
+        }
+    }
+}
+
+// MARK: - Sign In
+
+private extension ViewController {
+
+    func signIn() {
+        guard let window = view.window else { return }
+        Task {
+            do {
+                try await CDYahooKitManager.shared.signIn(presentationAnchor: window)
+                tableView.reloadData()
+            } catch CDYahooKitError.authorizationCancelled {
+                // User dismissed the browser sheet; nothing to report.
+            } catch {
+                presentAlert(title: "Sign In Failed", message: "\(error)")
+            }
+        }
+    }
+
+    func signOut() {
+        Task {
+            await CDYahooKitManager.shared.signOut()
+            tableView.reloadData()
+        }
+    }
+}
+
+// MARK: - Endpoint Requests
+
+private extension ViewController {
+
+    private func runEndpoint(_ row: Row) {
+        Task {
+            do {
+                try await performFetch(for: row)
+                showLastResponse(title: row.title)
+            } catch {
+                presentAlert(title: "Request Failed", message: "\(error)")
+            }
+        }
+    }
+
+    private func performFetch(for row: Row) async throws {
+        let manager = CDYahooKitManager.shared
+        let client = manager.client!
+
+        switch row {
+        case .signIn:
+            break
+        case .userGames:
+            _ = try await client.fetchUserGames()
+        case .league:
+            _ = try await client.fetchLeague(leagueKey: manager.requireLeagueKey())
+        case .standings:
+            _ = try await client.fetchLeagueStandings(leagueKey: manager.requireLeagueKey())
+        case .teamRoster:
+            _ = try await client.fetchTeamRoster(teamKey: manager.requireTeamKey(), week: nil)
+        case .leaguePlayers:
+            _ = try await client.fetchLeaguePlayers(leagueKey: manager.requireLeagueKey(), start: nil)
+        case .scoreboard:
+            _ = try await client.fetchLeagueScoreboard(leagueKey: manager.requireLeagueKey(), week: nil)
+        case .transactions:
+            _ = try await client.fetchLeagueTransactions(leagueKey: manager.requireLeagueKey())
+        }
+    }
+
+    func showLastResponse(title: String) {
+        guard let xml = CDYahooKitManager.shared.lastResponseXML else {
+            presentAlert(title: "No Response", message: "The request completed but no response body was captured.")
+            return
+        }
+        let responseViewController = CDYahooKitXMLResponseViewController(title: title, xmlText: xml)
+        navigationController?.pushViewController(responseViewController, animated: true)
+    }
+
+    func presentAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alertController, animated: true, completion: nil)
     }
 }
