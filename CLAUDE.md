@@ -223,8 +223,9 @@ swift test
 1. **Hand-authored XML fixtures.** `Tests/CDYahooKitTests/Fixtures/*.xml` were written by hand,
    not captured from a real Yahoo Developer Network account (none was available during the
    rewrite). They're internally consistent with the parser but unverified against the API's
-   actual response shape. Revisit if real API access becomes available — this is also why
-   `Documentation/API_SCHEMA.md` is a planned follow-up.
+   actual response shape. Revisit if real API access becomes available.
+   `Documentation/API_SCHEMA.md` documents each resource's request/response schema and flags
+   every element as verified or inferred pending that access.
 2. **No interactive OAuth on tvOS/watchOS** — `ASWebAuthenticationSession` is unavailable there;
    callers must complete the web step out of band and hand the code back.
 
@@ -271,4 +272,5 @@ Follows the shared sibling convention (CDOAuth1Kit / CDUntappdKit / CDYelpFusion
 - [Yahoo Fantasy Sports API docs](https://developer.yahoo.com/fantasysports/guide/)
 - [Documentation/ARCHITECTURE.md](Documentation/ARCHITECTURE.md)
 - [Documentation/Usage.md](Documentation/Usage.md)
+- [Documentation/API_SCHEMA.md](Documentation/API_SCHEMA.md)
 - [CONTRIBUTING.md](CONTRIBUTING.md)
