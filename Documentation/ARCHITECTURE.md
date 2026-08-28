@@ -571,8 +571,9 @@ OAuth client too, so a single stubbed session covers both token and data traffic
 > **Known limitation.** The fixtures in `Tests/CDYahooKitTests/Fixtures/*.xml` were written
 > by hand, not captured from a live Yahoo Developer Network account (none was available
 > during the rewrite). They're internally consistent with the parser but unverified against
-> the API's real response shape. `Documentation/API_SCHEMA.md` is the planned follow-up that
-> pins the real shapes down once live access exists.
+> the API's real response shape. [`Documentation/API_SCHEMA.md`](API_SCHEMA.md) maps each
+> resource's request and response element tree, flags every element as verified or inferred,
+> and lists what to reconcile once live access exists.
 
 ---
 
@@ -608,6 +609,7 @@ refresh — neither of which OAuth 1.0a has any equivalent of.
 ## Further Reading
 
 - [Documentation/Usage.md](Usage.md) — task-oriented usage guide
+- [Documentation/API_SCHEMA.md](API_SCHEMA.md) — per-resource request/response XML schema, verified vs. inferred
 - [Yahoo Fantasy Sports API guide](https://developer.yahoo.com/fantasysports/guide/)
 - [OAuth 2.0 for Yahoo](https://developer.yahoo.com/oauth2/guide/)
 - [RFC 7636 — PKCE](https://datatracker.ietf.org/doc/html/rfc7636)
