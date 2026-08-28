@@ -32,7 +32,6 @@ public API is identical to 1.0.0.
   each pushing a viewer showing the raw, re-indented XML Yahoo returned. Replaces the previous
   bespoke leagues-to-standings drill-down. The Example keeps its programmatic UI (no storyboard)
   by design.
-- `MARKETING_VERSION` bumped to 1.0.1 across the `CDYahooKit.xcodeproj` platform targets.
 
 ## [1.0.0](https://github.com/chrisdhaan/CDYahooKit/releases/tag/1.0.0)
 
