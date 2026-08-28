@@ -7,10 +7,10 @@ import Foundation
 
 /// Re-indents a raw Fantasy Sports API XML response body for on-screen display.
 ///
-/// The Fantasy Sports API is XML-native, so — unlike the sibling JSON examples, which re-encode
-/// their decoded models — this Example shows the exact bytes Yahoo returned, re-indented by
-/// element depth. Parsing is delegated to Foundation's `XMLParser`; a body that isn't
-/// well-formed XML is returned verbatim. CDATA sections are rendered as their text content.
+/// The Fantasy Sports API is XML-native, so this Example shows the exact bytes Yahoo returned,
+/// re-indented by element depth rather than re-encoded from the decoded models. Parsing is
+/// delegated to Foundation's `XMLParser`; a body that isn't well-formed XML is returned
+/// verbatim. CDATA sections are rendered as their text content.
 enum XMLPrettyPrinter {
 
     static func string(from data: Data) -> String {

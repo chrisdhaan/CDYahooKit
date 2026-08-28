@@ -70,9 +70,8 @@ XML Yahoo returned (captured through a `CDYahooEventMonitor`). It depends on CDY
 local Swift Package reference to this repository's root, so it builds standalone with no extra
 wiring.
 
-Unlike the sibling example apps (CDOAuth1Kit, CDYelpFusionKit), this one builds its UI
-programmatically rather than from a storyboard — a deliberate divergence, kept because there is
-no `.storyboard` XML to hand-maintain alongside the project file.
+This app builds its UI programmatically rather than from a storyboard — a deliberate choice,
+kept because there is no `.storyboard` XML to hand-maintain alongside the project file.
 
 To run it:
 
