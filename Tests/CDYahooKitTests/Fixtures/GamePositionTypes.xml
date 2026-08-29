@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fantasy_content xml:lang="en-US" time="1.23">
+    <game>
+        <game_key>449</game_key>
+        <game_id>449</game_id>
+        <name>Football</name>
+        <code>nfl</code>
+        <season>2025</season>
+        <position_types count="3">
+            <position_type>
+                <type>O</type>
+                <display_name>Offense</display_name>
+            </position_type>
+            <position_type>
+                <type>K</type>
+                <display_name>Kickers</display_name>
+            </position_type>
+            <position_type>
+                <type>DT</type>
+                <display_name>Defense/Special Teams</display_name>
+            </position_type>
+        </position_types>
+    </game>
+</fantasy_content>

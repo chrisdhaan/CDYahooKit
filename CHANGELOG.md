@@ -3,6 +3,13 @@
 ## [Unreleased]
 
 ### Added
+- `CDYahooFantasyAPIClient.fetchGameStatCategories(gameKey:)`,
+  `fetchGamePositionTypes(gameKey:)`, `fetchGameRosterPositions(gameKey:)`, and
+  `fetchGameWeeks(gameKey:)`, wrapping the four `game/{game_key}` metadata sub-resources that
+  describe a fantasy game's rules. New public types `CDYahooGameStatCategoriesResponse` /
+  `CDYahooGameStatCategory`, `CDYahooGamePositionTypesResponse` / `CDYahooPositionType`,
+  `CDYahooGameRosterPositionsResponse` / `CDYahooGameRosterPosition`, and
+  `CDYahooGameWeeksResponse` / `CDYahooGameWeek`. `gameKey` accepts a Yahoo game key or game code.
 - `CDYahooFantasyAPIClient.fetchTeamMatchups(teamKey:weeks:)` and
   `fetchTeamStats(teamKey:coverage:)`, wrapping the `team/{team_key}/matchups` (optional
   `;weeks=` filter) and `team/{team_key}/stats` (`;type=season` or `;type=week;week=`)
@@ -27,9 +34,11 @@
 
 ### Changed
 - `Documentation/API_SCHEMA.md`, `Documentation/Usage.md`, and `Documentation/ARCHITECTURE.md`
-  extended with the league settings, draft results, and team matchups/stats resources.
+  extended with the league settings, draft results, team matchups/stats, and game metadata
+  resources.
 - Example app: added **League Settings**, **League Draft Results**, **Team Draft Results**,
-  **Team Matchups**, and **Team Stats** rows to the endpoint list.
+  **Team Matchups**, **Team Stats**, **Game Stat Categories**, **Game Position Types**,
+  **Game Roster Positions**, and **Game Weeks** rows to the endpoint list.
 
 ### Fixed
 - DocC `GettingStarted` article: the `oAuthClient.authorizationURL(codeChallenge:state:)` call now

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fantasy_content xml:lang="en-US" time="1.23">
+    <game>
+        <game_key>449</game_key>
+        <game_id>449</game_id>
+        <name>Football</name>
+        <code>nfl</code>
+        <season>2025</season>
+        <roster_positions count="3">
+            <roster_position>
+                <position>QB</position>
+                <abbreviation>QB</abbreviation>
+                <display_name>Quarterback</display_name>
+                <position_type>O</position_type>
+            </roster_position>
+            <roster_position>
+                <position>W/R/T</position>
+                <abbreviation>W/R/T</abbreviation>
+                <display_name>Flex</display_name>
+                <position_type>O</position_type>
+            </roster_position>
+            <roster_position>
+                <position>BN</position>
+                <abbreviation>BN</abbreviation>
+                <display_name>Bench</display_name>
+            </roster_position>
+        </roster_positions>
+    </game>
+</fantasy_content>

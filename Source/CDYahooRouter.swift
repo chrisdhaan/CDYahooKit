@@ -20,6 +20,10 @@ enum CDYahooRouter {
     case teamDraftResults(teamKey: String)
     case teamMatchups(teamKey: String, weeks: [Int]?)
     case teamStats(teamKey: String, coverage: CDYahooTeamStatsCoverage)
+    case gameStatCategories(gameKey: String)
+    case gamePositionTypes(gameKey: String)
+    case gameRosterPositions(gameKey: String)
+    case gameWeeks(gameKey: String)
 
     var path: String {
         switch self {
@@ -63,6 +67,14 @@ enum CDYahooRouter {
             }
         case let .teamStats(teamKey, coverage):
             "team/\(Self.percentEncodedPathSegment(teamKey))/stats\(coverage.pathModifier)"
+        case let .gameStatCategories(gameKey):
+            "game/\(Self.percentEncodedPathSegment(gameKey))/stat_categories"
+        case let .gamePositionTypes(gameKey):
+            "game/\(Self.percentEncodedPathSegment(gameKey))/position_types"
+        case let .gameRosterPositions(gameKey):
+            "game/\(Self.percentEncodedPathSegment(gameKey))/roster_positions"
+        case let .gameWeeks(gameKey):
+            "game/\(Self.percentEncodedPathSegment(gameKey))/game_weeks"
         }
     }
 

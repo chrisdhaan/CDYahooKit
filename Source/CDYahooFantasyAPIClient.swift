@@ -110,4 +110,37 @@ public final class CDYahooFantasyAPIClient {
         let request = try await authorizedRequest(.teamStats(teamKey: teamKey, coverage: coverage))
         return try await session.perform(request)
     }
+
+    /// Fetches the stat categories a fantasy game scores — every stat, its display name, and the
+    /// position types it applies to. Game-wide; an individual league scores a curated subset (see
+    /// ``fetchLeagueSettings(leagueKey:)``).
+    /// - Parameter gameKey: A Yahoo game key or game code, e.g. `"449"` or `"nfl"`.
+    public func fetchGameStatCategories(gameKey: String) async throws -> CDYahooGameStatCategoriesResponse {
+        let request = try await authorizedRequest(.gameStatCategories(gameKey: gameKey))
+        return try await session.perform(request)
+    }
+
+    /// Fetches the player-position categories a fantasy game defines, e.g. offense, kickers,
+    /// defense/special teams.
+    /// - Parameter gameKey: A Yahoo game key or game code, e.g. `"449"` or `"nfl"`.
+    public func fetchGamePositionTypes(gameKey: String) async throws -> CDYahooGamePositionTypesResponse {
+        let request = try await authorizedRequest(.gamePositionTypes(gameKey: gameKey))
+        return try await session.perform(request)
+    }
+
+    /// Fetches every roster position a fantasy game defines — the position code, its abbreviation
+    /// and display name, and the position type it belongs to.
+    /// - Parameter gameKey: A Yahoo game key or game code, e.g. `"449"` or `"nfl"`.
+    public func fetchGameRosterPositions(gameKey: String) async throws -> CDYahooGameRosterPositionsResponse {
+        let request = try await authorizedRequest(.gameRosterPositions(gameKey: gameKey))
+        return try await session.perform(request)
+    }
+
+    /// Fetches a fantasy game's schedule of scoring periods — each week's number and the calendar
+    /// dates it spans.
+    /// - Parameter gameKey: A Yahoo game key or game code, e.g. `"449"` or `"nfl"`.
+    public func fetchGameWeeks(gameKey: String) async throws -> CDYahooGameWeeksResponse {
+        let request = try await authorizedRequest(.gameWeeks(gameKey: gameKey))
+        return try await session.perform(request)
+    }
 }

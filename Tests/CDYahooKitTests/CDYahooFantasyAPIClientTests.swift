@@ -341,6 +341,105 @@ extension CDYahooOAuthClientTests {
             #expect(firstPick.playerKey == "449.p.31883")
             #expect(response.draftResults.last?.round == 2)
         }
+
+        @Test("fetchGameStatCategories decodes a game's stat categories and their position types")
+        func fetchGameStatCategoriesDecodesFixture() async throws {
+            let client = await makeClient()
+            stubTokenEndpoint()
+            try await client.oAuthClient.authorize(withCode: "code", codeVerifier: "verifier")
+
+            try CDYahooMockURLProtocol.register(
+                stub: .init(statusCode: 200, data: fixtureData("GameStatCategories")),
+                for: #require(URL(string: "https://fantasysports.yahooapis.com/fantasy/v2/game/449/stat_categories"))
+            )
+
+            let response = try await client.fetchGameStatCategories(gameKey: "449")
+            #expect(response.gameKey == "449")
+            #expect(response.statCategories.count == 2)
+
+            let passingYards = try #require(response.statCategories.first)
+            #expect(passingYards.statId == 4)
+            #expect(passingYards.name == "Passing Yards")
+            #expect(passingYards.displayName == "Pass Yds")
+            #expect(passingYards.sortOrder == 1)
+            #expect(passingYards.positionType == "O")
+            #expect(passingYards.statPositionTypes == ["O"])
+
+            let interceptions = try #require(response.statCategories.last)
+            #expect(interceptions.statId == 9)
+            #expect(interceptions.positionType == nil)
+            #expect(interceptions.statPositionTypes == ["O", "DP"])
+        }
+
+        @Test("fetchGamePositionTypes decodes a game's player-position categories")
+        func fetchGamePositionTypesDecodesFixture() async throws {
+            let client = await makeClient()
+            stubTokenEndpoint()
+            try await client.oAuthClient.authorize(withCode: "code", codeVerifier: "verifier")
+
+            try CDYahooMockURLProtocol.register(
+                stub: .init(statusCode: 200, data: fixtureData("GamePositionTypes")),
+                for: #require(URL(string: "https://fantasysports.yahooapis.com/fantasy/v2/game/449/position_types"))
+            )
+
+            let response = try await client.fetchGamePositionTypes(gameKey: "449")
+            #expect(response.gameKey == "449")
+            #expect(response.positionTypes.count == 3)
+
+            let offense = try #require(response.positionTypes.first)
+            #expect(offense.type == "O")
+            #expect(offense.displayName == "Offense")
+            #expect(response.positionTypes.last?.type == "DT")
+        }
+
+        @Test("fetchGameRosterPositions decodes a game's roster positions")
+        func fetchGameRosterPositionsDecodesFixture() async throws {
+            let client = await makeClient()
+            stubTokenEndpoint()
+            try await client.oAuthClient.authorize(withCode: "code", codeVerifier: "verifier")
+
+            try CDYahooMockURLProtocol.register(
+                stub: .init(statusCode: 200, data: fixtureData("GameRosterPositions")),
+                for: #require(URL(string: "https://fantasysports.yahooapis.com/fantasy/v2/game/449/roster_positions"))
+            )
+
+            let response = try await client.fetchGameRosterPositions(gameKey: "449")
+            #expect(response.gameKey == "449")
+            #expect(response.rosterPositions.count == 3)
+
+            let quarterback = try #require(response.rosterPositions.first)
+            #expect(quarterback.position == "QB")
+            #expect(quarterback.abbreviation == "QB")
+            #expect(quarterback.displayName == "Quarterback")
+            #expect(quarterback.positionType == "O")
+
+            let bench = try #require(response.rosterPositions.last)
+            #expect(bench.position == "BN")
+            #expect(bench.positionType == nil)
+        }
+
+        @Test("fetchGameWeeks decodes a game's schedule of scoring periods")
+        func fetchGameWeeksDecodesFixture() async throws {
+            let client = await makeClient()
+            stubTokenEndpoint()
+            try await client.oAuthClient.authorize(withCode: "code", codeVerifier: "verifier")
+
+            try CDYahooMockURLProtocol.register(
+                stub: .init(statusCode: 200, data: fixtureData("GameWeeks")),
+                for: #require(URL(string: "https://fantasysports.yahooapis.com/fantasy/v2/game/449/game_weeks"))
+            )
+
+            let response = try await client.fetchGameWeeks(gameKey: "449")
+            #expect(response.gameKey == "449")
+            #expect(response.gameWeeks.count == 3)
+
+            let opener = try #require(response.gameWeeks.first)
+            #expect(opener.week == 1)
+            #expect(opener.displayName == "1")
+            #expect(opener.start == "2025-09-04")
+            #expect(opener.end == "2025-09-08")
+            #expect(response.gameWeeks.last?.week == 3)
+        }
     }
 
 }

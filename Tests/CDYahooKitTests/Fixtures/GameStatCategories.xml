@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fantasy_content xml:lang="en-US" time="1.23">
+    <game>
+        <game_key>449</game_key>
+        <game_id>449</game_id>
+        <name>Football</name>
+        <code>nfl</code>
+        <season>2025</season>
+        <stat_categories>
+            <stats>
+                <stat>
+                    <stat_id>4</stat_id>
+                    <name>Passing Yards</name>
+                    <display_name>Pass Yds</display_name>
+                    <sort_order>1</sort_order>
+                    <position_type>O</position_type>
+                    <stat_position_types>
+                        <stat_position_type>
+                            <position_type>O</position_type>
+                        </stat_position_type>
+                    </stat_position_types>
+                </stat>
+                <stat>
+                    <stat_id>9</stat_id>
+                    <name>Interceptions</name>
+                    <display_name>Int</display_name>
+                    <sort_order>0</sort_order>
+                    <stat_position_types>
+                        <stat_position_type>
+                            <position_type>O</position_type>
+                        </stat_position_type>
+                        <stat_position_type>
+                            <position_type>DP</position_type>
+                        </stat_position_type>
+                    </stat_position_types>
+                </stat>
+            </stats>
+        </stat_categories>
+    </game>
+</fantasy_content>
