@@ -182,7 +182,7 @@ turns it into a `GET` `URLRequest` against
 | `league(leagueKey:)` | `league/{leagueKey}` |
 | `standings(leagueKey:)` | `league/{leagueKey}/standings` |
 | `roster(teamKey:week:)` | `team/{teamKey}/roster` — `;week={week}` appended when `week != nil` |
-| `players(leagueKey:start:)` | `league/{leagueKey}/players` — `;start={start}` appended when `start != nil` |
+| `players(leagueKey:query:)` | `league/{leagueKey}/players` — `CDYahooLeaguePlayersQuery.pathModifier` appends the set `;out=` / `;position=` / `;status=` / `;search=` / `;sort=` / `;start=` / `;count=` modifiers |
 | `scoreboard(leagueKey:week:)` | `league/{leagueKey}/scoreboard` — `;week={week}` appended when `week != nil` |
 | `transactions(leagueKey:)` | `league/{leagueKey}/transactions` |
 | `settings(leagueKey:)` | `league/{leagueKey}/settings` |
@@ -451,11 +451,15 @@ CDYahooLeagueStandingsResponse          ← league/{leagueKey}/standings
 CDYahooTeamRosterResponse               ← team/{teamKey}/roster[;week={week}]
   ├── teamKey, name
   └── [CDYahooPlayer]                     playerKey, playerId, fullName, editorialTeamAbbr?,
-                                           displayPosition?, selectedPosition?, status?
+                                           displayPosition?, selectedPosition?, status?,
+                                           percentOwned?, ownership?, stats?
 
-CDYahooLeaguePlayersResponse            ← league/{leagueKey}/players[;start={start}]
+CDYahooLeaguePlayersResponse            ← league/{leagueKey}/players{CDYahooLeaguePlayersQuery.pathModifier}
   ├── leagueKey
-  └── [CDYahooPlayer]                     ← same CDYahooPlayer type as the roster response
+  └── [CDYahooPlayer]                     ← same CDYahooPlayer type as the roster response;
+                                           percentOwned / ownership (CDYahooPlayerOwnership) /
+                                           stats ([CDYahooPlayerStat]) filled only when the
+                                           query requested the matching ;out= sub-resource
 
 CDYahooLeagueScoreboardResponse         ← league/{leagueKey}/scoreboard[;week={week}]
   ├── leagueKey

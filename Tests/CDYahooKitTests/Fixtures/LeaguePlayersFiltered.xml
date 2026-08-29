@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fantasy_content xml:lang="en-US" time="1.23">
+    <league>
+        <league_key>449.l.12345</league_key>
+        <players count="2">
+            <player>
+                <player_key>449.p.30123</player_key>
+                <player_id>30123</player_id>
+                <name>
+                    <full>Jane Doe</full>
+                </name>
+                <editorial_team_abbr>SF</editorial_team_abbr>
+                <display_position>QB</display_position>
+                <status>ACT</status>
+                <player_stats>
+                    <coverage_type>season</coverage_type>
+                    <stats>
+                        <stat>
+                            <stat_id>4</stat_id>
+                            <value>3980</value>
+                        </stat>
+                        <stat>
+                            <stat_id>5</stat_id>
+                            <value>28</value>
+                        </stat>
+                    </stats>
+                </player_stats>
+                <percent_owned>
+                    <coverage_type>week</coverage_type>
+                    <week>8</week>
+                    <value>96</value>
+                    <delta>0.5</delta>
+                </percent_owned>
+                <ownership>
+                    <ownership_type>team</ownership_type>
+                    <owner_team_key>449.l.12345.t.3</owner_team_key>
+                    <owner_team_name>Team Gamma</owner_team_name>
+                </ownership>
+            </player>
+            <player>
+                <player_key>449.p.30789</player_key>
+                <player_id>30789</player_id>
+                <name>
+                    <full>Sam Lee</full>
+                </name>
+                <editorial_team_abbr>NYJ</editorial_team_abbr>
+                <display_position>WR</display_position>
+                <status/>
+                <ownership>
+                    <ownership_type>freeagents</ownership_type>
+                </ownership>
+            </player>
+        </players>
+    </league>
+</fantasy_content>
