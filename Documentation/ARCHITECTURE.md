@@ -51,7 +51,7 @@ Responsibilities:
 - Owns a `CDYahooURLSession` (private) for performing Fantasy Sports requests, and a
   `CDYahooOAuthClient` (public, exposed as `oAuthClient` so callers can drive the sign-in
   flow and check `isAuthorized()`).
-- Exposes one `public func fetch…(…) async throws -> …Response` per routed endpoint (eight
+- Exposes one `public func fetch…(…) async throws -> …Response` per routed endpoint (ten
   in v1).
 - `authorizedRequest(_:)` is the single private choke point every fetch method goes through:
   it calls `oAuthClient.validAccessToken()` (which refreshes silently if needed), then
@@ -186,6 +186,8 @@ turns it into a `GET` `URLRequest` against
 | `scoreboard(leagueKey:week:)` | `league/{leagueKey}/scoreboard` — `;week={week}` appended when `week != nil` |
 | `transactions(leagueKey:)` | `league/{leagueKey}/transactions` |
 | `settings(leagueKey:)` | `league/{leagueKey}/settings` |
+| `leagueDraftResults(leagueKey:)` | `league/{leagueKey}/draftresults` |
+| `teamDraftResults(teamKey:)` | `team/{teamKey}/draftresults` |
 
 League / team / game keys are percent-encoded before interpolation (allowed set:
 alphanumerics + `-._~`), so a value carrying `?`, `#`, or `/` can't silently reshape the URL
@@ -360,7 +362,7 @@ Fantasy Sports data pipeline is layered.
 `oAuthClient.authorizationURL(…)`, completes the browser step out of band (a companion
 device, a paired phone, a server-side exchange), and calls
 `oAuthClient.authorize(withCode:codeVerifier:)` with the code it obtained. Everything after
-that — `validAccessToken()`, silent refresh, all eight fetch methods — works identically on
+that — `validAccessToken()`, silent refresh, all ten fetch methods — works identically on
 all five platforms.
 
 ---
@@ -468,6 +470,14 @@ CDYahooLeagueSettingsResponse          ← league/{leagueKey}/settings
         ├── [CDYahooRosterPosition]        position, positionType?, count
         ├── [CDYahooStatCategory]          statId, name, displayName?, enabled, sortOrder?, positionType?
         └── [CDYahooStatModifier]          statId, value        (joins to CDYahooStatCategory on statId)
+
+CDYahooLeagueDraftResultsResponse     ← league/{leagueKey}/draftresults
+  ├── leagueKey
+  └── [CDYahooDraftResult]               pick, round, cost?, teamKey, playerKey
+
+CDYahooTeamDraftResultsResponse       ← team/{teamKey}/draftresults
+  ├── teamKey
+  └── [CDYahooDraftResult]               same CDYahooDraftResult type as the league response
 ```
 
 Optionality mirrors the API: a field the API always returns (keys, names) is non-optional

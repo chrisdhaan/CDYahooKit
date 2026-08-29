@@ -82,4 +82,17 @@ public final class CDYahooFantasyAPIClient {
         let request = try await authorizedRequest(.settings(leagueKey: leagueKey))
         return try await session.perform(request)
     }
+
+    /// Fetches every pick in a league's draft — round, pick number, the team that drafted, the
+    /// player taken, and (auction drafts only) the winning bid.
+    public func fetchLeagueDraftResults(leagueKey: String) async throws -> CDYahooLeagueDraftResultsResponse {
+        let request = try await authorizedRequest(.leagueDraftResults(leagueKey: leagueKey))
+        return try await session.perform(request)
+    }
+
+    /// Fetches one team's picks from the league's draft.
+    public func fetchTeamDraftResults(teamKey: String) async throws -> CDYahooTeamDraftResultsResponse {
+        let request = try await authorizedRequest(.teamDraftResults(teamKey: teamKey))
+        return try await session.perform(request)
+    }
 }

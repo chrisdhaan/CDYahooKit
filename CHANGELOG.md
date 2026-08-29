@@ -9,11 +9,22 @@
   rules. New public types `CDYahooLeagueSettingsResponse`, `CDYahooLeagueSettings`,
   `CDYahooRosterPosition`, `CDYahooStatCategory`, and `CDYahooStatModifier` — stat categories and
   modifiers are exposed as parallel lists joined on `statId`.
+- `CDYahooFantasyAPIClient.fetchLeagueDraftResults(leagueKey:)` and
+  `fetchTeamDraftResults(teamKey:)`, wrapping the `league/{league_key}/draftresults` and
+  `team/{team_key}/draftresults` sub-resources: each pick's round, pick number, drafting team,
+  player taken, and (auction drafts only) winning bid. New public types
+  `CDYahooLeagueDraftResultsResponse`, `CDYahooTeamDraftResultsResponse`, and the shared
+  `CDYahooDraftResult`.
 
 ### Changed
 - `Documentation/API_SCHEMA.md`, `Documentation/Usage.md`, and `Documentation/ARCHITECTURE.md`
-  extended with the league settings resource.
-- Example app: added a **League Settings** row to the endpoint list.
+  extended with the league settings and draft results resources.
+- Example app: added **League Settings**, **League Draft Results**, and **Team Draft Results**
+  rows to the endpoint list.
+
+### Fixed
+- DocC `GettingStarted` article: the `oAuthClient.authorizationURL(codeChallenge:state:)` call now
+  shows the required `await` (the method is `actor`-isolated), so the snippet compiles as written.
 
 ## [1.0.1](https://github.com/chrisdhaan/CDYahooKit/releases/tag/1.0.1)
 

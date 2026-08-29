@@ -26,6 +26,7 @@ the DocC catalog.
   - [Fetch the weekly scoreboard](#fetch-the-weekly-scoreboard)
   - [Fetch league transactions](#fetch-league-transactions)
   - [Fetch league settings](#fetch-league-settings)
+  - [Fetch draft results](#fetch-draft-results)
 - [Error Handling](#error-handling)
 - [Configuration](#configuration)
   - [Retry](#retry)
@@ -207,7 +208,7 @@ let authURL = try await client.oAuthClient.authorizationURL(codeChallenge: chall
 try await client.oAuthClient.authorize(withCode: code, codeVerifier: verifier)
 ```
 
-Everything after `authorize(withCode:codeVerifier:)` — silent refresh and all eight fetch
+Everything after `authorize(withCode:codeVerifier:)` — silent refresh and all ten fetch
 methods — works identically on tvOS and watchOS.
 
 ### Checking authorization status
@@ -429,6 +430,27 @@ Returns `CDYahooLeagueSettingsResponse` (`leagueKey`, `settings: CDYahooLeagueSe
 (`CDYahooStatCategory`: `statId`, `name`, `displayName?`, `enabled`, `sortOrder?`,
 `positionType?`), and `statModifiers` (`CDYahooStatModifier`: `statId`, `value`). Categories and
 modifiers are parallel lists joined on `statId`.
+
+### Fetch draft results
+
+```swift
+// Every pick in the league's draft
+let league = try await client.fetchLeagueDraftResults(leagueKey: "449.l.123456")
+for pick in league.draftResults {
+    let bid = pick.cost.map { " ($\($0))" } ?? ""
+    print("R\(pick.round) #\(pick.pick): \(pick.teamKey) → \(pick.playerKey)\(bid)")
+}
+
+// Just one team's picks
+let team = try await client.fetchTeamDraftResults(teamKey: "449.l.123456.t.5")
+print("\(team.teamKey) made \(team.draftResults.count) picks")
+```
+
+`fetchLeagueDraftResults(leagueKey:)` returns `CDYahooLeagueDraftResultsResponse` (`leagueKey`,
+`draftResults: [CDYahooDraftResult]`); `fetchTeamDraftResults(teamKey:)` returns
+`CDYahooTeamDraftResultsResponse` (`teamKey`, `draftResults`). Each `CDYahooDraftResult` carries
+`pick`, `round`, `teamKey`, and `playerKey`, plus `cost` (`Int?`) — populated only for auction
+drafts. Before a league drafts, `draftResults` is empty.
 
 ---
 

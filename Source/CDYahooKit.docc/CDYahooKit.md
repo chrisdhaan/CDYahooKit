@@ -7,7 +7,8 @@ for authentication.
 
 CDYahooKit covers the Yahoo Fantasy Sports API's read-only endpoints — a user's games and
 leagues, league metadata, league settings, standings, team rosters, the league player pool, the
-weekly scoreboard, and league transactions — plus the OAuth 2.0 handshake needed to call them.
+weekly scoreboard, league transactions, and draft results — plus the OAuth 2.0 handshake needed
+to call them.
 
 Yahoo Fantasy Sports API responses are XML, not JSON; CDYahooKit parses them directly, via an
 internal XML tree parser, rather than going through Yahoo's `format=json` parameter, whose output
@@ -29,6 +30,7 @@ is known to be inconsistent.
 - ``CDYahooPlayer``
 - ``CDYahooMatchup``
 - ``CDYahooTransaction``
+- ``CDYahooDraftResult``
 
 ### Authentication
 

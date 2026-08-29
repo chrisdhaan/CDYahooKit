@@ -27,7 +27,7 @@ for authentication. No external dependencies.
 
 ## Features
 
-- [x] Yahoo Fantasy Sports API: games, leagues, settings, standings, rosters, players, scoreboard, transactions (read-only)
+- [x] Yahoo Fantasy Sports API: games, leagues, settings, standings, rosters, players, scoreboard, transactions, draft results (read-only)
 - [x] Sign In With Yahoo: OAuth 2.0 authorization code flow with PKCE
 - [x] Keychain-backed token storage with silent refresh
 - [x] async/await API
@@ -65,8 +65,8 @@ the full [API documentation](https://chrisdhaan.github.io/CDYahooKit/documentati
 `Example/iOS Example.xcodeproj` is a real, buildable iOS app project demonstrating the full Sign
 In With Yahoo + Fantasy Sports flow: OAuth 2.0 + PKCE login, then a row per read-only endpoint —
 user games & leagues, league metadata, league settings, standings, team roster, league players,
-scoreboard, and transactions — each of which runs the request and pushes a viewer showing the
-raw, re-indented
+scoreboard, transactions, and draft results (league- and team-scoped) — each of which runs the
+request and pushes a viewer showing the raw, re-indented
 XML Yahoo returned (captured through a `CDYahooEventMonitor`). It depends on CDYahooKit as a
 local Swift Package reference to this repository's root, so it builds standalone with no extra
 wiring.

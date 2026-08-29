@@ -110,6 +110,8 @@ present. A `count` that disagrees with the child element total would not be dete
 | 6 | [League scoreboard](#6-league-scoreboard) | `fetchLeagueScoreboard(leagueKey:week:)` | [`LeagueScoreboard.xml`](../Tests/CDYahooKitTests/Fixtures/LeagueScoreboard.xml) |
 | 7 | [League transactions](#7-league-transactions) | `fetchLeagueTransactions(leagueKey:)` | [`LeagueTransactions.xml`](../Tests/CDYahooKitTests/Fixtures/LeagueTransactions.xml) |
 | 8 | [League settings](#8-league-settings) | `fetchLeagueSettings(leagueKey:)` | [`LeagueSettings.xml`](../Tests/CDYahooKitTests/Fixtures/LeagueSettings.xml) |
+| 9 | [League draft results](#9-league-draft-results) | `fetchLeagueDraftResults(leagueKey:)` | [`LeagueDraftResults.xml`](../Tests/CDYahooKitTests/Fixtures/LeagueDraftResults.xml) |
+| 10 | [Team draft results](#10-team-draft-results) | `fetchTeamDraftResults(teamKey:)` | [`TeamDraftResults.xml`](../Tests/CDYahooKitTests/Fixtures/TeamDraftResults.xml) |
 
 ---
 
@@ -824,6 +826,121 @@ element (🔵).
 
 ---
 
+### 9. League draft results
+
+Every pick made in a league's draft.
+
+| | |
+|---|---|
+| **CDYahooKit method** | `CDYahooFantasyAPIClient.fetchLeagueDraftResults(leagueKey:)` |
+| **Router case** | `CDYahooRouter.leagueDraftResults(leagueKey:)` |
+| **Response type** | [`CDYahooLeagueDraftResultsResponse`](../Source/CDYahooDraftResultsResponse.swift) → `[CDYahooDraftResult]` |
+| **Fixture** | [`LeagueDraftResults.xml`](../Tests/CDYahooKitTests/Fixtures/LeagueDraftResults.xml) |
+
+#### Request
+
+```
+GET …/fantasy/v2/league/{leagueKey}/draftresults
+```
+
+No modifiers. Before the league drafts, Yahoo returns an empty `<draft_results>` collection.
+
+#### Response — XML element tree
+
+```xml
+<fantasy_content xml:lang="en-US" time="1.23">
+  <league>
+    <league_key>449.l.12345</league_key>
+    <draft_results count="2">
+      <draft_result>
+        <pick>1</pick>
+        <round>1</round>
+        <cost>52</cost>                       <!-- auction drafts only; absent for a snake draft -->
+        <team_key>449.l.12345.t.3</team_key>
+        <player_key>449.p.31883</player_key>
+      </draft_result>
+      <!-- … one <draft_result> per pick, in pick order -->
+    </draft_results>
+  </league>
+</fantasy_content>
+```
+
+#### Element → model mapping
+
+| XML path (from `<fantasy_content>`) | Swift property | Type | Required by decoder | Status |
+|---|---|---|---|---|
+| `league/league_key` | `CDYahooLeagueDraftResultsResponse.leagueKey` | `String` | Yes → `missingField("league")` | 🟢 · 🔵 |
+| `league/draft_results/draft_result` | `.draftResults[]` | `[CDYahooDraftResult]` | No (missing → `[]`) | 🟢 · 🟡 |
+| `…/draft_result/pick` | `CDYahooDraftResult.pick` | `Int` | Yes → `missingField("draft_result")` | 🟢 · 🔵 |
+| `…/draft_result/round` | `.round` | `Int` | Yes | 🟢 · 🔵 |
+| `…/draft_result/cost` | `.cost` | `Int?` | No | 🟢 · 🔵 |
+| `…/draft_result/team_key` | `.teamKey` | `String` | Yes | 🟢 · 🔵 |
+| `…/draft_result/player_key` | `.playerKey` | `String` | Yes | 🟢 · 🔵 |
+
+#### Cardinality notes
+
+- `draft_results count="N"` — one `<draft_result>` per pick, in pick order (🔵). Empty before the
+  draft.
+- `cost` is present only for auction drafts. `CDYahooDraftResult.cost` is `Int?`; a snake draft
+  decodes it as `nil`.
+
+---
+
+### 10. Team draft results
+
+One team's picks from the league's draft — the same `draftresults` sub-resource, scoped to a team.
+
+| | |
+|---|---|
+| **CDYahooKit method** | `CDYahooFantasyAPIClient.fetchTeamDraftResults(teamKey:)` |
+| **Router case** | `CDYahooRouter.teamDraftResults(teamKey:)` |
+| **Response type** | [`CDYahooTeamDraftResultsResponse`](../Source/CDYahooDraftResultsResponse.swift) → `[CDYahooDraftResult]` |
+| **Fixture** | [`TeamDraftResults.xml`](../Tests/CDYahooKitTests/Fixtures/TeamDraftResults.xml) |
+
+#### Request
+
+```
+GET …/fantasy/v2/team/{teamKey}/draftresults
+```
+
+No modifiers.
+
+#### Response — XML element tree
+
+```xml
+<fantasy_content xml:lang="en-US" time="1.23">
+  <team>
+    <team_key>449.l.67890.t.5</team_key>
+    <name>Gridiron Giants</name>
+    <draft_results count="2">
+      <draft_result>
+        <pick>5</pick>
+        <round>1</round>
+        <team_key>449.l.67890.t.5</team_key>
+        <player_key>449.p.31883</player_key>
+      </draft_result>
+      <!-- … one <draft_result> per pick this team made -->
+    </draft_results>
+  </team>
+</fantasy_content>
+```
+
+#### Element → model mapping
+
+| XML path (from `<fantasy_content>`) | Swift property | Type | Required by decoder | Status |
+|---|---|---|---|---|
+| `team/team_key` | `CDYahooTeamDraftResultsResponse.teamKey` | `String` | Yes → `missingField("team")` | 🟢 · 🔵 |
+| `team/draft_results/draft_result` | `.draftResults[]` | `[CDYahooDraftResult]` | No (missing → `[]`) | 🟢 · 🟡 |
+| `…/draft_result/*` | `CDYahooDraftResult` | — | same shape as resource #9 | 🟢 · 🔵 |
+
+#### Cardinality notes
+
+- `draft_results` here holds only the picks this team made (🔵).
+- `<name>` is echoed alongside `<team_key>` in the fixture but not modeled — `CDYahooTeamDraftResultsResponse`
+  carries only `teamKey` and `draftResults`.
+
+---
+
 ## Verification summary
 
 | # | Resource | Request URI & params | Response element tree |
@@ -836,6 +953,8 @@ element (🔵).
 | 6 | League scoreboard | 🟢 · 🔵 | 🟢 decoder paths · 🔵 elements · 🟡 `<team_points>` inner shape |
 | 7 | League transactions | 🟢 (no filters) · 🔵 | 🟢 decoder paths · 🔵 elements · 🟡 **trade = two `<transaction_data>` per player, only first read** |
 | 8 | League settings | 🟢 (no modifiers) · 🔵 | 🟢 decoder paths · 🔵 elements · 🟡 `settings` nesting, parallel stat lists, large unmodeled field set |
+| 9 | League draft results | 🟢 (no modifiers) · 🔵 | 🟢 decoder paths · 🔵 elements · 🟡 `<draft_results>` nesting, `cost`-only-on-auction |
+| 10 | Team draft results | 🟢 (no modifiers) · 🔵 | 🟢 decoder paths · 🔵 elements · 🟡 `<draft_results>` nesting, `<name>` echo unmodeled |
 
 **What is solidly verified:** every request URI, path modifier, and parameter CDYahooKit sends
 (read straight from `CDYahooRouter`), and every XML path each `init(node:)` decoder reads (read
@@ -872,6 +991,11 @@ and reconcile it with this document. Specifically confirm:
    modeled rule, and that `stat_categories` / `stat_modifiers` are `stats`-wrapped parallel lists
    joined on `stat_id`. Decide which of the large unmodeled field set (draft config, `max_teams`,
    `player_pool`, `has_playoff_consolation_games`, …) is worth adding to `CDYahooLeagueSettings`.
+9. **Draft results** — confirm `<draft_results>` nests directly under `<league>` / `<team>`, the
+   `<draft_result>` sub-element names (`pick`, `round`, `cost`, `team_key`, `player_key`), that
+   `cost` appears only for auction drafts, and whether a real response carries anything else worth
+   modeling (a `<players>` expansion when `;out=` is used, timestamps). Same `draftresults`
+   sub-resource for both scopes.
 
 Then: regenerate the fixtures in
 [`Tests/CDYahooKitTests/Fixtures/`](../Tests/CDYahooKitTests/Fixtures/) from the captured

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fantasy_content xml:lang="en-US" time="1.23">
+    <team>
+        <team_key>449.l.67890.t.5</team_key>
+        <name>Gridiron Giants</name>
+        <draft_results count="2">
+            <draft_result>
+                <pick>5</pick>
+                <round>1</round>
+                <team_key>449.l.67890.t.5</team_key>
+                <player_key>449.p.31883</player_key>
+            </draft_result>
+            <draft_result>
+                <pick>16</pick>
+                <round>2</round>
+                <team_key>449.l.67890.t.5</team_key>
+                <player_key>449.p.28457</player_key>
+            </draft_result>
+        </draft_results>
+    </team>
+</fantasy_content>

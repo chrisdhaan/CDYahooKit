@@ -22,6 +22,8 @@ final class ViewController: UITableViewController {
         case scoreboard
         case transactions
         case settings
+        case leagueDraftResults
+        case teamDraftResults
 
         var title: String {
             switch self {
@@ -34,6 +36,8 @@ final class ViewController: UITableViewController {
             case .scoreboard: "League Scoreboard"
             case .transactions: "League Transactions"
             case .settings: "League Settings"
+            case .leagueDraftResults: "League Draft Results"
+            case .teamDraftResults: "Team Draft Results"
             }
         }
 
@@ -164,20 +168,35 @@ private extension ViewController {
             break
         case .userGames:
             _ = try await client.fetchUserGames()
-        case .league:
-            _ = try await client.fetchLeague(leagueKey: manager.requireLeagueKey())
-        case .standings:
-            _ = try await client.fetchLeagueStandings(leagueKey: manager.requireLeagueKey())
         case .teamRoster:
             _ = try await client.fetchTeamRoster(teamKey: manager.requireTeamKey(), week: nil)
+        case .teamDraftResults:
+            _ = try await client.fetchTeamDraftResults(teamKey: manager.requireTeamKey())
+        default:
+            try await performLeagueFetch(for: row, client: client, leagueKey: manager.requireLeagueKey())
+        }
+    }
+
+    /// The `league/{leagueKey}/…` endpoints, split out of `performFetch(for:)` so neither switch
+    /// trips SwiftLint's cyclomatic-complexity limit as the endpoint list grows.
+    private func performLeagueFetch(for row: Row, client: CDYahooFantasyAPIClient, leagueKey: String) async throws {
+        switch row {
+        case .league:
+            _ = try await client.fetchLeague(leagueKey: leagueKey)
+        case .standings:
+            _ = try await client.fetchLeagueStandings(leagueKey: leagueKey)
         case .leaguePlayers:
-            _ = try await client.fetchLeaguePlayers(leagueKey: manager.requireLeagueKey(), start: nil)
+            _ = try await client.fetchLeaguePlayers(leagueKey: leagueKey, start: nil)
         case .scoreboard:
-            _ = try await client.fetchLeagueScoreboard(leagueKey: manager.requireLeagueKey(), week: nil)
+            _ = try await client.fetchLeagueScoreboard(leagueKey: leagueKey, week: nil)
         case .transactions:
-            _ = try await client.fetchLeagueTransactions(leagueKey: manager.requireLeagueKey())
+            _ = try await client.fetchLeagueTransactions(leagueKey: leagueKey)
         case .settings:
-            _ = try await client.fetchLeagueSettings(leagueKey: manager.requireLeagueKey())
+            _ = try await client.fetchLeagueSettings(leagueKey: leagueKey)
+        case .leagueDraftResults:
+            _ = try await client.fetchLeagueDraftResults(leagueKey: leagueKey)
+        case .signIn, .userGames, .teamRoster, .teamDraftResults:
+            break
         }
     }
 
