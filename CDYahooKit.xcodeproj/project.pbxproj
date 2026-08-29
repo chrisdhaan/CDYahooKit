@@ -24,6 +24,11 @@
 		68215A39943E4668832C5091 /* CDYahooLeagueSettingsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB80A6163ED5406983788598 /* CDYahooLeagueSettingsResponse.swift */; };
 		1955176AD205425EA526F849 /* CDYahooLeagueSettingsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB80A6163ED5406983788598 /* CDYahooLeagueSettingsResponse.swift */; };
 		D25B6FBF282441BCA7F56362 /* CDYahooLeagueSettingsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB80A6163ED5406983788598 /* CDYahooLeagueSettingsResponse.swift */; };
+		E8E4BFB9858E6A835D8A40A8 /* CDYahooDraftResultsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C953CC96B0F8AD439E71C91 /* CDYahooDraftResultsResponse.swift */; };
+		9B7DDD8A1F72E8435A756E4F /* CDYahooDraftResultsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C953CC96B0F8AD439E71C91 /* CDYahooDraftResultsResponse.swift */; };
+		5F4FFA458B4ED149CAE6D999 /* CDYahooDraftResultsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C953CC96B0F8AD439E71C91 /* CDYahooDraftResultsResponse.swift */; };
+		DEEBDFDD151973E742A46E3E /* CDYahooDraftResultsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C953CC96B0F8AD439E71C91 /* CDYahooDraftResultsResponse.swift */; };
+		B19B266407E5B7DFC65CBE23 /* CDYahooDraftResultsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C953CC96B0F8AD439E71C91 /* CDYahooDraftResultsResponse.swift */; };
 		1A0246B2C5DB4C22EC8747A0 /* CDYahooURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F179C9080E7CAD5E7BC83A6 /* CDYahooURLSession.swift */; };
 		1B3A7ED90776574B724E9026 /* CDYahooLeagueResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C496F85A10AA74DDC92FA017 /* CDYahooLeagueResponse.swift */; };
 		1FAE75A558CF51BFDB6591D6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6771E7DC3F08B6EBFEA51E3E /* Cocoa.framework */; };
@@ -194,6 +199,7 @@
 		9799F003F3C1F75577A5061E /* CDYahooXMLNode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CDYahooXMLNode.swift; sourceTree = "<group>"; };
 		9FF20D9902F53EFAF8714EB5 /* CDYahooLeagueTransactionsResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CDYahooLeagueTransactionsResponse.swift; sourceTree = "<group>"; };
 		AB80A6163ED5406983788598 /* CDYahooLeagueSettingsResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CDYahooLeagueSettingsResponse.swift; sourceTree = "<group>"; };
+		5C953CC96B0F8AD439E71C91 /* CDYahooDraftResultsResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CDYahooDraftResultsResponse.swift; sourceTree = "<group>"; };
 		A825972A134DB2F13A7BE27E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/XROS.platform/Developer/SDKs/XROS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		A95161A8FD485CA7B349DAF2 /* CDYahooFantasyAPIClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CDYahooFantasyAPIClient.swift; sourceTree = "<group>"; };
 		BA2C5C569F5BA28B63667664 /* CDYahooPKCE.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CDYahooPKCE.swift; sourceTree = "<group>"; };
@@ -324,6 +330,7 @@
 				D722F36D086DA9DA0CE9B064 /* CDYahooAuthSession.swift */,
 				2A3128453D5468E3FEAAC01B /* CDYahooCacheConfiguration.swift */,
 				4577F74659A6BD422EEC1AF4 /* CDYahooConstants.swift */,
+				5C953CC96B0F8AD439E71C91 /* CDYahooDraftResultsResponse.swift */,
 				29E86F538817135A8D2F999A /* CDYahooEventMonitor.swift */,
 				A95161A8FD485CA7B349DAF2 /* CDYahooFantasyAPIClient.swift */,
 				73BD826B358A095DE39A7E05 /* CDYahooGame.swift */,
@@ -597,6 +604,7 @@
 				DDA2834AB9E715D410ACA81B /* CDYahooLeagueStandingsResponse.swift in Sources */,
 				EA77F2D7E08F0BDE8898F8F9 /* CDYahooLeagueTransactionsResponse.swift in Sources */,
 				06F3F7522B384D81B6F07F2A /* CDYahooLeagueSettingsResponse.swift in Sources */,
+				E8E4BFB9858E6A835D8A40A8 /* CDYahooDraftResultsResponse.swift in Sources */,
 				ACFB679B9580E85DCC1C824E /* CDYahooOAuthClient.swift in Sources */,
 				16A5EA6F18AD53F7EAD3A1B9 /* CDYahooOAuthCredential.swift in Sources */,
 				2C0AD9DE2A34205D70C533A4 /* CDYahooOAuthRouter.swift in Sources */,
@@ -634,6 +642,7 @@
 				C644AA22A6A62885049EB857 /* CDYahooLeagueStandingsResponse.swift in Sources */,
 				943C712A05B7258BDD0A76CA /* CDYahooLeagueTransactionsResponse.swift in Sources */,
 				C5E677EF4FE149CBB3514205 /* CDYahooLeagueSettingsResponse.swift in Sources */,
+				9B7DDD8A1F72E8435A756E4F /* CDYahooDraftResultsResponse.swift in Sources */,
 				31513B939004D6802741CC0B /* CDYahooOAuthClient.swift in Sources */,
 				43E359B0A67B169469898EAD /* CDYahooOAuthCredential.swift in Sources */,
 				0C99A7B83B7A29975C35E202 /* CDYahooOAuthRouter.swift in Sources */,
@@ -671,6 +680,7 @@
 				F8A02BD58EDD63F26F669F82 /* CDYahooLeagueStandingsResponse.swift in Sources */,
 				199C35448E653BC456150ED7 /* CDYahooLeagueTransactionsResponse.swift in Sources */,
 				68215A39943E4668832C5091 /* CDYahooLeagueSettingsResponse.swift in Sources */,
+				5F4FFA458B4ED149CAE6D999 /* CDYahooDraftResultsResponse.swift in Sources */,
 				7A9F61C9B0587094BD054269 /* CDYahooOAuthClient.swift in Sources */,
 				23A11F6762745A36561D9470 /* CDYahooOAuthCredential.swift in Sources */,
 				C239DF8733FF25EB1B0DC7E9 /* CDYahooOAuthRouter.swift in Sources */,
@@ -708,6 +718,7 @@
 				B5D5F639644BA7C86E16C643 /* CDYahooLeagueStandingsResponse.swift in Sources */,
 				CF7D1A14C0E83DDC0C9BF53A /* CDYahooLeagueTransactionsResponse.swift in Sources */,
 				1955176AD205425EA526F849 /* CDYahooLeagueSettingsResponse.swift in Sources */,
+				DEEBDFDD151973E742A46E3E /* CDYahooDraftResultsResponse.swift in Sources */,
 				4AFCAA995A7212649DA4144F /* CDYahooOAuthClient.swift in Sources */,
 				401826F28E2F6B7695E9EA97 /* CDYahooOAuthCredential.swift in Sources */,
 				98C39DD74DEBABE1EDBCAA4D /* CDYahooOAuthRouter.swift in Sources */,
@@ -745,6 +756,7 @@
 				A4204D46D7FBD78FB6BE7628 /* CDYahooLeagueStandingsResponse.swift in Sources */,
 				833779053A4E9F19FC689EF3 /* CDYahooLeagueTransactionsResponse.swift in Sources */,
 				D25B6FBF282441BCA7F56362 /* CDYahooLeagueSettingsResponse.swift in Sources */,
+				B19B266407E5B7DFC65CBE23 /* CDYahooDraftResultsResponse.swift in Sources */,
 				83EA980607AE8B616A2D9B37 /* CDYahooOAuthClient.swift in Sources */,
 				ED5C6F64559B22D2A7D40547 /* CDYahooOAuthCredential.swift in Sources */,
 				25CFBFAAEC6267C252D84220 /* CDYahooOAuthRouter.swift in Sources */,

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fantasy_content xml:lang="en-US" time="1.23">
+    <league>
+        <league_key>449.l.12345</league_key>
+        <draft_results count="2">
+            <draft_result>
+                <pick>1</pick>
+                <round>1</round>
+                <cost>52</cost>
+                <team_key>449.l.12345.t.3</team_key>
+                <player_key>449.p.31883</player_key>
+            </draft_result>
+            <draft_result>
+                <pick>2</pick>
+                <round>1</round>
+                <cost>48</cost>
+                <team_key>449.l.12345.t.7</team_key>
+                <player_key>449.p.30977</player_key>
+            </draft_result>
+        </draft_results>
+    </league>
+</fantasy_content>

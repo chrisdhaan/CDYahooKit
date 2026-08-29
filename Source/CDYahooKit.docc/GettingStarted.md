@@ -18,7 +18,7 @@ let client = CDYahooFantasyAPIClient(clientId: "...", clientSecret: "...", redir
 let verifier = CDYahooPKCE.makeCodeVerifier()
 let challenge = CDYahooPKCE.codeChallenge(for: verifier)
 let state = UUID().uuidString
-let authURL = try client.oAuthClient.authorizationURL(codeChallenge: challenge, state: state)
+let authURL = try await client.oAuthClient.authorizationURL(codeChallenge: challenge, state: state)
 
 let callback = try await CDYahooAuthSession(presentationAnchor: view.window!)
     .authorize(authorizationURL: authURL, callbackScheme: "myapp")

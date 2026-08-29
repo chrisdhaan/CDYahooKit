@@ -238,6 +238,52 @@ extension CDYahooOAuthClientTests {
             #expect(passingYardsModifier.statId == 4)
             #expect(passingYardsModifier.value == 0.04)
         }
+
+        @Test("fetchLeagueDraftResults decodes every pick, including the auction cost")
+        func fetchLeagueDraftResultsDecodesFixture() async throws {
+            let client = await makeClient()
+            stubTokenEndpoint()
+            try await client.oAuthClient.authorize(withCode: "code", codeVerifier: "verifier")
+
+            try CDYahooMockURLProtocol.register(
+                stub: .init(statusCode: 200, data: fixtureData("LeagueDraftResults")),
+                for: #require(URL(string: "https://fantasysports.yahooapis.com/fantasy/v2/league/449.l.12345/draftresults"))
+            )
+
+            let response = try await client.fetchLeagueDraftResults(leagueKey: "449.l.12345")
+            #expect(response.leagueKey == "449.l.12345")
+            #expect(response.draftResults.count == 2)
+
+            let firstPick = try #require(response.draftResults.first)
+            #expect(firstPick.pick == 1)
+            #expect(firstPick.round == 1)
+            #expect(firstPick.cost == 52)
+            #expect(firstPick.teamKey == "449.l.12345.t.3")
+            #expect(firstPick.playerKey == "449.p.31883")
+        }
+
+        @Test("fetchTeamDraftResults decodes one team's picks; a snake draft has no cost")
+        func fetchTeamDraftResultsDecodesFixture() async throws {
+            let client = await makeClient()
+            stubTokenEndpoint()
+            try await client.oAuthClient.authorize(withCode: "code", codeVerifier: "verifier")
+
+            try CDYahooMockURLProtocol.register(
+                stub: .init(statusCode: 200, data: fixtureData("TeamDraftResults")),
+                for: #require(URL(string: "https://fantasysports.yahooapis.com/fantasy/v2/team/449.l.67890.t.5/draftresults"))
+            )
+
+            let response = try await client.fetchTeamDraftResults(teamKey: "449.l.67890.t.5")
+            #expect(response.teamKey == "449.l.67890.t.5")
+            #expect(response.draftResults.count == 2)
+
+            let firstPick = try #require(response.draftResults.first)
+            #expect(firstPick.pick == 5)
+            #expect(firstPick.round == 1)
+            #expect(firstPick.cost == nil)
+            #expect(firstPick.playerKey == "449.p.31883")
+            #expect(response.draftResults.last?.round == 2)
+        }
     }
 
 }
