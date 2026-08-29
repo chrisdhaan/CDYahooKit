@@ -21,6 +21,7 @@ final class ViewController: UITableViewController {
         case leaguePlayers
         case scoreboard
         case transactions
+        case settings
 
         var title: String {
             switch self {
@@ -32,6 +33,7 @@ final class ViewController: UITableViewController {
             case .leaguePlayers: "League Players"
             case .scoreboard: "League Scoreboard"
             case .transactions: "League Transactions"
+            case .settings: "League Settings"
             }
         }
 
@@ -174,6 +176,8 @@ private extension ViewController {
             _ = try await client.fetchLeagueScoreboard(leagueKey: manager.requireLeagueKey(), week: nil)
         case .transactions:
             _ = try await client.fetchLeagueTransactions(leagueKey: manager.requireLeagueKey())
+        case .settings:
+            _ = try await client.fetchLeagueSettings(leagueKey: manager.requireLeagueKey())
         }
     }
 

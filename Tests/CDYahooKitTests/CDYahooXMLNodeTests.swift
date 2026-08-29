@@ -49,4 +49,17 @@ struct CDYahooXMLNodeTests {
         let node = CDYahooXMLNode(name: "league", children: [])
         #expect(node.int("num_teams") == nil)
     }
+
+    @Test("bool(_:) reads Yahoo's 1/0 flag encoding and rejects anything else")
+    func boolReadsYahooFlagEncoding() {
+        let node = CDYahooXMLNode(name: "settings", children: [
+            CDYahooXMLNode(name: "uses_playoff", text: "1"),
+            CDYahooXMLNode(name: "uses_faab", text: "0"),
+            CDYahooXMLNode(name: "waiver_rule", text: "gametime")
+        ])
+        #expect(node.bool("uses_playoff") == true)
+        #expect(node.bool("uses_faab") == false)
+        #expect(node.bool("waiver_rule") == nil)
+        #expect(node.bool("missing") == nil)
+    }
 }

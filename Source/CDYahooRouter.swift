@@ -15,6 +15,7 @@ enum CDYahooRouter {
     case players(leagueKey: String, start: Int?)
     case scoreboard(leagueKey: String, week: Int?)
     case transactions(leagueKey: String)
+    case settings(leagueKey: String)
 
     var path: String {
         switch self {
@@ -44,6 +45,8 @@ enum CDYahooRouter {
             }
         case let .transactions(leagueKey):
             "league/\(Self.percentEncodedPathSegment(leagueKey))/transactions"
+        case let .settings(leagueKey):
+            "league/\(Self.percentEncodedPathSegment(leagueKey))/settings"
         }
     }
 

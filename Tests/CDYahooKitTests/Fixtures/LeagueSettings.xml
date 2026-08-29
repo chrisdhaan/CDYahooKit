@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fantasy_content xml:lang="en-US" time="1.23">
+    <league>
+        <league_key>449.l.12345</league_key>
+        <league_id>12345</league_id>
+        <name>My Fantasy League</name>
+        <settings>
+            <scoring_type>head</scoring_type>
+            <uses_playoff>1</uses_playoff>
+            <playoff_start_week>15</playoff_start_week>
+            <num_playoff_teams>6</num_playoff_teams>
+            <num_playoff_consolation_teams>4</num_playoff_consolation_teams>
+            <uses_playoff_reseeding>0</uses_playoff_reseeding>
+            <waiver_type>R</waiver_type>
+            <waiver_rule>gametime</waiver_rule>
+            <uses_faab>0</uses_faab>
+            <waiver_time>2</waiver_time>
+            <trade_end_date>2025-11-14</trade_end_date>
+            <trade_ratify_type>commish</trade_ratify_type>
+            <trade_reject_time>2</trade_reject_time>
+            <roster_positions>
+                <roster_position>
+                    <position>QB</position>
+                    <position_type>O</position_type>
+                    <count>1</count>
+                </roster_position>
+                <roster_position>
+                    <position>BN</position>
+                    <count>5</count>
+                </roster_position>
+            </roster_positions>
+            <stat_categories>
+                <stats>
+                    <stat>
+                        <stat_id>4</stat_id>
+                        <enabled>1</enabled>
+                        <name>Passing Yards</name>
+                        <display_name>Pass Yds</display_name>
+                        <sort_order>1</sort_order>
+                        <position_type>O</position_type>
+                    </stat>
+                    <stat>
+                        <stat_id>5</stat_id>
+                        <enabled>1</enabled>
+                        <name>Passing Touchdowns</name>
+                        <display_name>Pass TD</display_name>
+                        <sort_order>0</sort_order>
+                        <position_type>O</position_type>
+                    </stat>
+                </stats>
+            </stat_categories>
+            <stat_modifiers>
+                <stats>
+                    <stat>
+                        <stat_id>4</stat_id>
+                        <value>0.04</value>
+                    </stat>
+                    <stat>
+                        <stat_id>5</stat_id>
+                        <value>4</value>
+                    </stat>
+                </stats>
+            </stat_modifiers>
+        </settings>
+    </league>
+</fantasy_content>

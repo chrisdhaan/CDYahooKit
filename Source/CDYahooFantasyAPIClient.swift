@@ -75,4 +75,11 @@ public final class CDYahooFantasyAPIClient {
         let request = try await authorizedRequest(.transactions(leagueKey: leagueKey))
         return try await session.perform(request)
     }
+
+    /// Fetches a league's settings: scoring type, roster positions, stat categories and their
+    /// point modifiers, and the league's waiver, trade, and playoff rules.
+    public func fetchLeagueSettings(leagueKey: String) async throws -> CDYahooLeagueSettingsResponse {
+        let request = try await authorizedRequest(.settings(leagueKey: leagueKey))
+        return try await session.perform(request)
+    }
 }

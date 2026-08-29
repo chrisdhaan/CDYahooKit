@@ -25,6 +25,7 @@ the DocC catalog.
   - [Fetch the league player pool](#fetch-the-league-player-pool)
   - [Fetch the weekly scoreboard](#fetch-the-weekly-scoreboard)
   - [Fetch league transactions](#fetch-league-transactions)
+  - [Fetch league settings](#fetch-league-settings)
 - [Error Handling](#error-handling)
 - [Configuration](#configuration)
   - [Retry](#retry)
@@ -206,7 +207,7 @@ let authURL = try await client.oAuthClient.authorizationURL(codeChallenge: chall
 try await client.oAuthClient.authorize(withCode: code, codeVerifier: verifier)
 ```
 
-Everything after `authorize(withCode:codeVerifier:)` — silent refresh and all seven fetch
+Everything after `authorize(withCode:codeVerifier:)` — silent refresh and all eight fetch
 methods — works identically on tvOS and watchOS.
 
 ### Checking authorization status
@@ -396,6 +397,38 @@ Returns `CDYahooLeagueTransactionsResponse` (`leagueKey`,
 `transactions: [CDYahooTransaction]`). Each `CDYahooTransaction` has `transactionKey`,
 `transactionId`, `type`, `status`, and `players: [CDYahooTransactionPlayer]` (`playerKey`,
 `fullName`, `transactionType?`, `destinationTeamKey?`).
+
+### Fetch league settings
+
+```swift
+let response = try await client.fetchLeagueSettings(leagueKey: "449.l.123456")
+let settings = response.settings
+
+print("Scoring: \(settings.scoringType ?? "?")")
+print("Playoffs: \(settings.numPlayoffTeams ?? 0) teams from week \(settings.playoffStartWeek ?? 0)")
+
+let starters = settings.rosterPositions
+    .filter { !["BN", "IR"].contains($0.position) }
+    .map { "\($0.count)×\($0.position)" }
+    .joined(separator: " ")
+print("Starting lineup: \(starters)")
+
+// Join each scored stat to its point value on stat_id
+let pointsByStatId = Dictionary(uniqueKeysWithValues: settings.statModifiers.map { ($0.statId, $0.value) })
+for stat in settings.statCategories where stat.enabled {
+    print("  \(stat.name): \(pointsByStatId[stat.statId].map(String.init) ?? "—")")
+}
+```
+
+Returns `CDYahooLeagueSettingsResponse` (`leagueKey`, `settings: CDYahooLeagueSettings`).
+`CDYahooLeagueSettings` carries the scoring type, the playoff/waiver/trade rules
+(`usesPlayoff`, `playoffStartWeek`, `numPlayoffTeams`, `numPlayoffConsolationTeams`,
+`usesPlayoffReseeding`, `waiverType`, `waiverRule`, `usesFaab`, `waiverTime`, `tradeEndDate`,
+`tradeRatifyType`, `tradeRejectTime` — all optional), and three lists: `rosterPositions`
+(`CDYahooRosterPosition`: `position`, `positionType?`, `count`), `statCategories`
+(`CDYahooStatCategory`: `statId`, `name`, `displayName?`, `enabled`, `sortOrder?`,
+`positionType?`), and `statModifiers` (`CDYahooStatModifier`: `statId`, `value`). Categories and
+modifiers are parallel lists joined on `statId`.
 
 ---
 

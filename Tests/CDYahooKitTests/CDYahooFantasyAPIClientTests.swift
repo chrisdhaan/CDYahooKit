@@ -186,6 +186,58 @@ extension CDYahooOAuthClientTests {
             #expect(transaction.players.first?.fullName == "Sam Lee")
             #expect(transaction.players.first?.transactionType == "add")
         }
+
+        @Test("fetchLeagueSettings decodes scoring, roster, stat, waiver/trade, and playoff config")
+        func fetchLeagueSettingsDecodesFixture() async throws {
+            let client = await makeClient()
+            stubTokenEndpoint()
+            try await client.oAuthClient.authorize(withCode: "code", codeVerifier: "verifier")
+
+            try CDYahooMockURLProtocol.register(
+                stub: .init(statusCode: 200, data: fixtureData("LeagueSettings")),
+                for: #require(URL(string: "https://fantasysports.yahooapis.com/fantasy/v2/league/449.l.12345/settings"))
+            )
+
+            let response = try await client.fetchLeagueSettings(leagueKey: "449.l.12345")
+            #expect(response.leagueKey == "449.l.12345")
+
+            let settings = response.settings
+            #expect(settings.scoringType == "head")
+            #expect(settings.usesPlayoff == true)
+            #expect(settings.playoffStartWeek == 15)
+            #expect(settings.numPlayoffTeams == 6)
+            #expect(settings.numPlayoffConsolationTeams == 4)
+            #expect(settings.usesPlayoffReseeding == false)
+            #expect(settings.waiverType == "R")
+            #expect(settings.waiverRule == "gametime")
+            #expect(settings.usesFaab == false)
+            #expect(settings.waiverTime == 2)
+            #expect(settings.tradeEndDate == "2025-11-14")
+            #expect(settings.tradeRatifyType == "commish")
+            #expect(settings.tradeRejectTime == 2)
+
+            #expect(settings.rosterPositions.count == 2)
+            let quarterback = try #require(settings.rosterPositions.first)
+            #expect(quarterback.position == "QB")
+            #expect(quarterback.positionType == "O")
+            #expect(quarterback.count == 1)
+            #expect(settings.rosterPositions.last?.position == "BN")
+            #expect(settings.rosterPositions.last?.positionType == nil)
+
+            #expect(settings.statCategories.count == 2)
+            let passingYards = try #require(settings.statCategories.first)
+            #expect(passingYards.statId == 4)
+            #expect(passingYards.name == "Passing Yards")
+            #expect(passingYards.displayName == "Pass Yds")
+            #expect(passingYards.enabled == true)
+            #expect(passingYards.sortOrder == 1)
+            #expect(passingYards.positionType == "O")
+
+            #expect(settings.statModifiers.count == 2)
+            let passingYardsModifier = try #require(settings.statModifiers.first)
+            #expect(passingYardsModifier.statId == 4)
+            #expect(passingYardsModifier.value == 0.04)
+        }
     }
 
 }
