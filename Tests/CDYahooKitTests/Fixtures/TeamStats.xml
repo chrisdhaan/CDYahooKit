@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fantasy_content xml:lang="en-US" time="1.23">
+    <team>
+        <team_key>449.l.12345.t.1</team_key>
+        <team_id>1</team_id>
+        <name>Team Alpha</name>
+        <team_stats>
+            <coverage_type>week</coverage_type>
+            <week>8</week>
+            <stats>
+                <stat>
+                    <stat_id>4</stat_id>
+                    <value>312</value>
+                </stat>
+                <stat>
+                    <stat_id>5</stat_id>
+                    <value>2.5</value>
+                </stat>
+                <stat>
+                    <stat_id>78</stat_id>
+                    <value>-</value>
+                </stat>
+            </stats>
+        </team_stats>
+        <team_points>
+            <coverage_type>week</coverage_type>
+            <week>8</week>
+            <total>112.5</total>
+        </team_points>
+    </team>
+</fantasy_content>

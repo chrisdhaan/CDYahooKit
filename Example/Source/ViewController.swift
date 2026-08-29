@@ -24,6 +24,8 @@ final class ViewController: UITableViewController {
         case settings
         case leagueDraftResults
         case teamDraftResults
+        case teamMatchups
+        case teamStats
 
         var title: String {
             switch self {
@@ -38,6 +40,8 @@ final class ViewController: UITableViewController {
             case .settings: "League Settings"
             case .leagueDraftResults: "League Draft Results"
             case .teamDraftResults: "Team Draft Results"
+            case .teamMatchups: "Team Matchups"
+            case .teamStats: "Team Stats"
             }
         }
 
@@ -172,6 +176,10 @@ private extension ViewController {
             _ = try await client.fetchTeamRoster(teamKey: manager.requireTeamKey(), week: nil)
         case .teamDraftResults:
             _ = try await client.fetchTeamDraftResults(teamKey: manager.requireTeamKey())
+        case .teamMatchups:
+            _ = try await client.fetchTeamMatchups(teamKey: manager.requireTeamKey())
+        case .teamStats:
+            _ = try await client.fetchTeamStats(teamKey: manager.requireTeamKey())
         default:
             try await performLeagueFetch(for: row, client: client, leagueKey: manager.requireLeagueKey())
         }
@@ -195,7 +203,7 @@ private extension ViewController {
             _ = try await client.fetchLeagueSettings(leagueKey: leagueKey)
         case .leagueDraftResults:
             _ = try await client.fetchLeagueDraftResults(leagueKey: leagueKey)
-        case .signIn, .userGames, .teamRoster, .teamDraftResults:
+        case .signIn, .userGames, .teamRoster, .teamDraftResults, .teamMatchups, .teamStats:
             break
         }
     }

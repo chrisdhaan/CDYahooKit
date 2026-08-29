@@ -18,6 +18,8 @@ enum CDYahooRouter {
     case settings(leagueKey: String)
     case leagueDraftResults(leagueKey: String)
     case teamDraftResults(teamKey: String)
+    case teamMatchups(teamKey: String, weeks: [Int]?)
+    case teamStats(teamKey: String, coverage: CDYahooTeamStatsCoverage)
 
     var path: String {
         switch self {
@@ -53,6 +55,14 @@ enum CDYahooRouter {
             "league/\(Self.percentEncodedPathSegment(leagueKey))/draftresults"
         case let .teamDraftResults(teamKey):
             "team/\(Self.percentEncodedPathSegment(teamKey))/draftresults"
+        case let .teamMatchups(teamKey, weeks):
+            if let weeks, !weeks.isEmpty {
+                "team/\(Self.percentEncodedPathSegment(teamKey))/matchups;weeks=\(weeks.map(String.init).joined(separator: ","))"
+            } else {
+                "team/\(Self.percentEncodedPathSegment(teamKey))/matchups"
+            }
+        case let .teamStats(teamKey, coverage):
+            "team/\(Self.percentEncodedPathSegment(teamKey))/stats\(coverage.pathModifier)"
         }
     }
 

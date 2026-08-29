@@ -27,6 +27,7 @@ the DocC catalog.
   - [Fetch league transactions](#fetch-league-transactions)
   - [Fetch league settings](#fetch-league-settings)
   - [Fetch draft results](#fetch-draft-results)
+  - [Fetch team matchups and stats](#fetch-team-matchups-and-stats)
 - [Error Handling](#error-handling)
 - [Configuration](#configuration)
   - [Retry](#retry)
@@ -451,6 +452,40 @@ print("\(team.teamKey) made \(team.draftResults.count) picks")
 `CDYahooTeamDraftResultsResponse` (`teamKey`, `draftResults`). Each `CDYahooDraftResult` carries
 `pick`, `round`, `teamKey`, and `playerKey`, plus `cost` (`Int?`) — populated only for auction
 drafts. Before a league drafts, `draftResults` is empty.
+
+### Fetch team matchups and stats
+
+```swift
+// A team's head-to-head matchups. Omit `weeks` for the full schedule.
+let matchups = try await client.fetchTeamMatchups(teamKey: "449.l.123456.t.5", weeks: [1, 2, 3])
+for matchup in matchups.matchups {
+    let scores = matchup.teams.map { "\($0.name) \($0.totalPoints ?? 0)" }.joined(separator: " vs ")
+    let outcome = matchup.isTied == true ? "tie" : (matchup.winnerTeamKey ?? "pending")
+    print("Week \(matchup.week): \(scores) — \(outcome)")
+}
+
+// A team's accumulated stats for a coverage window
+let seasonStats = try await client.fetchTeamStats(teamKey: "449.l.123456.t.5")          // .season is the default
+let week8Stats = try await client.fetchTeamStats(teamKey: "449.l.123456.t.5", coverage: .week(8))
+print("Week 8 total: \(week8Stats.stats.totalPoints ?? 0)")
+for stat in week8Stats.stats.stats {
+    print("stat \(stat.statId) = \(stat.value)")
+}
+```
+
+`fetchTeamMatchups(teamKey:weeks:)` returns `CDYahooTeamMatchupsResponse` (`teamKey`,
+`matchups: [CDYahooMatchup]`). It reuses the same `CDYahooMatchup` / `CDYahooMatchupTeamScore`
+types as [the scoreboard](#fetch-the-weekly-scoreboard), additionally populating `weekStart`,
+`weekEnd`, `isPlayoffs`, `isConsolation`, `isTied`, `winnerTeamKey`, and each side's
+`projectedPoints` (all `nil` in a scoreboard response). Pass `weeks:` to limit the result;
+omit it (or pass `nil`) for the team's full schedule.
+
+`fetchTeamStats(teamKey:coverage:)` returns `CDYahooTeamStatsResponse` (`teamKey`,
+`stats: CDYahooTeamStats`). `coverage` is a `CDYahooTeamStatsCoverage` — `.season` (the default)
+or `.week(Int)`. `CDYahooTeamStats` carries `coverageType`, `week`, `totalPoints` (the fantasy
+points earned in the window), and `stats: [CDYahooTeamStat]`. Each `CDYahooTeamStat` has a
+`statId` (join it to the league settings' `CDYahooStatCategory` / `CDYahooStatModifier`) and a
+`value` kept as a `String` — Yahoo emits `-` for a stat with no value in the window.
 
 ---
 

@@ -3,6 +3,15 @@
 ## [Unreleased]
 
 ### Added
+- `CDYahooFantasyAPIClient.fetchTeamMatchups(teamKey:weeks:)` and
+  `fetchTeamStats(teamKey:coverage:)`, wrapping the `team/{team_key}/matchups` (optional
+  `;weeks=` filter) and `team/{team_key}/stats` (`;type=season` or `;type=week;week=`)
+  sub-resources. New public types `CDYahooTeamMatchupsResponse`, `CDYahooTeamStatsResponse`,
+  `CDYahooTeamStats`, `CDYahooTeamStat`, and the `CDYahooTeamStatsCoverage` coverage-window enum
+  (`.season` / `.week(_:)`). `CDYahooMatchup` gained optional `weekStart`, `weekEnd`,
+  `isPlayoffs`, `isConsolation`, `isTied`, and `winnerTeamKey` fields (populated from the team
+  `matchups` payload; `nil` from the league `scoreboard`), and `CDYahooMatchupTeamScore` gained
+  an optional `projectedPoints`.
 - `CDYahooFantasyAPIClient.fetchLeagueSettings(leagueKey:)`, wrapping the
   `league/{league_key}/settings` sub-resource: scoring type, roster positions, the stat
   categories the league scores and their point modifiers, and its waiver, trade, and playoff
@@ -18,9 +27,9 @@
 
 ### Changed
 - `Documentation/API_SCHEMA.md`, `Documentation/Usage.md`, and `Documentation/ARCHITECTURE.md`
-  extended with the league settings and draft results resources.
-- Example app: added **League Settings**, **League Draft Results**, and **Team Draft Results**
-  rows to the endpoint list.
+  extended with the league settings, draft results, and team matchups/stats resources.
+- Example app: added **League Settings**, **League Draft Results**, **Team Draft Results**,
+  **Team Matchups**, and **Team Stats** rows to the endpoint list.
 
 ### Fixed
 - DocC `GettingStarted` article: the `oAuthClient.authorizationURL(codeChallenge:state:)` call now

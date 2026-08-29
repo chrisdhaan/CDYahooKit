@@ -262,6 +262,63 @@ extension CDYahooOAuthClientTests {
             #expect(firstPick.playerKey == "449.p.31883")
         }
 
+        @Test("fetchTeamMatchups decodes a team's matchups with per-week scores")
+        func fetchTeamMatchupsDecodesFixture() async throws {
+            let client = await makeClient()
+            stubTokenEndpoint()
+            try await client.oAuthClient.authorize(withCode: "code", codeVerifier: "verifier")
+
+            try CDYahooMockURLProtocol.register(
+                stub: .init(statusCode: 200, data: fixtureData("TeamMatchups")),
+                for: #require(URL(string: "https://fantasysports.yahooapis.com/fantasy/v2/team/449.l.12345.t.1/matchups;weeks=1,2"))
+            )
+
+            let response = try await client.fetchTeamMatchups(teamKey: "449.l.12345.t.1", weeks: [1, 2])
+            #expect(response.teamKey == "449.l.12345.t.1")
+            #expect(response.matchups.count == 2)
+
+            let opener = try #require(response.matchups.first)
+            #expect(opener.week == 1)
+            #expect(opener.weekStart == "2025-09-04")
+            #expect(opener.weekEnd == "2025-09-08")
+            #expect(opener.isPlayoffs == false)
+            #expect(opener.isTied == false)
+            #expect(opener.winnerTeamKey == "449.l.12345.t.1")
+            #expect(opener.teams.count == 2)
+            #expect(opener.teams.first?.totalPoints == 112.5)
+            #expect(opener.teams.first?.projectedPoints == 105.0)
+
+            let tie = response.matchups[1]
+            #expect(tie.isTied == true)
+            #expect(tie.winnerTeamKey == nil)
+            #expect(tie.teams.first?.projectedPoints == nil)
+        }
+
+        @Test("fetchTeamStats decodes a team's stat totals for a coverage window")
+        func fetchTeamStatsDecodesFixture() async throws {
+            let client = await makeClient()
+            stubTokenEndpoint()
+            try await client.oAuthClient.authorize(withCode: "code", codeVerifier: "verifier")
+
+            try CDYahooMockURLProtocol.register(
+                stub: .init(statusCode: 200, data: fixtureData("TeamStats")),
+                for: #require(URL(string: "https://fantasysports.yahooapis.com/fantasy/v2/team/449.l.12345.t.1/stats;type=week;week=8"))
+            )
+
+            let response = try await client.fetchTeamStats(teamKey: "449.l.12345.t.1", coverage: .week(8))
+            #expect(response.teamKey == "449.l.12345.t.1")
+            #expect(response.stats.coverageType == "week")
+            #expect(response.stats.week == 8)
+            #expect(response.stats.totalPoints == 112.5)
+            #expect(response.stats.stats.count == 3)
+
+            let passingYards = try #require(response.stats.stats.first)
+            #expect(passingYards.statId == 4)
+            #expect(passingYards.value == "312")
+
+            #expect(response.stats.stats.last?.value == "-")
+        }
+
         @Test("fetchTeamDraftResults decodes one team's picks; a snake draft has no cost")
         func fetchTeamDraftResultsDecodesFixture() async throws {
             let client = await makeClient()

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fantasy_content xml:lang="en-US" time="1.23">
+    <team>
+        <team_key>449.l.12345.t.1</team_key>
+        <team_id>1</team_id>
+        <name>Team Alpha</name>
+        <matchups count="2">
+            <matchup>
+                <week>1</week>
+                <week_start>2025-09-04</week_start>
+                <week_end>2025-09-08</week_end>
+                <status>postevent</status>
+                <is_playoffs>0</is_playoffs>
+                <is_consolation>0</is_consolation>
+                <is_tied>0</is_tied>
+                <winner_team_key>449.l.12345.t.1</winner_team_key>
+                <teams count="2">
+                    <team>
+                        <team_key>449.l.12345.t.1</team_key>
+                        <name>Team Alpha</name>
+                        <team_points>
+                            <coverage_type>week</coverage_type>
+                            <week>1</week>
+                            <total>112.5</total>
+                        </team_points>
+                        <team_projected_points>
+                            <coverage_type>week</coverage_type>
+                            <week>1</week>
+                            <total>105.0</total>
+                        </team_projected_points>
+                    </team>
+                    <team>
+                        <team_key>449.l.12345.t.2</team_key>
+                        <name>Team Beta</name>
+                        <team_points>
+                            <coverage_type>week</coverage_type>
+                            <week>1</week>
+                            <total>98.4</total>
+                        </team_points>
+                        <team_projected_points>
+                            <coverage_type>week</coverage_type>
+                            <week>1</week>
+                            <total>101.2</total>
+                        </team_projected_points>
+                    </team>
+                </teams>
+            </matchup>
+            <matchup>
+                <week>2</week>
+                <week_start>2025-09-11</week_start>
+                <week_end>2025-09-15</week_end>
+                <status>postevent</status>
+                <is_playoffs>0</is_playoffs>
+                <is_consolation>0</is_consolation>
+                <is_tied>1</is_tied>
+                <teams count="2">
+                    <team>
+                        <team_key>449.l.12345.t.1</team_key>
+                        <name>Team Alpha</name>
+                        <team_points>
+                            <coverage_type>week</coverage_type>
+                            <week>2</week>
+                            <total>100.0</total>
+                        </team_points>
+                    </team>
+                    <team>
+                        <team_key>449.l.12345.t.9</team_key>
+                        <name>Team Iota</name>
+                        <team_points>
+                            <coverage_type>week</coverage_type>
+                            <week>2</week>
+                            <total>100.0</total>
+                        </team_points>
+                    </team>
+                </teams>
+            </matchup>
+        </matchups>
+    </team>
+</fantasy_content>
