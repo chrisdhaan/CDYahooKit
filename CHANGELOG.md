@@ -4,8 +4,8 @@
 
 ### Changed
 
-- Aligned the LICENSE file with the sibling CDMarkdownKit/CDYelpFusionKit/CDUntappdKit/CDOAuth1Kit frameworks, and refreshed all Xcode scheme files (restoring a missing macro-expansion configuration, bumping the recorded Xcode version) after finding them years out of date.
-- Tightened the `file_length`, `function_body_length`, and `type_body_length` SwiftLint limits to match the shared baseline agreed across all 5 sibling frameworks (`line_length` was already aligned). No violations resulted — the codebase already fit comfortably within the tightened limits.
+- Aligned the LICENSE file with this project's established standards, and refreshed all Xcode scheme files (restoring a missing macro-expansion configuration, bumping the recorded Xcode version) after finding them years out of date.
+- Tightened the `file_length`, `function_body_length`, and `type_body_length` SwiftLint limits to a consistent baseline (`line_length` was already aligned). No violations resulted — the codebase already fit comfortably within the tightened limits.
 
 ## [1.1.0](https://github.com/chrisdhaan/CDYahooKit/releases/tag/1.1.0)
 
