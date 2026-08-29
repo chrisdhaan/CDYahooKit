@@ -188,6 +188,8 @@ turns it into a `GET` `URLRequest` against
 | `settings(leagueKey:)` | `league/{leagueKey}/settings` |
 | `leagueDraftResults(leagueKey:)` | `league/{leagueKey}/draftresults` |
 | `teamDraftResults(teamKey:)` | `team/{teamKey}/draftresults` |
+| `teamMatchups(teamKey:weeks:)` | `team/{teamKey}/matchups` — `;weeks={w1},{w2},…` appended when `weeks` is non-empty |
+| `teamStats(teamKey:coverage:)` | `team/{teamKey}/stats;type=season` or `…;type=week;week={week}` |
 
 League / team / game keys are percent-encoded before interpolation (allowed set:
 alphanumerics + `-._~`), so a value carrying `?`, `#`, or `/` can't silently reshape the URL
@@ -453,8 +455,9 @@ CDYahooLeaguePlayersResponse            ← league/{leagueKey}/players[;start={s
 
 CDYahooLeagueScoreboardResponse         ← league/{leagueKey}/scoreboard[;week={week}]
   ├── leagueKey
-  └── [CDYahooMatchup]                    week, status
-        └── [CDYahooMatchupTeamScore]     teamKey, name, totalPoints?
+  └── [CDYahooMatchup]                    week, status, weekStart?, weekEnd?, isPlayoffs?,
+        │                                  isConsolation?, isTied?, winnerTeamKey?
+        └── [CDYahooMatchupTeamScore]     teamKey, name, totalPoints?, projectedPoints?
 
 CDYahooLeagueTransactionsResponse       ← league/{leagueKey}/transactions
   ├── leagueKey
@@ -478,6 +481,15 @@ CDYahooLeagueDraftResultsResponse     ← league/{leagueKey}/draftresults
 CDYahooTeamDraftResultsResponse       ← team/{teamKey}/draftresults
   ├── teamKey
   └── [CDYahooDraftResult]               same CDYahooDraftResult type as the league response
+
+CDYahooTeamMatchupsResponse          ← team/{teamKey}/matchups[;weeks={w1},{w2},…]
+  ├── teamKey
+  └── [CDYahooMatchup]                   same CDYahooMatchup type as the scoreboard response
+
+CDYahooTeamStatsResponse             ← team/{teamKey}/stats;type=season | …;type=week;week={week}
+  ├── teamKey
+  └── CDYahooTeamStats                   coverageType?, week?, totalPoints?
+        └── [CDYahooTeamStat]            statId, value        (joins to CDYahooStatCategory on statId)
 ```
 
 Optionality mirrors the API: a field the API always returns (keys, names) is non-optional

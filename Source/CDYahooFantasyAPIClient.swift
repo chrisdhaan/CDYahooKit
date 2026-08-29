@@ -95,4 +95,19 @@ public final class CDYahooFantasyAPIClient {
         let request = try await authorizedRequest(.teamDraftResults(teamKey: teamKey))
         return try await session.perform(request)
     }
+
+    /// Fetches a team's head-to-head matchups, each with both sides' scores. Pass `weeks` to limit
+    /// the result to specific weeks; pass `nil` (the default) for the team's full schedule.
+    public func fetchTeamMatchups(teamKey: String, weeks: [Int]? = nil) async throws -> CDYahooTeamMatchupsResponse {
+        let request = try await authorizedRequest(.teamMatchups(teamKey: teamKey, weeks: weeks))
+        return try await session.perform(request)
+    }
+
+    /// Fetches a team's accumulated stats and fantasy points for a coverage window — the whole
+    /// season (`.season`, the default) or a single week (`.week(_:)`).
+    public func fetchTeamStats(teamKey: String,
+                               coverage: CDYahooTeamStatsCoverage = .season) async throws -> CDYahooTeamStatsResponse {
+        let request = try await authorizedRequest(.teamStats(teamKey: teamKey, coverage: coverage))
+        return try await session.perform(request)
+    }
 }

@@ -112,6 +112,8 @@ present. A `count` that disagrees with the child element total would not be dete
 | 8 | [League settings](#8-league-settings) | `fetchLeagueSettings(leagueKey:)` | [`LeagueSettings.xml`](../Tests/CDYahooKitTests/Fixtures/LeagueSettings.xml) |
 | 9 | [League draft results](#9-league-draft-results) | `fetchLeagueDraftResults(leagueKey:)` | [`LeagueDraftResults.xml`](../Tests/CDYahooKitTests/Fixtures/LeagueDraftResults.xml) |
 | 10 | [Team draft results](#10-team-draft-results) | `fetchTeamDraftResults(teamKey:)` | [`TeamDraftResults.xml`](../Tests/CDYahooKitTests/Fixtures/TeamDraftResults.xml) |
+| 11 | [Team matchups](#11-team-matchups) | `fetchTeamMatchups(teamKey:weeks:)` | [`TeamMatchups.xml`](../Tests/CDYahooKitTests/Fixtures/TeamMatchups.xml) |
+| 12 | [Team stats](#12-team-stats) | `fetchTeamStats(teamKey:coverage:)` | [`TeamStats.xml`](../Tests/CDYahooKitTests/Fixtures/TeamStats.xml) |
 
 ---
 
@@ -941,6 +943,196 @@ No modifiers.
 
 ---
 
+### 11. Team matchups
+
+One team's schedule of head-to-head matchups, each with both sides' scores. The same `<matchup>`
+element the league [scoreboard](#6-league-scoreboard) returns, scoped to a team and carrying the
+richer week-boundary / outcome fields.
+
+| | |
+|---|---|
+| **CDYahooKit method** | `CDYahooFantasyAPIClient.fetchTeamMatchups(teamKey:weeks:)` — `weeks: [Int]?`, default `nil` |
+| **Router case** | `CDYahooRouter.teamMatchups(teamKey:weeks:)` |
+| **Response type** | [`CDYahooTeamMatchupsResponse`](../Source/CDYahooTeamMatchupsResponse.swift) → `[CDYahooMatchup]` → `[CDYahooMatchupTeamScore]` |
+| **Fixture** | [`TeamMatchups.xml`](../Tests/CDYahooKitTests/Fixtures/TeamMatchups.xml) |
+
+#### Request
+
+```
+GET …/fantasy/v2/team/{teamKey}/matchups                       (weeks == nil / empty)
+GET …/fantasy/v2/team/{teamKey}/matchups;weeks={w1},{w2},…     (weeks non-empty)
+```
+
+| Modifier | Required | Status | Notes |
+|----------|----------|--------|-------|
+| `{teamKey}` path segment | Yes | 🟢 | Format `{league_key}.t.{team_id}`. Percent-encoded as a path segment. |
+| `;weeks={w1},{w2},…` | No | 🟢 | Comma-joined raw integers. Omitted entirely when `weeks` is `nil` or empty → the team's full schedule. |
+
+**Limitation (🟢):** only `;weeks=` is exposed. Yahoo also documents a single `;week=` selector and,
+for date-based sports, `;date=` (🔵) — CDYahooKit has no parameter for either.
+
+#### Response — XML element tree
+
+```xml
+<fantasy_content xml:lang="en-US" time="1.23">
+  <team>
+    <team_key>449.l.12345.t.1</team_key>
+    <team_id>1</team_id>
+    <name>Team Alpha</name>
+    <matchups count="2">
+      <matchup>
+        <week>1</week>
+        <week_start>2025-09-04</week_start>
+        <week_end>2025-09-08</week_end>
+        <status>postevent</status>                <!-- preevent | midevent | postevent (🔵) -->
+        <is_playoffs>0</is_playoffs>
+        <is_consolation>0</is_consolation>
+        <is_tied>0</is_tied>
+        <winner_team_key>449.l.12345.t.1</winner_team_key>   <!-- absent on a tie / pre-event -->
+        <!-- real API also: is_matchup_recap_available, matchup_recap_url, matchup_recap_title -->
+        <teams count="2">
+          <team>
+            <team_key>449.l.12345.t.1</team_key>
+            <name>Team Alpha</name>
+            <team_points>
+              <coverage_type>week</coverage_type>
+              <week>1</week>
+              <total>112.5</total>
+            </team_points>
+            <team_projected_points>
+              <coverage_type>week</coverage_type>
+              <week>1</week>
+              <total>105.0</total>
+            </team_projected_points>
+            <!-- real API team also: win_probability -->
+          </team>
+          <team>… Team Beta …</team>
+        </teams>
+      </matchup>
+      <!-- … one <matchup> per week in scope -->
+    </matchups>
+  </team>
+</fantasy_content>
+```
+
+#### Element → model mapping
+
+| XML path (from `<fantasy_content>`) | Swift property | Type | Required by decoder | Status |
+|---|---|---|---|---|
+| `team/team_key` | `CDYahooTeamMatchupsResponse.teamKey` | `String` | Yes → `missingField("team")` | 🟢 · 🔵 |
+| `team/matchups/matchup` | `.matchups[]` | `[CDYahooMatchup]` | No (missing → `[]`) | 🟢 · 🟡 |
+| `…/matchup/week` | `CDYahooMatchup.week` | `Int` (default `0`) | No | 🟢 · 🔵 |
+| `…/matchup/status` | `CDYahooMatchup.status` | `String` (default `""`) | No | 🟢 · 🔵 |
+| `…/matchup/week_start` | `CDYahooMatchup.weekStart` | `String?` (`YYYY-MM-DD`) | No | 🟢 · 🔵 |
+| `…/matchup/week_end` | `CDYahooMatchup.weekEnd` | `String?` | No | 🟢 · 🔵 |
+| `…/matchup/is_playoffs` | `CDYahooMatchup.isPlayoffs` | `Bool?` (`"1"`/`"0"`) | No | 🟢 · 🔵 |
+| `…/matchup/is_consolation` | `CDYahooMatchup.isConsolation` | `Bool?` | No | 🟢 · 🔵 |
+| `…/matchup/is_tied` | `CDYahooMatchup.isTied` | `Bool?` | No | 🟢 · 🔵 |
+| `…/matchup/winner_team_key` | `CDYahooMatchup.winnerTeamKey` | `String?` | No | 🟢 · 🔵 |
+| `…/matchup/teams/team` | `CDYahooMatchup.teams[]` | `[CDYahooMatchupTeamScore]` | No (missing → `[]`) | 🟢 · 🔵 |
+| `…/team/team_key` | `CDYahooMatchupTeamScore.teamKey` | `String` | Yes → `missingField("team")` | 🟢 · 🔵 |
+| `…/team/name` | `CDYahooMatchupTeamScore.name` | `String` | Yes | 🟢 · 🔵 |
+| `…/team/team_points/total` | `CDYahooMatchupTeamScore.totalPoints` | `Double?` | No | 🟢 · 🟡 |
+| `…/team/team_projected_points/total` | `CDYahooMatchupTeamScore.projectedPoints` | `Double?` | No | 🟢 · 🟡 |
+
+#### Cardinality notes
+
+- `matchups count="N"` — one `<matchup>` per week in scope (all weeks, or just those in `;weeks=`).
+- `CDYahooMatchup` and `CDYahooMatchupTeamScore` are **shared with the league [scoreboard](#6-league-scoreboard)**.
+  The scoreboard payload omits `week_start` … `winner_team_key` and `team_projected_points`, so
+  those properties decode to `nil` there.
+- **🟡** The extra `<matchup>` fields (`week_start`, `is_tied`, `winner_team_key`, …) and
+  `<team_projected_points>` are asserted only by the hand-authored fixture; the shared element
+  names carry over from the scoreboard fixture (also 🟡 on `<team_points>` inner shape).
+
+---
+
+### 12. Team stats
+
+A team's accumulated stat totals for a coverage window — the whole season, or one week — plus the
+fantasy points they earned in it.
+
+| | |
+|---|---|
+| **CDYahooKit method** | `CDYahooFantasyAPIClient.fetchTeamStats(teamKey:coverage:)` — `coverage: CDYahooTeamStatsCoverage`, default `.season` |
+| **Router case** | `CDYahooRouter.teamStats(teamKey:coverage:)` |
+| **Response type** | [`CDYahooTeamStatsResponse`](../Source/CDYahooTeamStatsResponse.swift) → [`CDYahooTeamStats`](../Source/CDYahooTeamStatsResponse.swift) → `[CDYahooTeamStat]` |
+| **Fixture** | [`TeamStats.xml`](../Tests/CDYahooKitTests/Fixtures/TeamStats.xml) |
+
+#### Request
+
+```
+GET …/fantasy/v2/team/{teamKey}/stats;type=season                 (coverage == .season)
+GET …/fantasy/v2/team/{teamKey}/stats;type=week;week={week}       (coverage == .week(week))
+```
+
+| Modifier | Required | Status | Notes |
+|----------|----------|--------|-------|
+| `{teamKey}` path segment | Yes | 🟢 | Percent-encoded as a path segment. |
+| `;type=season` \| `;type=week;week={week}` | Yes | 🟢 | Built from `CDYahooTeamStatsCoverage`: `.season` → `;type=season`; `.week(w)` → `;type=week;week=w` (raw `Int`). CDYahooKit always sends one or the other. |
+
+**Limitation (🟢):** the date-based coverage Yahoo supports for baseball/basketball/hockey
+(`;type=date;date=YYYY-MM-DD`, `;type=lastweek`, `;type=lastmonth`) (🔵) is not exposed.
+
+#### Response — XML element tree
+
+```xml
+<fantasy_content xml:lang="en-US" time="1.23">
+  <team>
+    <team_key>449.l.12345.t.1</team_key>
+    <team_id>1</team_id>
+    <name>Team Alpha</name>
+    <team_stats>
+      <coverage_type>week</coverage_type>          <!-- season | week -->
+      <week>8</week>                                <!-- present when coverage_type = week -->
+      <stats>
+        <stat>
+          <stat_id>4</stat_id>
+          <value>312</value>
+        </stat>
+        <stat>
+          <stat_id>78</stat_id>
+          <value>-</value>                          <!-- "-" = no value in the window -->
+        </stat>
+        <!-- … one <stat> per league stat category -->
+      </stats>
+    </team_stats>
+    <team_points>
+      <coverage_type>week</coverage_type>
+      <week>8</week>
+      <total>112.5</total>
+    </team_points>
+  </team>
+</fantasy_content>
+```
+
+#### Element → model mapping
+
+| XML path (from `<fantasy_content>`) | Swift property | Type | Required by decoder | Status |
+|---|---|---|---|---|
+| `team/team_key` | `CDYahooTeamStatsResponse.teamKey` | `String` | Yes → `missingField("team")` | 🟢 · 🔵 |
+| `team/team_stats/coverage_type` | `CDYahooTeamStats.coverageType` | `String?` | No | 🟢 · 🔵 |
+| `team/team_stats/week` | `CDYahooTeamStats.week` | `Int?` | No | 🟢 · 🔵 |
+| `team/team_stats/stats/stat` | `CDYahooTeamStats.stats[]` | `[CDYahooTeamStat]` | No (missing → `[]`) | 🟢 · 🟡 |
+| `…/stat/stat_id` | `CDYahooTeamStat.statId` | `Int` | Yes → `missingField("stat")` | 🟢 · 🔵 |
+| `…/stat/value` | `CDYahooTeamStat.value` | `String` | Yes | 🟢 · 🔵 |
+| `team/team_points/total` | `CDYahooTeamStats.totalPoints` | `Double?` | No | 🟢 · 🟡 |
+
+#### Cardinality notes
+
+- `team_stats` is a single element; `team_stats/stats` wraps zero or more `<stat>`. A stats
+  response for a league that hasn't played still decodes, with `stats == []`.
+- **`value` is kept as a `String`.** Yahoo emits `-` for a stat with no value in the window, and
+  emits fractional stats in the leading-dot form (`.5`) — both lossy to round-trip through a
+  `Double`. Callers that need a number parse `value` themselves.
+- `CDYahooTeamStat.statId` joins to the league [settings](#8-league-settings)'
+  `CDYahooStatCategory` (stat name) and `CDYahooStatModifier` (point value).
+- **🟡** The `<team_stats>` / `<team_points>` nesting and the `stats`-wrapper shape are asserted
+  only by the hand-authored fixture. Real responses also carry `<coverage_type>`/`<week>` on
+  `<team_points>` (CDYahooKit reads only `team_points/total`).
+
+---
+
 ## Verification summary
 
 | # | Resource | Request URI & params | Response element tree |
@@ -955,6 +1147,8 @@ No modifiers.
 | 8 | League settings | 🟢 (no modifiers) · 🔵 | 🟢 decoder paths · 🔵 elements · 🟡 `settings` nesting, parallel stat lists, large unmodeled field set |
 | 9 | League draft results | 🟢 (no modifiers) · 🔵 | 🟢 decoder paths · 🔵 elements · 🟡 `<draft_results>` nesting, `cost`-only-on-auction |
 | 10 | Team draft results | 🟢 (no modifiers) · 🔵 | 🟢 decoder paths · 🔵 elements · 🟡 `<draft_results>` nesting, `<name>` echo unmodeled |
+| 11 | Team matchups | 🟢 (`;weeks=` only) · 🔵 | 🟢 decoder paths · 🔵 elements · 🟡 shared `<matchup>` shape, extra outcome fields + `team_projected_points` |
+| 12 | Team stats | 🟢 (`;type=season`/`;type=week`) · 🔵 | 🟢 decoder paths · 🔵 elements · 🟡 `<team_stats>` nesting, `value` as `String` for `-` / leading-dot |
 
 **What is solidly verified:** every request URI, path modifier, and parameter CDYahooKit sends
 (read straight from `CDYahooRouter`), and every XML path each `init(node:)` decoder reads (read
@@ -996,6 +1190,16 @@ and reconcile it with this document. Specifically confirm:
    `cost` appears only for auction drafts, and whether a real response carries anything else worth
    modeling (a `<players>` expansion when `;out=` is used, timestamps). Same `draftresults`
    sub-resource for both scopes.
+10. **Team matchups** — confirm `<matchups>` nests directly under `<team>`, the `<matchup>`
+    sub-element names (`week_start`, `week_end`, `is_playoffs`, `is_consolation`, `is_tied`,
+    `winner_team_key`), that `<team_projected_points>` sits beside `<team_points>` inside each
+    matchup `<team>`, and whether the `;weeks=` list (vs. a single `;week=`) is the right filter.
+    Reconcile the shared `CDYahooMatchup` shape against both this and the scoreboard response.
+11. **Team stats** — confirm `<team_stats>` (with `<coverage_type>` / `<week>`) and the sibling
+    `<team_points>` nest directly under `<team>`, that `stats` wraps the `<stat>` list, the
+    `;type=season` / `;type=week;week=` parameter names, and the real `value` vocabulary (whether
+    `-` and leading-dot fractions both occur — they drive the `String` typing). Decide whether
+    date-based coverage (`;type=date`, `;type=lastweek`) is worth exposing.
 
 Then: regenerate the fixtures in
 [`Tests/CDYahooKitTests/Fixtures/`](../Tests/CDYahooKitTests/Fixtures/) from the captured
