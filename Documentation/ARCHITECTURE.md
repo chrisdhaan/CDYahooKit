@@ -190,6 +190,10 @@ turns it into a `GET` `URLRequest` against
 | `teamDraftResults(teamKey:)` | `team/{teamKey}/draftresults` |
 | `teamMatchups(teamKey:weeks:)` | `team/{teamKey}/matchups` — `;weeks={w1},{w2},…` appended when `weeks` is non-empty |
 | `teamStats(teamKey:coverage:)` | `team/{teamKey}/stats;type=season` or `…;type=week;week={week}` |
+| `gameStatCategories(gameKey:)` | `game/{gameKey}/stat_categories` |
+| `gamePositionTypes(gameKey:)` | `game/{gameKey}/position_types` |
+| `gameRosterPositions(gameKey:)` | `game/{gameKey}/roster_positions` |
+| `gameWeeks(gameKey:)` | `game/{gameKey}/game_weeks` |
 
 League / team / game keys are percent-encoded before interpolation (allowed set:
 alphanumerics + `-._~`), so a value carrying `?`, `#`, or `/` can't silently reshape the URL
@@ -490,6 +494,23 @@ CDYahooTeamStatsResponse             ← team/{teamKey}/stats;type=season | …;
   ├── teamKey
   └── CDYahooTeamStats                   coverageType?, week?, totalPoints?
         └── [CDYahooTeamStat]            statId, value        (joins to CDYahooStatCategory on statId)
+
+CDYahooGameStatCategoriesResponse    ← game/{gameKey}/stat_categories
+  ├── gameKey
+  └── [CDYahooGameStatCategory]          statId, name, displayName?, sortOrder?, positionType?,
+                                          statPositionTypes
+
+CDYahooGamePositionTypesResponse    ← game/{gameKey}/position_types
+  ├── gameKey
+  └── [CDYahooPositionType]              type, displayName?
+
+CDYahooGameRosterPositionsResponse  ← game/{gameKey}/roster_positions
+  ├── gameKey
+  └── [CDYahooGameRosterPosition]        position, abbreviation?, displayName?, positionType?
+
+CDYahooGameWeeksResponse            ← game/{gameKey}/game_weeks
+  ├── gameKey
+  └── [CDYahooGameWeek]                  week, displayName?, start?, end?
 ```
 
 Optionality mirrors the API: a field the API always returns (keys, names) is non-optional

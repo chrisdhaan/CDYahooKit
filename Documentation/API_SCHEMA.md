@@ -114,6 +114,10 @@ present. A `count` that disagrees with the child element total would not be dete
 | 10 | [Team draft results](#10-team-draft-results) | `fetchTeamDraftResults(teamKey:)` | [`TeamDraftResults.xml`](../Tests/CDYahooKitTests/Fixtures/TeamDraftResults.xml) |
 | 11 | [Team matchups](#11-team-matchups) | `fetchTeamMatchups(teamKey:weeks:)` | [`TeamMatchups.xml`](../Tests/CDYahooKitTests/Fixtures/TeamMatchups.xml) |
 | 12 | [Team stats](#12-team-stats) | `fetchTeamStats(teamKey:coverage:)` | [`TeamStats.xml`](../Tests/CDYahooKitTests/Fixtures/TeamStats.xml) |
+| 13 | [Game stat categories](#13-game-stat-categories) | `fetchGameStatCategories(gameKey:)` | [`GameStatCategories.xml`](../Tests/CDYahooKitTests/Fixtures/GameStatCategories.xml) |
+| 14 | [Game position types](#14-game-position-types) | `fetchGamePositionTypes(gameKey:)` | [`GamePositionTypes.xml`](../Tests/CDYahooKitTests/Fixtures/GamePositionTypes.xml) |
+| 15 | [Game roster positions](#15-game-roster-positions) | `fetchGameRosterPositions(gameKey:)` | [`GameRosterPositions.xml`](../Tests/CDYahooKitTests/Fixtures/GameRosterPositions.xml) |
+| 16 | [Game weeks](#16-game-weeks) | `fetchGameWeeks(gameKey:)` | [`GameWeeks.xml`](../Tests/CDYahooKitTests/Fixtures/GameWeeks.xml) |
 
 ---
 
@@ -1133,6 +1137,269 @@ GET …/fantasy/v2/team/{teamKey}/stats;type=week;week={week}       (coverage ==
 
 ---
 
+### 13. Game stat categories
+
+Every stat a fantasy game defines, with the position types each stat applies to. Game-wide — a
+league scores a curated subset (see [League settings](#8-league-settings)).
+
+| | |
+|---|---|
+| **CDYahooKit method** | `CDYahooFantasyAPIClient.fetchGameStatCategories(gameKey:)` |
+| **Router case** | `CDYahooRouter.gameStatCategories(gameKey:)` |
+| **Response type** | [`CDYahooGameStatCategoriesResponse`](../Source/CDYahooGameMetadata.swift) → `[CDYahooGameStatCategory]` |
+| **Fixture** | [`GameStatCategories.xml`](../Tests/CDYahooKitTests/Fixtures/GameStatCategories.xml) |
+
+#### Request
+
+```
+GET https://fantasysports.yahooapis.com/fantasy/v2/game/{gameKey}/stat_categories
+```
+
+| Part | Required | Status | Notes |
+|------|----------|--------|-------|
+| `{gameKey}` path segment | Yes | 🟢 | A numeric game key (`449`) or a game code (`nfl`). 🔵 Percent-encoded as a path segment. |
+
+No modifiers.
+
+#### Response — XML element tree
+
+```xml
+<fantasy_content xml:lang="en-US" time="1.23">
+  <game>
+    <game_key>449</game_key>
+    <game_id>449</game_id>
+    <name>Football</name>
+    <code>nfl</code>
+    <season>2025</season>
+    <stat_categories>
+      <stats>
+        <stat>
+          <stat_id>4</stat_id>
+          <name>Passing Yards</name>
+          <display_name>Pass Yds</display_name>
+          <sort_order>1</sort_order>
+          <position_type>O</position_type>
+          <stat_position_types>
+            <stat_position_type>
+              <position_type>O</position_type>
+              <!-- real API also: is_only_display_stat -->
+            </stat_position_type>
+          </stat_position_types>
+        </stat>
+        <!-- … one <stat> per stat the game defines -->
+      </stats>
+    </stat_categories>
+  </game>
+</fantasy_content>
+```
+
+#### Element → model mapping
+
+| XML path (from `<fantasy_content>`) | Swift property | Type | Required by decoder | Status |
+|---|---|---|---|---|
+| `game/game_key` | `CDYahooGameStatCategoriesResponse.gameKey` | `String` | Yes → throws `missingField("game")` | 🟢 · 🔵 |
+| `game/stat_categories/stats/stat` | `.statCategories[]` | `[CDYahooGameStatCategory]` | No (missing → `[]`) | 🟢 · 🟡 |
+| `…/stat/stat_id` | `CDYahooGameStatCategory.statId` | `Int` | Yes → `missingField("stat")` | 🟢 · 🔵 |
+| `…/stat/name` | `.name` | `String` | Yes | 🟢 · 🔵 |
+| `…/stat/display_name` | `.displayName` | `String?` | No | 🟢 · 🔵 |
+| `…/stat/sort_order` | `.sortOrder` | `Int?` | No | 🟢 · 🔵 |
+| `…/stat/position_type` | `.positionType` | `String?` | No | 🟢 · 🔵 |
+| `…/stat/stat_position_types/stat_position_type/position_type` | `.statPositionTypes` | `[String]` (missing → `[]`) | No | 🟢 · 🟡 |
+
+#### Cardinality notes
+
+- Same `stat_categories/stats/stat` nesting as [League settings](#8-league-settings), but the
+  game-scoped `<stat>` has **no `<enabled>`** (that is a per-league flag) and adds
+  `<stat_position_types>`.
+- **🟡** Element names and the `stat_position_types` shape are asserted only by the hand-authored
+  fixture. Real responses also carry `is_only_display_stat` and, on some games, `abbr`.
+
+---
+
+### 14. Game position types
+
+The player-position categories a fantasy game defines (e.g. `O` / "Offense", `DT` /
+"Defense/Special Teams").
+
+| | |
+|---|---|
+| **CDYahooKit method** | `CDYahooFantasyAPIClient.fetchGamePositionTypes(gameKey:)` |
+| **Router case** | `CDYahooRouter.gamePositionTypes(gameKey:)` |
+| **Response type** | [`CDYahooGamePositionTypesResponse`](../Source/CDYahooGameMetadata.swift) → `[CDYahooPositionType]` |
+| **Fixture** | [`GamePositionTypes.xml`](../Tests/CDYahooKitTests/Fixtures/GamePositionTypes.xml) |
+
+#### Request
+
+```
+GET https://fantasysports.yahooapis.com/fantasy/v2/game/{gameKey}/position_types
+```
+
+No modifiers. `{gameKey}` is a game key or game code, percent-encoded as a path segment.
+
+#### Response — XML element tree
+
+```xml
+<fantasy_content xml:lang="en-US" time="1.23">
+  <game>
+    <game_key>449</game_key>
+    <name>Football</name>
+    <code>nfl</code>
+    <season>2025</season>
+    <position_types count="3">
+      <position_type>
+        <type>O</type>
+        <display_name>Offense</display_name>
+      </position_type>
+      <!-- … one <position_type> per category -->
+    </position_types>
+  </game>
+</fantasy_content>
+```
+
+#### Element → model mapping
+
+| XML path (from `<fantasy_content>`) | Swift property | Type | Required by decoder | Status |
+|---|---|---|---|---|
+| `game/game_key` | `CDYahooGamePositionTypesResponse.gameKey` | `String` | Yes → `missingField("game")` | 🟢 · 🔵 |
+| `game/position_types/position_type` | `.positionTypes[]` | `[CDYahooPositionType]` | No (missing → `[]`) | 🟢 · 🟡 |
+| `…/position_type/type` | `CDYahooPositionType.type` | `String` | Yes → `missingField("position_type")` | 🟢 · 🔵 |
+| `…/position_type/display_name` | `.displayName` | `String?` | No | 🟢 · 🔵 |
+
+#### Cardinality notes
+
+- `position_types count="N"` — a small fixed set per game.
+- **🟡** Element names asserted only by the hand-authored fixture.
+
+---
+
+### 15. Game roster positions
+
+Every roster position a fantasy game defines — the position code, its abbreviation and display
+name, and the position type it belongs to.
+
+| | |
+|---|---|
+| **CDYahooKit method** | `CDYahooFantasyAPIClient.fetchGameRosterPositions(gameKey:)` |
+| **Router case** | `CDYahooRouter.gameRosterPositions(gameKey:)` |
+| **Response type** | [`CDYahooGameRosterPositionsResponse`](../Source/CDYahooGameMetadata.swift) → `[CDYahooGameRosterPosition]` |
+| **Fixture** | [`GameRosterPositions.xml`](../Tests/CDYahooKitTests/Fixtures/GameRosterPositions.xml) |
+
+#### Request
+
+```
+GET https://fantasysports.yahooapis.com/fantasy/v2/game/{gameKey}/roster_positions
+```
+
+No modifiers. `{gameKey}` is a game key or game code, percent-encoded as a path segment.
+
+#### Response — XML element tree
+
+```xml
+<fantasy_content xml:lang="en-US" time="1.23">
+  <game>
+    <game_key>449</game_key>
+    <name>Football</name>
+    <code>nfl</code>
+    <season>2025</season>
+    <roster_positions count="3">
+      <roster_position>
+        <position>QB</position>
+        <abbreviation>QB</abbreviation>
+        <display_name>Quarterback</display_name>
+        <position_type>O</position_type>
+        <!-- real API also: is_bench, is_starting_position on some games -->
+      </roster_position>
+      <roster_position>
+        <position>BN</position>                <!-- BN = bench; no position_type -->
+        <abbreviation>BN</abbreviation>
+        <display_name>Bench</display_name>
+      </roster_position>
+    </roster_positions>
+  </game>
+</fantasy_content>
+```
+
+#### Element → model mapping
+
+| XML path (from `<fantasy_content>`) | Swift property | Type | Required by decoder | Status |
+|---|---|---|---|---|
+| `game/game_key` | `CDYahooGameRosterPositionsResponse.gameKey` | `String` | Yes → `missingField("game")` | 🟢 · 🔵 |
+| `game/roster_positions/roster_position` | `.rosterPositions[]` | `[CDYahooGameRosterPosition]` | No (missing → `[]`) | 🟢 · 🟡 |
+| `…/roster_position/position` | `CDYahooGameRosterPosition.position` | `String` | Yes → `missingField("roster_position")` | 🟢 · 🔵 |
+| `…/roster_position/abbreviation` | `.abbreviation` | `String?` | No | 🟢 · 🔵 |
+| `…/roster_position/display_name` | `.displayName` | `String?` | No | 🟢 · 🔵 |
+| `…/roster_position/position_type` | `.positionType` | `String?` | No | 🟢 · 🔵 |
+
+#### Cardinality notes
+
+- Same `roster_positions/roster_position` wrapper as [League settings](#8-league-settings), but
+  the game-scoped element has **no `<count>`** (that is per-league) and adds `<abbreviation>` /
+  `<display_name>`. CDYahooKit models it as the distinct `CDYahooGameRosterPosition`.
+- `position_type` is absent for bench / IR slots.
+- **🟡** Element names asserted only by the hand-authored fixture.
+
+---
+
+### 16. Game weeks
+
+A fantasy game's schedule of scoring periods — each week's number and the calendar dates it
+spans.
+
+| | |
+|---|---|
+| **CDYahooKit method** | `CDYahooFantasyAPIClient.fetchGameWeeks(gameKey:)` |
+| **Router case** | `CDYahooRouter.gameWeeks(gameKey:)` |
+| **Response type** | [`CDYahooGameWeeksResponse`](../Source/CDYahooGameMetadata.swift) → `[CDYahooGameWeek]` |
+| **Fixture** | [`GameWeeks.xml`](../Tests/CDYahooKitTests/Fixtures/GameWeeks.xml) |
+
+#### Request
+
+```
+GET https://fantasysports.yahooapis.com/fantasy/v2/game/{gameKey}/game_weeks
+```
+
+No modifiers. `{gameKey}` is a game key or game code, percent-encoded as a path segment.
+
+#### Response — XML element tree
+
+```xml
+<fantasy_content xml:lang="en-US" time="1.23">
+  <game>
+    <game_key>449</game_key>
+    <name>Football</name>
+    <code>nfl</code>
+    <season>2025</season>
+    <game_weeks count="18">
+      <game_week>
+        <week>1</week>
+        <display_name>1</display_name>
+        <start>2025-09-04</start>
+        <end>2025-09-08</end>
+      </game_week>
+      <!-- … one <game_week> per scoring period -->
+    </game_weeks>
+  </game>
+</fantasy_content>
+```
+
+#### Element → model mapping
+
+| XML path (from `<fantasy_content>`) | Swift property | Type | Required by decoder | Status |
+|---|---|---|---|---|
+| `game/game_key` | `CDYahooGameWeeksResponse.gameKey` | `String` | Yes → `missingField("game")` | 🟢 · 🔵 |
+| `game/game_weeks/game_week` | `.gameWeeks[]` | `[CDYahooGameWeek]` | No (missing → `[]`) | 🟢 · 🟡 |
+| `…/game_week/week` | `CDYahooGameWeek.week` | `Int` | Yes → `missingField("game_week")` | 🟢 · 🔵 |
+| `…/game_week/display_name` | `.displayName` | `String?` | No | 🟢 · 🔵 |
+| `…/game_week/start` | `.start` | `String?` (`YYYY-MM-DD`) | No | 🟢 · 🔵 |
+| `…/game_week/end` | `.end` | `String?` (`YYYY-MM-DD`) | No | 🟢 · 🔵 |
+
+#### Cardinality notes
+
+- `game_weeks count="N"` — one `<game_week>` per scoring period, in week order.
+- **🟡** Element names asserted only by the hand-authored fixture.
+
+---
+
 ## Verification summary
 
 | # | Resource | Request URI & params | Response element tree |
@@ -1149,6 +1416,10 @@ GET …/fantasy/v2/team/{teamKey}/stats;type=week;week={week}       (coverage ==
 | 10 | Team draft results | 🟢 (no modifiers) · 🔵 | 🟢 decoder paths · 🔵 elements · 🟡 `<draft_results>` nesting, `<name>` echo unmodeled |
 | 11 | Team matchups | 🟢 (`;weeks=` only) · 🔵 | 🟢 decoder paths · 🔵 elements · 🟡 shared `<matchup>` shape, extra outcome fields + `team_projected_points` |
 | 12 | Team stats | 🟢 (`;type=season`/`;type=week`) · 🔵 | 🟢 decoder paths · 🔵 elements · 🟡 `<team_stats>` nesting, `value` as `String` for `-` / leading-dot |
+| 13 | Game stat categories | 🟢 (no modifiers) · 🔵 | 🟢 decoder paths · 🟡 element names, `stat_position_types` shape, no `<enabled>` (vs. league settings) |
+| 14 | Game position types | 🟢 (no modifiers) · 🔵 | 🟢 decoder paths · 🟡 element names |
+| 15 | Game roster positions | 🟢 (no modifiers) · 🔵 | 🟢 decoder paths · 🟡 element names, no `<count>` (vs. league settings), `<abbreviation>` / `<display_name>` |
+| 16 | Game weeks | 🟢 (no modifiers) · 🔵 | 🟢 decoder paths · 🟡 element names |
 
 **What is solidly verified:** every request URI, path modifier, and parameter CDYahooKit sends
 (read straight from `CDYahooRouter`), and every XML path each `init(node:)` decoder reads (read
@@ -1200,6 +1471,18 @@ and reconcile it with this document. Specifically confirm:
     `;type=season` / `;type=week;week=` parameter names, and the real `value` vocabulary (whether
     `-` and leading-dot fractions both occur — they drive the `String` typing). Decide whether
     date-based coverage (`;type=date`, `;type=lastweek`) is worth exposing.
+12. **Game stat categories** — confirm `<stat_categories>` nests directly under `<game>` with the
+    same `stats/stat` wrapper as league settings, that the game-scoped `<stat>` omits `<enabled>`,
+    and the `<stat_position_types>/<stat_position_type>/<position_type>` shape. Decide whether
+    `is_only_display_stat` is worth modeling.
+13. **Game position types** — confirm `<position_types>/<position_type>` nests directly under
+    `<game>` and the `<type>` / `<display_name>` sub-element names.
+14. **Game roster positions** — confirm `<roster_positions>/<roster_position>` nests directly
+    under `<game>`, the `<position>` / `<abbreviation>` / `<display_name>` / `<position_type>`
+    sub-element names, that the game-scoped element omits `<count>`, and whether
+    `is_starting_position` / `is_bench` are worth modeling.
+15. **Game weeks** — confirm `<game_weeks>/<game_week>` nests directly under `<game>` and the
+    `<week>` / `<display_name>` / `<start>` / `<end>` sub-element names.
 
 Then: regenerate the fixtures in
 [`Tests/CDYahooKitTests/Fixtures/`](../Tests/CDYahooKitTests/Fixtures/) from the captured

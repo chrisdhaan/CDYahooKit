@@ -27,18 +27,23 @@
 		E8E4BFB9858E6A835D8A40A8 /* CDYahooDraftResultsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C953CC96B0F8AD439E71C91 /* CDYahooDraftResultsResponse.swift */; };
 		D6DE1FD2AA800FCA10E5B2C2 /* CDYahooTeamMatchupsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C0E576666B6FE397F9007E /* CDYahooTeamMatchupsResponse.swift */; };
 		03822C88038D5D2CF9CB0AAD /* CDYahooTeamStatsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B41AD7CECE6B53132518945 /* CDYahooTeamStatsResponse.swift */; };
+		E64222D034F24B65B8BB7602 /* CDYahooGameMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D75D04ADA34844882AB294 /* CDYahooGameMetadata.swift */; };
 		9B7DDD8A1F72E8435A756E4F /* CDYahooDraftResultsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C953CC96B0F8AD439E71C91 /* CDYahooDraftResultsResponse.swift */; };
 		0751851D62DA5BF00885C36C /* CDYahooTeamMatchupsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C0E576666B6FE397F9007E /* CDYahooTeamMatchupsResponse.swift */; };
 		3730AF298865318AA81AA311 /* CDYahooTeamStatsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B41AD7CECE6B53132518945 /* CDYahooTeamStatsResponse.swift */; };
+		43FC276BE3BD46EABD21E8B1 /* CDYahooGameMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D75D04ADA34844882AB294 /* CDYahooGameMetadata.swift */; };
 		5F4FFA458B4ED149CAE6D999 /* CDYahooDraftResultsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C953CC96B0F8AD439E71C91 /* CDYahooDraftResultsResponse.swift */; };
 		F47D3AD8D40052EB49184762 /* CDYahooTeamMatchupsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C0E576666B6FE397F9007E /* CDYahooTeamMatchupsResponse.swift */; };
 		90BED0979381612331108A88 /* CDYahooTeamStatsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B41AD7CECE6B53132518945 /* CDYahooTeamStatsResponse.swift */; };
+		F14CED70BCDB466B8CCF0E3A /* CDYahooGameMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D75D04ADA34844882AB294 /* CDYahooGameMetadata.swift */; };
 		DEEBDFDD151973E742A46E3E /* CDYahooDraftResultsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C953CC96B0F8AD439E71C91 /* CDYahooDraftResultsResponse.swift */; };
 		089ECD190644ABC4EB6B456F /* CDYahooTeamMatchupsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C0E576666B6FE397F9007E /* CDYahooTeamMatchupsResponse.swift */; };
 		BD2DEF5242992C758BD4A446 /* CDYahooTeamStatsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B41AD7CECE6B53132518945 /* CDYahooTeamStatsResponse.swift */; };
+		9EF91E62253E4B6B9D56138F /* CDYahooGameMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D75D04ADA34844882AB294 /* CDYahooGameMetadata.swift */; };
 		B19B266407E5B7DFC65CBE23 /* CDYahooDraftResultsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C953CC96B0F8AD439E71C91 /* CDYahooDraftResultsResponse.swift */; };
 		C16C8D75CE47CF3120BDF500 /* CDYahooTeamMatchupsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C0E576666B6FE397F9007E /* CDYahooTeamMatchupsResponse.swift */; };
 		EF993DDFF54552A94292D821 /* CDYahooTeamStatsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B41AD7CECE6B53132518945 /* CDYahooTeamStatsResponse.swift */; };
+		0440F52B72104BAAB88BB362 /* CDYahooGameMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D75D04ADA34844882AB294 /* CDYahooGameMetadata.swift */; };
 		1A0246B2C5DB4C22EC8747A0 /* CDYahooURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F179C9080E7CAD5E7BC83A6 /* CDYahooURLSession.swift */; };
 		1B3A7ED90776574B724E9026 /* CDYahooLeagueResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C496F85A10AA74DDC92FA017 /* CDYahooLeagueResponse.swift */; };
 		1FAE75A558CF51BFDB6591D6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6771E7DC3F08B6EBFEA51E3E /* Cocoa.framework */; };
@@ -212,6 +217,7 @@
 		5C953CC96B0F8AD439E71C91 /* CDYahooDraftResultsResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CDYahooDraftResultsResponse.swift; sourceTree = "<group>"; };
 		82C0E576666B6FE397F9007E /* CDYahooTeamMatchupsResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CDYahooTeamMatchupsResponse.swift; sourceTree = "<group>"; };
 		5B41AD7CECE6B53132518945 /* CDYahooTeamStatsResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CDYahooTeamStatsResponse.swift; sourceTree = "<group>"; };
+		43D75D04ADA34844882AB294 /* CDYahooGameMetadata.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CDYahooGameMetadata.swift; sourceTree = "<group>"; };
 		A825972A134DB2F13A7BE27E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/XROS.platform/Developer/SDKs/XROS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		A95161A8FD485CA7B349DAF2 /* CDYahooFantasyAPIClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CDYahooFantasyAPIClient.swift; sourceTree = "<group>"; };
 		BA2C5C569F5BA28B63667664 /* CDYahooPKCE.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CDYahooPKCE.swift; sourceTree = "<group>"; };
@@ -346,6 +352,7 @@
 				29E86F538817135A8D2F999A /* CDYahooEventMonitor.swift */,
 				A95161A8FD485CA7B349DAF2 /* CDYahooFantasyAPIClient.swift */,
 				73BD826B358A095DE39A7E05 /* CDYahooGame.swift */,
+				43D75D04ADA34844882AB294 /* CDYahooGameMetadata.swift */,
 				4F849D73681C50ADF221351A /* CDYahooKeychain.swift */,
 				0E30F0CF6C790C634BD9D491 /* CDYahooKitError.swift */,
 				D7A74F103AF5D2C2F5C99056 /* CDYahooLeague.swift */,
@@ -621,6 +628,7 @@
 				E8E4BFB9858E6A835D8A40A8 /* CDYahooDraftResultsResponse.swift in Sources */,
 				D6DE1FD2AA800FCA10E5B2C2 /* CDYahooTeamMatchupsResponse.swift in Sources */,
 				03822C88038D5D2CF9CB0AAD /* CDYahooTeamStatsResponse.swift in Sources */,
+				E64222D034F24B65B8BB7602 /* CDYahooGameMetadata.swift in Sources */,
 				ACFB679B9580E85DCC1C824E /* CDYahooOAuthClient.swift in Sources */,
 				16A5EA6F18AD53F7EAD3A1B9 /* CDYahooOAuthCredential.swift in Sources */,
 				2C0AD9DE2A34205D70C533A4 /* CDYahooOAuthRouter.swift in Sources */,
@@ -661,6 +669,7 @@
 				9B7DDD8A1F72E8435A756E4F /* CDYahooDraftResultsResponse.swift in Sources */,
 				0751851D62DA5BF00885C36C /* CDYahooTeamMatchupsResponse.swift in Sources */,
 				3730AF298865318AA81AA311 /* CDYahooTeamStatsResponse.swift in Sources */,
+				43FC276BE3BD46EABD21E8B1 /* CDYahooGameMetadata.swift in Sources */,
 				31513B939004D6802741CC0B /* CDYahooOAuthClient.swift in Sources */,
 				43E359B0A67B169469898EAD /* CDYahooOAuthCredential.swift in Sources */,
 				0C99A7B83B7A29975C35E202 /* CDYahooOAuthRouter.swift in Sources */,
@@ -701,6 +710,7 @@
 				5F4FFA458B4ED149CAE6D999 /* CDYahooDraftResultsResponse.swift in Sources */,
 				F47D3AD8D40052EB49184762 /* CDYahooTeamMatchupsResponse.swift in Sources */,
 				90BED0979381612331108A88 /* CDYahooTeamStatsResponse.swift in Sources */,
+				F14CED70BCDB466B8CCF0E3A /* CDYahooGameMetadata.swift in Sources */,
 				7A9F61C9B0587094BD054269 /* CDYahooOAuthClient.swift in Sources */,
 				23A11F6762745A36561D9470 /* CDYahooOAuthCredential.swift in Sources */,
 				C239DF8733FF25EB1B0DC7E9 /* CDYahooOAuthRouter.swift in Sources */,
@@ -741,6 +751,7 @@
 				DEEBDFDD151973E742A46E3E /* CDYahooDraftResultsResponse.swift in Sources */,
 				089ECD190644ABC4EB6B456F /* CDYahooTeamMatchupsResponse.swift in Sources */,
 				BD2DEF5242992C758BD4A446 /* CDYahooTeamStatsResponse.swift in Sources */,
+				9EF91E62253E4B6B9D56138F /* CDYahooGameMetadata.swift in Sources */,
 				4AFCAA995A7212649DA4144F /* CDYahooOAuthClient.swift in Sources */,
 				401826F28E2F6B7695E9EA97 /* CDYahooOAuthCredential.swift in Sources */,
 				98C39DD74DEBABE1EDBCAA4D /* CDYahooOAuthRouter.swift in Sources */,
@@ -781,6 +792,7 @@
 				B19B266407E5B7DFC65CBE23 /* CDYahooDraftResultsResponse.swift in Sources */,
 				C16C8D75CE47CF3120BDF500 /* CDYahooTeamMatchupsResponse.swift in Sources */,
 				EF993DDFF54552A94292D821 /* CDYahooTeamStatsResponse.swift in Sources */,
+				0440F52B72104BAAB88BB362 /* CDYahooGameMetadata.swift in Sources */,
 				83EA980607AE8B616A2D9B37 /* CDYahooOAuthClient.swift in Sources */,
 				ED5C6F64559B22D2A7D40547 /* CDYahooOAuthCredential.swift in Sources */,
 				25CFBFAAEC6267C252D84220 /* CDYahooOAuthRouter.swift in Sources */,

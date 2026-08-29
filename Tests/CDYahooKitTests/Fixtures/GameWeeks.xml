@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fantasy_content xml:lang="en-US" time="1.23">
+    <game>
+        <game_key>449</game_key>
+        <game_id>449</game_id>
+        <name>Football</name>
+        <code>nfl</code>
+        <season>2025</season>
+        <game_weeks count="3">
+            <game_week>
+                <week>1</week>
+                <display_name>1</display_name>
+                <start>2025-09-04</start>
+                <end>2025-09-08</end>
+            </game_week>
+            <game_week>
+                <week>2</week>
+                <display_name>2</display_name>
+                <start>2025-09-11</start>
+                <end>2025-09-15</end>
+            </game_week>
+            <game_week>
+                <week>3</week>
+                <display_name>3</display_name>
+                <start>2025-09-18</start>
+                <end>2025-09-22</end>
+            </game_week>
+        </game_weeks>
+    </game>
+</fantasy_content>

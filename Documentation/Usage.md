@@ -28,6 +28,7 @@ the DocC catalog.
   - [Fetch league settings](#fetch-league-settings)
   - [Fetch draft results](#fetch-draft-results)
   - [Fetch team matchups and stats](#fetch-team-matchups-and-stats)
+  - [Fetch game metadata](#fetch-game-metadata)
 - [Error Handling](#error-handling)
 - [Configuration](#configuration)
   - [Retry](#retry)
@@ -486,6 +487,48 @@ or `.week(Int)`. `CDYahooTeamStats` carries `coverageType`, `week`, `totalPoints
 points earned in the window), and `stats: [CDYahooTeamStat]`. Each `CDYahooTeamStat` has a
 `statId` (join it to the league settings' `CDYahooStatCategory` / `CDYahooStatModifier`) and a
 `value` kept as a `String` — Yahoo emits `-` for a stat with no value in the window.
+
+### Fetch game metadata
+
+The four `game/{game_key}` sub-resources describe a fantasy game's rules — the same rules a
+league configures a subset of. `gameKey` is a Yahoo game key or game code (`"449"` or `"nfl"`);
+get one from [the user's games](#fetch-the-users-games-and-leagues).
+
+```swift
+let statCategories = try await client.fetchGameStatCategories(gameKey: "nfl")
+for stat in statCategories.statCategories {
+    print("\(stat.statId): \(stat.name) — applies to \(stat.statPositionTypes)")
+}
+
+let positionTypes = try await client.fetchGamePositionTypes(gameKey: "nfl")
+for type in positionTypes.positionTypes {
+    print("\(type.type) = \(type.displayName ?? "")")
+}
+
+let rosterPositions = try await client.fetchGameRosterPositions(gameKey: "nfl")
+for position in rosterPositions.rosterPositions {
+    print("\(position.position) (\(position.positionType ?? "—")): \(position.displayName ?? "")")
+}
+
+let gameWeeks = try await client.fetchGameWeeks(gameKey: "nfl")
+for week in gameWeeks.gameWeeks {
+    print("Week \(week.week): \(week.start ?? "?") – \(week.end ?? "?")")
+}
+```
+
+- `fetchGameStatCategories(gameKey:)` → `CDYahooGameStatCategoriesResponse` (`gameKey`,
+  `statCategories: [CDYahooGameStatCategory]`). Each `CDYahooGameStatCategory` has `statId`,
+  `name`, `displayName`, `sortOrder`, `positionType`, and `statPositionTypes: [String]`. Unlike
+  the league-scoped `CDYahooStatCategory` it has no `enabled` flag — that is a per-league setting.
+- `fetchGamePositionTypes(gameKey:)` → `CDYahooGamePositionTypesResponse` (`gameKey`,
+  `positionTypes: [CDYahooPositionType]`). Each `CDYahooPositionType` has `type` and `displayName`.
+- `fetchGameRosterPositions(gameKey:)` → `CDYahooGameRosterPositionsResponse` (`gameKey`,
+  `rosterPositions: [CDYahooGameRosterPosition]`). Each `CDYahooGameRosterPosition` has
+  `position`, `abbreviation`, `displayName`, and `positionType`. Distinct from the league-scoped
+  `CDYahooRosterPosition`, which instead carries the `count` a league starts.
+- `fetchGameWeeks(gameKey:)` → `CDYahooGameWeeksResponse` (`gameKey`,
+  `gameWeeks: [CDYahooGameWeek]`). Each `CDYahooGameWeek` has `week`, `displayName`, `start`, and
+  `end` (`YYYY-MM-DD`).
 
 ---
 

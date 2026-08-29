@@ -26,6 +26,10 @@ final class ViewController: UITableViewController {
         case teamDraftResults
         case teamMatchups
         case teamStats
+        case gameStatCategories
+        case gamePositionTypes
+        case gameRosterPositions
+        case gameWeeks
 
         var title: String {
             switch self {
@@ -42,6 +46,10 @@ final class ViewController: UITableViewController {
             case .teamDraftResults: "Team Draft Results"
             case .teamMatchups: "Team Matchups"
             case .teamStats: "Team Stats"
+            case .gameStatCategories: "Game Stat Categories"
+            case .gamePositionTypes: "Game Position Types"
+            case .gameRosterPositions: "Game Roster Positions"
+            case .gameWeeks: "Game Weeks"
             }
         }
 
@@ -180,8 +188,27 @@ private extension ViewController {
             _ = try await client.fetchTeamMatchups(teamKey: manager.requireTeamKey())
         case .teamStats:
             _ = try await client.fetchTeamStats(teamKey: manager.requireTeamKey())
+        case .gameStatCategories, .gamePositionTypes, .gameRosterPositions, .gameWeeks:
+            try await performGameFetch(for: row, client: client, gameKey: manager.requireGameKey())
         default:
             try await performLeagueFetch(for: row, client: client, leagueKey: manager.requireLeagueKey())
+        }
+    }
+
+    /// The `game/{gameKey}/…` metadata endpoints, split out of `performFetch(for:)` so neither
+    /// switch trips SwiftLint's cyclomatic-complexity limit as the endpoint list grows.
+    private func performGameFetch(for row: Row, client: CDYahooFantasyAPIClient, gameKey: String) async throws {
+        switch row {
+        case .gameStatCategories:
+            _ = try await client.fetchGameStatCategories(gameKey: gameKey)
+        case .gamePositionTypes:
+            _ = try await client.fetchGamePositionTypes(gameKey: gameKey)
+        case .gameRosterPositions:
+            _ = try await client.fetchGameRosterPositions(gameKey: gameKey)
+        case .gameWeeks:
+            _ = try await client.fetchGameWeeks(gameKey: gameKey)
+        default:
+            break
         }
     }
 
@@ -203,7 +230,8 @@ private extension ViewController {
             _ = try await client.fetchLeagueSettings(leagueKey: leagueKey)
         case .leagueDraftResults:
             _ = try await client.fetchLeagueDraftResults(leagueKey: leagueKey)
-        case .signIn, .userGames, .teamRoster, .teamDraftResults, .teamMatchups, .teamStats:
+        case .signIn, .userGames, .teamRoster, .teamDraftResults, .teamMatchups, .teamStats,
+             .gameStatCategories, .gamePositionTypes, .gameRosterPositions, .gameWeeks:
             break
         }
     }

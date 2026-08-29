@@ -32,6 +32,12 @@ final class CDYahooKitManager {
     /// Discovered from the first team in ``leagueKey``'s standings; parameterizes the team roster row.
     private(set) var teamKey: String?
 
+    /// The game-key prefix of ``leagueKey`` (`{game_key}.l.{league_id}`); parameterizes the
+    /// game-metadata endpoint rows.
+    var gameKey: String? {
+        leagueKey.flatMap { $0.split(separator: ".").first.map(String.init) }
+    }
+
     /// Retained for the lifetime of the in-flight authorization so the wrapper isn't
     /// deallocated out from under `ASWebAuthenticationSession` while the user is in Safari.
     private var authSession: CDYahooAuthSession?
@@ -117,6 +123,13 @@ final class CDYahooKitManager {
     func requireTeamKey() throws -> String {
         guard let teamKey else { throw ExampleError.noTeamFound }
         return teamKey
+    }
+
+    /// - Returns: The game key derived from the discovered league.
+    /// - Throws: ``ExampleError/noLeagueFound`` if the signed-in account has no fantasy league.
+    func requireGameKey() throws -> String {
+        guard let gameKey else { throw ExampleError.noLeagueFound }
+        return gameKey
     }
 
     private func discoverLeagueAndTeam() async throws {
