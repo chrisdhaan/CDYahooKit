@@ -1,5 +1,20 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+- `CDYahooFantasyAPIClient.fetchLeagueSettings(leagueKey:)`, wrapping the
+  `league/{league_key}/settings` sub-resource: scoring type, roster positions, the stat
+  categories the league scores and their point modifiers, and its waiver, trade, and playoff
+  rules. New public types `CDYahooLeagueSettingsResponse`, `CDYahooLeagueSettings`,
+  `CDYahooRosterPosition`, `CDYahooStatCategory`, and `CDYahooStatModifier` — stat categories and
+  modifiers are exposed as parallel lists joined on `statId`.
+
+### Changed
+- `Documentation/API_SCHEMA.md`, `Documentation/Usage.md`, and `Documentation/ARCHITECTURE.md`
+  extended with the league settings resource.
+- Example app: added a **League Settings** row to the endpoint list.
+
 ## [1.0.1](https://github.com/chrisdhaan/CDYahooKit/releases/tag/1.0.1)
 
 Released on 2026-08-27.

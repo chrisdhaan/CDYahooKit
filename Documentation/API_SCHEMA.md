@@ -109,6 +109,7 @@ present. A `count` that disagrees with the child element total would not be dete
 | 5 | [League players](#5-league-players) | `fetchLeaguePlayers(leagueKey:start:)` | [`LeaguePlayers.xml`](../Tests/CDYahooKitTests/Fixtures/LeaguePlayers.xml) |
 | 6 | [League scoreboard](#6-league-scoreboard) | `fetchLeagueScoreboard(leagueKey:week:)` | [`LeagueScoreboard.xml`](../Tests/CDYahooKitTests/Fixtures/LeagueScoreboard.xml) |
 | 7 | [League transactions](#7-league-transactions) | `fetchLeagueTransactions(leagueKey:)` | [`LeagueTransactions.xml`](../Tests/CDYahooKitTests/Fixtures/LeagueTransactions.xml) |
+| 8 | [League settings](#8-league-settings) | `fetchLeagueSettings(leagueKey:)` | [`LeagueSettings.xml`](../Tests/CDYahooKitTests/Fixtures/LeagueSettings.xml) |
 
 ---
 
@@ -688,6 +689,141 @@ transaction set. Yahoo supports `;type=`, `;types=add,drop,commish,trade`, `;tea
 
 ---
 
+### 8. League settings
+
+A league's configuration: scoring type, roster shape, the stat categories it scores and their
+point values, and its waiver, trade, and playoff rules.
+
+| | |
+|---|---|
+| **CDYahooKit method** | `CDYahooFantasyAPIClient.fetchLeagueSettings(leagueKey:)` |
+| **Router case** | `CDYahooRouter.settings(leagueKey:)` |
+| **Response type** | [`CDYahooLeagueSettingsResponse`](../Source/CDYahooLeagueSettingsResponse.swift) → [`CDYahooLeagueSettings`](../Source/CDYahooLeagueSettingsResponse.swift) → `[CDYahooRosterPosition]` / `[CDYahooStatCategory]` / `[CDYahooStatModifier]` |
+| **Fixture** | [`LeagueSettings.xml`](../Tests/CDYahooKitTests/Fixtures/LeagueSettings.xml) |
+
+#### Request
+
+```
+GET https://fantasysports.yahooapis.com/fantasy/v2/league/{leagueKey}/settings
+```
+
+No modifiers. The `settings` sub-resource is returned nested under the `<league>` resource
+element (🔵).
+
+#### Response — XML element tree
+
+```xml
+<fantasy_content xml:lang="en-US" time="1.23">
+  <league>
+    <league_key>449.l.12345</league_key>
+    <league_id>12345</league_id>
+    <name>My Fantasy League</name>
+    <settings>
+      <scoring_type>head</scoring_type>              <!-- head | roto | point (🔵) -->
+      <uses_playoff>1</uses_playoff>                 <!-- 1 | 0 -->
+      <playoff_start_week>15</playoff_start_week>
+      <num_playoff_teams>6</num_playoff_teams>
+      <num_playoff_consolation_teams>4</num_playoff_consolation_teams>
+      <uses_playoff_reseeding>0</uses_playoff_reseeding>
+      <waiver_type>R</waiver_type>                   <!-- R (rolling) | FR | C (🔵) -->
+      <waiver_rule>gametime</waiver_rule>
+      <uses_faab>0</uses_faab>
+      <waiver_time>2</waiver_time>
+      <trade_end_date>2025-11-14</trade_end_date>
+      <trade_ratify_type>commish</trade_ratify_type> <!-- commish | vote | none (🔵) -->
+      <trade_reject_time>2</trade_reject_time>
+      <!-- real API settings also: draft_type, is_auction_draft, persistent_url,
+           has_playoff_consolation_games, draft_time, draft_pick_time, post_draft_players,
+           max_teams, player_pool, cant_cut_list, can_trade_draft_picks, … — none modeled -->
+      <roster_positions>
+        <roster_position>
+          <position>QB</position>
+          <position_type>O</position_type>          <!-- O (offense) | DT | DP | P | K … (🔵) -->
+          <count>1</count>
+        </roster_position>
+        <roster_position>
+          <position>BN</position>                    <!-- BN = bench; IR also seen -->
+          <count>5</count>
+        </roster_position>
+      </roster_positions>
+      <stat_categories>
+        <stats>
+          <stat>
+            <stat_id>4</stat_id>
+            <enabled>1</enabled>
+            <name>Passing Yards</name>
+            <display_name>Pass Yds</display_name>
+            <sort_order>1</sort_order>
+            <position_type>O</position_type>
+            <!-- real API also: stat_position_types, is_only_display_stat -->
+          </stat>
+          <stat>…</stat>
+        </stats>
+      </stat_categories>
+      <stat_modifiers>
+        <stats>
+          <stat>
+            <stat_id>4</stat_id>
+            <value>0.04</value>
+          </stat>
+          <stat>…</stat>
+        </stats>
+      </stat_modifiers>
+    </settings>
+  </league>
+</fantasy_content>
+```
+
+#### Element → model mapping
+
+| XML path (from `<fantasy_content>`) | Swift property | Type | Required by decoder | Status |
+|---|---|---|---|---|
+| `league/league_key` | `CDYahooLeagueSettingsResponse.leagueKey` | `String` | Yes → throws `missingField("league/settings")` | 🟢 · 🔵 |
+| `league/settings` | — (anchor) | — | Yes → throws `missingField("league/settings")` | 🟢 · 🔵 |
+| `…/settings/scoring_type` | `CDYahooLeagueSettings.scoringType` | `String?` | No | 🟢 · 🔵 |
+| `…/settings/uses_playoff` | `.usesPlayoff` | `Bool?` (`"1"`/`"0"`) | No | 🟢 · 🔵 |
+| `…/settings/playoff_start_week` | `.playoffStartWeek` | `Int?` | No | 🟢 · 🔵 |
+| `…/settings/num_playoff_teams` | `.numPlayoffTeams` | `Int?` | No | 🟢 · 🔵 |
+| `…/settings/num_playoff_consolation_teams` | `.numPlayoffConsolationTeams` | `Int?` | No | 🟢 · 🔵 |
+| `…/settings/uses_playoff_reseeding` | `.usesPlayoffReseeding` | `Bool?` | No | 🟢 · 🔵 |
+| `…/settings/waiver_type` | `.waiverType` | `String?` | No | 🟢 · 🔵 |
+| `…/settings/waiver_rule` | `.waiverRule` | `String?` | No | 🟢 · 🔵 |
+| `…/settings/uses_faab` | `.usesFaab` | `Bool?` | No | 🟢 · 🔵 |
+| `…/settings/waiver_time` | `.waiverTime` | `Int?` | No | 🟢 · 🔵 |
+| `…/settings/trade_end_date` | `.tradeEndDate` | `String?` (`YYYY-MM-DD`) | No | 🟢 · 🔵 |
+| `…/settings/trade_ratify_type` | `.tradeRatifyType` | `String?` | No | 🟢 · 🔵 |
+| `…/settings/trade_reject_time` | `.tradeRejectTime` | `Int?` | No | 🟢 · 🔵 |
+| `…/settings/roster_positions/roster_position` | `.rosterPositions[]` | `[CDYahooRosterPosition]` | No (missing → `[]`) | 🟢 · 🟡 |
+| `…/roster_position/position` | `CDYahooRosterPosition.position` | `String` | Yes → `missingField("roster_position")` | 🟢 · 🔵 |
+| `…/roster_position/position_type` | `.positionType` | `String?` | No | 🟢 · 🔵 |
+| `…/roster_position/count` | `.count` | `Int` (default `0`) | No | 🟢 · 🔵 |
+| `…/settings/stat_categories/stats/stat` | `.statCategories[]` | `[CDYahooStatCategory]` | No (missing → `[]`) | 🟢 · 🟡 |
+| `…/stat_categories/…/stat/stat_id` | `CDYahooStatCategory.statId` | `Int` | Yes → `missingField("stat")` | 🟢 · 🔵 |
+| `…/stat/name` | `.name` | `String` | Yes | 🟢 · 🔵 |
+| `…/stat/display_name` | `.displayName` | `String?` | No | 🟢 · 🔵 |
+| `…/stat/enabled` | `.enabled` | `Bool` (default `true`) | No | 🟢 · 🔵 |
+| `…/stat/sort_order` | `.sortOrder` | `Int?` | No | 🟢 · 🔵 |
+| `…/stat/position_type` | `.positionType` | `String?` | No | 🟢 · 🔵 |
+| `…/settings/stat_modifiers/stats/stat` | `.statModifiers[]` | `[CDYahooStatModifier]` | No (missing → `[]`) | 🟢 · 🟡 |
+| `…/stat_modifiers/…/stat/stat_id` | `CDYahooStatModifier.statId` | `Int` | Yes → `missingField("stat")` | 🟢 · 🔵 |
+| `…/stat_modifiers/…/stat/value` | `CDYahooStatModifier.value` | `Double` | Yes | 🟢 · 🔵 |
+
+#### Cardinality notes
+
+- `roster_positions`, `stat_categories/stats`, and `stat_modifiers/stats` are each a wrapper with
+  zero or more children; a settings response fetched before the league is configured still decodes
+  with those arrays empty.
+- **Stat categories and modifiers are two parallel lists**, joined on `stat_id` — a category
+  carries the stat's identity, its modifier (when the league assigns one) carries the point value.
+  CDYahooKit keeps them parallel rather than merging.
+- **🟡** Real settings responses carry a much larger flat field set (draft config, `max_teams`,
+  `player_pool`, consolation-game flags, …) and richer `stat` sub-elements
+  (`stat_position_types`, `is_only_display_stat`). CDYahooKit models a curated subset covering
+  scoring, roster shape, and waiver/trade/playoff rules; the element names and `settings` nesting
+  are asserted only by the hand-authored fixture.
+
+---
+
 ## Verification summary
 
 | # | Resource | Request URI & params | Response element tree |
@@ -699,6 +835,7 @@ transaction set. Yahoo supports `;type=`, `;types=add,drop,commish,trade`, `;tea
 | 5 | League players | 🟢 (`start` only) · 🔵 | 🟢 decoder paths · 🟡 `<players>` nesting, `ownership` + pagination unmodeled |
 | 6 | League scoreboard | 🟢 · 🔵 | 🟢 decoder paths · 🔵 elements · 🟡 `<team_points>` inner shape |
 | 7 | League transactions | 🟢 (no filters) · 🔵 | 🟢 decoder paths · 🔵 elements · 🟡 **trade = two `<transaction_data>` per player, only first read** |
+| 8 | League settings | 🟢 (no modifiers) · 🔵 | 🟢 decoder paths · 🔵 elements · 🟡 `settings` nesting, parallel stat lists, large unmodeled field set |
 
 **What is solidly verified:** every request URI, path modifier, and parameter CDYahooKit sends
 (read straight from `CDYahooRouter`), and every XML path each `init(node:)` decoder reads (read
@@ -731,6 +868,10 @@ and reconcile it with this document. Specifically confirm:
 7. **Transactions** — **capture a real trade** and confirm the two-`<transaction_data>`-per-player
    shape, then fix `CDYahooTransactionPlayer.init(node:)` to read both moves. Confirm `timestamp`
    and `faab_bid`.
+8. **Settings** — confirm `<settings>` is nested under `<league>`, the element names for each
+   modeled rule, and that `stat_categories` / `stat_modifiers` are `stats`-wrapped parallel lists
+   joined on `stat_id`. Decide which of the large unmodeled field set (draft config, `max_teams`,
+   `player_pool`, `has_playoff_consolation_games`, …) is worth adding to `CDYahooLeagueSettings`.
 
 Then: regenerate the fixtures in
 [`Tests/CDYahooKitTests/Fixtures/`](../Tests/CDYahooKitTests/Fixtures/) from the captured

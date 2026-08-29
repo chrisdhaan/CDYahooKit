@@ -46,6 +46,16 @@ struct CDYahooXMLNode {
     func int(_ name: String) -> Int? {
         text(name).flatMap(Int.init)
     }
+
+    /// `text(name)` interpreted as one of Yahoo's boolean flags. Yahoo encodes these as the
+    /// strings `"1"` (true) and `"0"` (false); any other value — or a missing child — is `nil`.
+    func bool(_ name: String) -> Bool? {
+        switch text(name) {
+        case "1": true
+        case "0": false
+        default: nil
+        }
+    }
 }
 
 /// Thrown by a response model's `init(node:)` when a required XML field is missing.

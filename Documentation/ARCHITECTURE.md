@@ -51,7 +51,7 @@ Responsibilities:
 - Owns a `CDYahooURLSession` (private) for performing Fantasy Sports requests, and a
   `CDYahooOAuthClient` (public, exposed as `oAuthClient` so callers can drive the sign-in
   flow and check `isAuthorized()`).
-- Exposes one `public func fetch…(…) async throws -> …Response` per routed endpoint (seven
+- Exposes one `public func fetch…(…) async throws -> …Response` per routed endpoint (eight
   in v1).
 - `authorizedRequest(_:)` is the single private choke point every fetch method goes through:
   it calls `oAuthClient.validAccessToken()` (which refreshes silently if needed), then
@@ -185,6 +185,7 @@ turns it into a `GET` `URLRequest` against
 | `players(leagueKey:start:)` | `league/{leagueKey}/players` — `;start={start}` appended when `start != nil` |
 | `scoreboard(leagueKey:week:)` | `league/{leagueKey}/scoreboard` — `;week={week}` appended when `week != nil` |
 | `transactions(leagueKey:)` | `league/{leagueKey}/transactions` |
+| `settings(leagueKey:)` | `league/{leagueKey}/settings` |
 
 League / team / game keys are percent-encoded before interpolation (allowed set:
 alphanumerics + `-._~`), so a value carrying `?`, `#`, or `/` can't silently reshape the URL
@@ -359,7 +360,7 @@ Fantasy Sports data pipeline is layered.
 `oAuthClient.authorizationURL(…)`, completes the browser step out of band (a companion
 device, a paired phone, a server-side exchange), and calls
 `oAuthClient.authorize(withCode:codeVerifier:)` with the code it obtained. Everything after
-that — `validAccessToken()`, silent refresh, all seven fetch methods — works identically on
+that — `validAccessToken()`, silent refresh, all eight fetch methods — works identically on
 all five platforms.
 
 ---
@@ -397,7 +398,7 @@ format. CDYahooKit treats XML as the source of truth end to end.
 ### Why a shared tree, not a delegate per type
 
 A hand-rolled `XMLParser` delegate per response would mean re-implementing element-stack
-bookkeeping, character buffering, and whitespace trimming seven-plus times. Instead:
+bookkeeping, character buffering, and whitespace trimming a dozen-plus times. Instead:
 
 1. `CDYahooXMLTreeBuilder.parse(data)` walks the document once, pushing a `CDYahooXMLNode`
    on `didStartElement`, appending trimmed text on `foundCharacters`, and popping into the
@@ -457,6 +458,16 @@ CDYahooLeagueTransactionsResponse       ← league/{leagueKey}/transactions
   ├── leagueKey
   └── [CDYahooTransaction]                transactionKey, transactionId, type, status
         └── [CDYahooTransactionPlayer]    playerKey, fullName, transactionType?, destinationTeamKey?
+
+CDYahooLeagueSettingsResponse          ← league/{leagueKey}/settings
+  ├── leagueKey
+  └── CDYahooLeagueSettings               scoringType?, usesPlayoff?, playoffStartWeek?, numPlayoffTeams?,
+        │                                  numPlayoffConsolationTeams?, usesPlayoffReseeding?, waiverType?,
+        │                                  waiverRule?, usesFaab?, waiverTime?, tradeEndDate?,
+        │                                  tradeRatifyType?, tradeRejectTime?
+        ├── [CDYahooRosterPosition]        position, positionType?, count
+        ├── [CDYahooStatCategory]          statId, name, displayName?, enabled, sortOrder?, positionType?
+        └── [CDYahooStatModifier]          statId, value        (joins to CDYahooStatCategory on statId)
 ```
 
 Optionality mirrors the API: a field the API always returns (keys, names) is non-optional
