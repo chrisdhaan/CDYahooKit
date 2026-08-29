@@ -1,6 +1,12 @@
 # Changelog
 
-## [Unreleased]
+## [1.1.0](https://github.com/chrisdhaan/CDYahooKit/releases/tag/1.1.0)
+
+Released on 2026-08-28.
+
+Expanded read coverage of the Fantasy Sports API: league settings, draft results (league- and
+team-scoped), team matchups and stat totals, `game/{game_key}` rule metadata, and player-pool
+filtering, sorting, pagination, and sub-resources. No write endpoints — v1 remains read-only.
 
 ### Added
 - `CDYahooFantasyAPIClient.fetchLeaguePlayers(leagueKey:query:)`, extending the

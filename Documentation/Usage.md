@@ -51,7 +51,7 @@ Add CDYahooKit to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/chrisdhaan/CDYahooKit.git", from: "1.0.0")
+    .package(url: "https://github.com/chrisdhaan/CDYahooKit.git", from: "1.1.0")
 ],
 targets: [
     .target(
