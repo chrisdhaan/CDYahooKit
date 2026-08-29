@@ -12,9 +12,10 @@ stores OAuth tokens in the keychain with silent refresh.
 - No external runtime dependencies (Foundation, Security, and — where available —
   AuthenticationServices only). The only SPM dependency is `swift-docc-plugin`, used for docs.
 - Read-only coverage of the Fantasy Sports API: a user's games/leagues, league metadata, league
-  settings, standings, team rosters, the league player pool, the weekly scoreboard, league
-  transactions, draft results (league- and team-scoped), a team's matchups and stat totals, and a
-  game's rule metadata (stat categories, position types, roster positions, game weeks).
+  settings, standings, team rosters, the league player pool (with `;out=` sub-resources, filters,
+  sorting, and pagination), the weekly scoreboard, league transactions, draft results (league- and
+  team-scoped), a team's matchups and stat totals, and a game's rule metadata (stat categories,
+  position types, roster positions, game weeks).
   No write endpoints in v1.
 - The Fantasy Sports API is **XML-native**. CDYahooKit parses XML directly through its own small
   tree parser rather than using Yahoo's inconsistent `format=json` parameter.
@@ -36,7 +37,7 @@ CDYahooKit/
 ├── CDYahooKit.xcodeproj/              # Root native Xcode project (one framework target/scheme per platform)
 ├── CDYahooKit.xcworkspace/            # Ties CDYahooKit.xcodeproj + Example/iOS Example.xcodeproj together
 ├── CDYahooKit/Assets/.gitkeep         # Placeholder asset-catalog dir for the native Xcode targets
-├── Source/                           # Core library (Swift) — 34 files
+├── Source/                           # Core library (Swift) — 35 files
 │   ├── CDYahooFantasyAPIClient.swift  # Primary public API client (@MainActor)
 │   ├── CDYahooRouter.swift            # Fantasy endpoint enum → URLRequest (fantasy/v2/* paths)
 │   ├── CDYahooURLSession.swift        # Request execution: cache / retry / adapters / monitors, then parse
@@ -58,9 +59,10 @@ CDYahooKit/
 │   ├── CDYahoo{Game,League,Player}.swift               # Shared models
 │   ├── CDYahoo{UserGames,League,LeagueSettings,LeagueStandings,TeamRoster,LeaguePlayers,LeagueScoreboard,LeagueTransactions,DraftResults,TeamMatchups,TeamStats}Response.swift
 │   ├── CDYahooGameMetadata.swift      # game/{game_key} stat_categories / position_types / roster_positions / game_weeks models + responses
+│   ├── CDYahooLeaguePlayersQuery.swift # players-collection modifiers: CDYahooLeaguePlayersQuery + CDYahooPlayerSubresource / CDYahooPlayerStatusFilter / CDYahooPlayersSort
 │   ├── Testing/CDYahooMockURLProtocol.swift            # Ships in the CDYahooKitTesting product
 │   └── CDYahooKit.docc/               # DocC catalog (CDYahooKit.md landing page, GettingStarted.md)
-├── Tests/CDYahooKitTests/            # Swift Testing suites (12 @Suite, 64 @Test)
+├── Tests/CDYahooKitTests/            # Swift Testing suites (13 @Suite, 73 @Test)
 │   └── Fixtures/*.xml                 # Hand-authored response fixtures (see Known Limitations)
 ├── Example/                          # Example iOS app
 │   ├── iOS Example.xcodeproj/        # References the framework via a LOCAL SPM package (relativePath = "..")

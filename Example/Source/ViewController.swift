@@ -221,7 +221,7 @@ private extension ViewController {
         case .standings:
             _ = try await client.fetchLeagueStandings(leagueKey: leagueKey)
         case .leaguePlayers:
-            _ = try await client.fetchLeaguePlayers(leagueKey: leagueKey, start: nil)
+            _ = try await client.fetchLeaguePlayers(leagueKey: leagueKey, query: .init())
         case .scoreboard:
             _ = try await client.fetchLeagueScoreboard(leagueKey: leagueKey, week: nil)
         case .transactions:

@@ -141,10 +141,46 @@ extension CDYahooOAuthClientTests {
                 for: #require(URL(string: "https://fantasysports.yahooapis.com/fantasy/v2/league/449.l.12345/players"))
             )
 
-            let response = try await client.fetchLeaguePlayers(leagueKey: "449.l.12345", start: nil)
+            let response = try await client.fetchLeaguePlayers(leagueKey: "449.l.12345", query: .init())
             #expect(response.players.count == 2)
             #expect(response.players.first?.status == "ACT")
             #expect(response.players.last?.status == nil)
+        }
+
+        @Test("fetchLeaguePlayers applies query modifiers and decodes the ;out= sub-resources")
+        func fetchLeaguePlayersDecodesFilteredFixture() async throws {
+            let client = await makeClient()
+            stubTokenEndpoint()
+            try await client.oAuthClient.authorize(withCode: "code", codeVerifier: "verifier")
+
+            try CDYahooMockURLProtocol.register(
+                stub: .init(statusCode: 200, data: fixtureData("LeaguePlayersFiltered")),
+                for: #require(URL(string: "https://fantasysports.yahooapis.com/fantasy/v2/league/449.l.12345"
+                        + "/players;out=stats,percent_owned,ownership;status=T;start=25"))
+            )
+
+            let query = CDYahooLeaguePlayersQuery(
+                subresources: [.stats, .percentOwned, .ownership],
+                status: .taken,
+                start: 25
+            )
+            let response = try await client.fetchLeaguePlayers(leagueKey: "449.l.12345", query: query)
+            #expect(response.players.count == 2)
+
+            let taken = try #require(response.players.first)
+            #expect(taken.percentOwned == 96)
+            #expect(taken.ownership?.ownershipType == "team")
+            #expect(taken.ownership?.ownerTeamKey == "449.l.12345.t.3")
+            #expect(taken.ownership?.ownerTeamName == "Team Gamma")
+            #expect(taken.stats?.count == 2)
+            #expect(taken.stats?.first?.statId == 4)
+            #expect(taken.stats?.first?.value == "3980")
+
+            let freeAgent = response.players[1]
+            #expect(freeAgent.ownership?.ownershipType == "freeagents")
+            #expect(freeAgent.ownership?.ownerTeamKey == nil)
+            #expect(freeAgent.percentOwned == nil)
+            #expect(freeAgent.stats == nil)
         }
 
         @Test("fetchLeagueScoreboard decodes matchups with each team's points")

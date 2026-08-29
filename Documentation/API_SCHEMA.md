@@ -106,7 +106,7 @@ present. A `count` that disagrees with the child element total would not be dete
 | 2 | [League](#2-league) | `fetchLeague(leagueKey:)` | [`League.xml`](../Tests/CDYahooKitTests/Fixtures/League.xml) |
 | 3 | [League standings](#3-league-standings) | `fetchLeagueStandings(leagueKey:)` | [`LeagueStandings.xml`](../Tests/CDYahooKitTests/Fixtures/LeagueStandings.xml) |
 | 4 | [Team roster](#4-team-roster) | `fetchTeamRoster(teamKey:week:)` | [`TeamRoster.xml`](../Tests/CDYahooKitTests/Fixtures/TeamRoster.xml) |
-| 5 | [League players](#5-league-players) | `fetchLeaguePlayers(leagueKey:start:)` | [`LeaguePlayers.xml`](../Tests/CDYahooKitTests/Fixtures/LeaguePlayers.xml) |
+| 5 | [League players](#5-league-players) | `fetchLeaguePlayers(leagueKey:query:)` | [`LeaguePlayers.xml`](../Tests/CDYahooKitTests/Fixtures/LeaguePlayers.xml), [`LeaguePlayersFiltered.xml`](../Tests/CDYahooKitTests/Fixtures/LeaguePlayersFiltered.xml) |
 | 6 | [League scoreboard](#6-league-scoreboard) | `fetchLeagueScoreboard(leagueKey:week:)` | [`LeagueScoreboard.xml`](../Tests/CDYahooKitTests/Fixtures/LeagueScoreboard.xml) |
 | 7 | [League transactions](#7-league-transactions) | `fetchLeagueTransactions(leagueKey:)` | [`LeagueTransactions.xml`](../Tests/CDYahooKitTests/Fixtures/LeagueTransactions.xml) |
 | 8 | [League settings](#8-league-settings) | `fetchLeagueSettings(leagueKey:)` | [`LeagueSettings.xml`](../Tests/CDYahooKitTests/Fixtures/LeagueSettings.xml) |
@@ -452,30 +452,39 @@ GET …/fantasy/v2/team/{teamKey}/roster;week={week}     (week != nil)
 
 ### 5. League players
 
-The league's player pool, paged.
+The league's player pool — filtered, sorted, paged, and optionally expanded with per-player
+sub-resources.
 
 | | |
 |---|---|
-| **CDYahooKit method** | `CDYahooFantasyAPIClient.fetchLeaguePlayers(leagueKey:start:)` — `start: Int?`, zero-based |
-| **Router case** | `CDYahooRouter.players(leagueKey:start:)` |
+| **CDYahooKit method** | `CDYahooFantasyAPIClient.fetchLeaguePlayers(leagueKey:query:)` — `query: CDYahooLeaguePlayersQuery` (defaults to `.init()`). `fetchLeaguePlayers(leagueKey:start:)` is deprecated and forwards to it. |
+| **Router case** | `CDYahooRouter.players(leagueKey:query:)` |
 | **Response type** | [`CDYahooLeaguePlayersResponse`](../Source/CDYahooLeaguePlayersResponse.swift) → `[CDYahooPlayer]` |
-| **Fixture** | [`LeaguePlayers.xml`](../Tests/CDYahooKitTests/Fixtures/LeaguePlayers.xml) |
+| **Fixtures** | [`LeaguePlayers.xml`](../Tests/CDYahooKitTests/Fixtures/LeaguePlayers.xml) (bare pool), [`LeaguePlayersFiltered.xml`](../Tests/CDYahooKitTests/Fixtures/LeaguePlayersFiltered.xml) (`;out=` sub-resources) |
 
 #### Request
 
 ```
-GET …/fantasy/v2/league/{leagueKey}/players                  (start == nil)
-GET …/fantasy/v2/league/{leagueKey}/players;start={start}    (start != nil)
+GET …/fantasy/v2/league/{leagueKey}/players{;out=…}{;position=…}{;status=…}{;search=…}{;sort=…}{;start=…}{;count=…}
 ```
 
-| Modifier | Required | Status | Notes |
-|----------|----------|--------|-------|
-| `{leagueKey}` path segment | Yes | 🟢 | |
-| `;start={start}` | No | 🟢 | Zero-based offset. Omitted when `start == nil` → first page. |
+[`CDYahooLeaguePlayersQuery.pathModifier`](../Source/CDYahooLeaguePlayersQuery.swift) emits only
+the modifiers that are set, always in the order below. A default-initialized query emits nothing
+(`GET …/players`).
 
-**Limitation (🟢):** `start` is the only knob CDYahooKit exposes. Yahoo also supports `;count=`
-(page size, max 25), and the filters `;status=`, `;position=`, `;search=`, `;sort=`, `;sort_type=`
-(🔵). Default page size is 25, so a caller pages by advancing `start` in steps of 25.
+| Modifier | Built from | Status | Notes |
+|----------|-----------|--------|-------|
+| `{leagueKey}` path segment | `leagueKey` | 🟢 | |
+| `;out={a,b,c}` | `query.subresources` (`CDYahooPlayerSubresource` option set) | 🟢 · 🔵 | Comma-joined selectors, fixed order `stats,percent_owned,ownership`. Each pulls the matching per-player element. |
+| `;position={code}` | `query.position` | 🟢 · 🔵 | Verbatim position code, e.g. `QB`. |
+| `;status={code}` | `query.status` (`CDYahooPlayerStatusFilter`) | 🟢 · 🔵 | `A` available · `FA` free agents · `W` waivers · `T` taken · `K` keepers. |
+| `;search={text}` | `query.search` | 🟢 · 🔵 | Name substring. Percent-encoded (allowed set: alphanumerics + `-._~`) so a space can't reshape the URL. |
+| `;sort={code}` | `query.sort` (`CDYahooPlayersSort`) | 🟢 · 🔵 | `NAME` · `OR` overall rank · `AR` actual rank · `PTS` points · or a raw `stat_id` via `.stat(_:)`. |
+| `;start={n}` | `query.start` | 🟢 · 🔵 | Zero-based offset. Interpolated raw (`Int`). |
+| `;count={n}` | `query.count` | 🟢 · 🔵 | Page size, capped by Yahoo at 25. Interpolated raw (`Int`). |
+
+**Limitation (🟢):** Yahoo also documents `;sort_type=` and `;sort_season=` companions to
+`;sort=` (🔵) — CDYahooKit has no parameter for those.
 
 #### Response — XML element tree
 
@@ -493,6 +502,24 @@ GET …/fantasy/v2/league/{leagueKey}/players;start={start}    (start != nil)
         <editorial_team_abbr>SF</editorial_team_abbr>
         <display_position>QB</display_position>
         <status>ACT</status>
+        <player_stats>                          <!-- ;out=stats -->
+          <coverage_type>season</coverage_type>
+          <stats>
+            <stat><stat_id>4</stat_id><value>3980</value></stat>
+            <stat><stat_id>5</stat_id><value>28</value></stat>
+          </stats>
+        </player_stats>
+        <percent_owned>                         <!-- ;out=percent_owned -->
+          <coverage_type>week</coverage_type>
+          <week>8</week>
+          <value>96</value>
+          <delta>0.5</delta>
+        </percent_owned>
+        <ownership>                             <!-- ;out=ownership -->
+          <ownership_type>team</ownership_type>
+          <owner_team_key>449.l.12345.t.3</owner_team_key>
+          <owner_team_name>Team Gamma</owner_team_name>
+        </ownership>
       </player>
       <player>
         <player_key>449.p.30789</player_key>
@@ -501,9 +528,8 @@ GET …/fantasy/v2/league/{leagueKey}/players;start={start}    (start != nil)
         <editorial_team_abbr>NYJ</editorial_team_abbr>
         <display_position>WR</display_position>
         <status/>                              <!-- self-closing → decodes to nil -->
+        <ownership><ownership_type>freeagents</ownership_type></ownership>
       </player>
-      <!-- real API player pool entries also nest <ownership><ownership_type>…</ownership_type>…
-           and the collection carries pagination context — none modeled -->
     </players>
   </league>
 </fantasy_content>
@@ -515,19 +541,27 @@ GET …/fantasy/v2/league/{leagueKey}/players;start={start}    (start != nil)
 |---|---|---|---|---|
 | `league/league_key` | `CDYahooLeaguePlayersResponse.leagueKey` | `String` | Yes → `missingField("league")` | 🟢 · 🔵 |
 | `league/players/player` | `.players[]` | `[CDYahooPlayer]` | No (missing → `[]`) | 🟢 · 🟡 |
-| `…/player/*` | `CDYahooPlayer` fields | — | see [Team roster](#4-team-roster) mapping | 🟢 · 🔵 |
+| `…/player/*` (base) | `CDYahooPlayer` fields | — | see [Team roster](#4-team-roster) mapping | 🟢 · 🔵 |
+| `…/player/percent_owned/value` | `CDYahooPlayer.percentOwned` | `Double?` | No (absent unless `;out=percent_owned`) | 🟡 |
+| `…/player/ownership` | `CDYahooPlayer.ownership` | `CDYahooPlayerOwnership?` | No (absent unless `;out=ownership`); `ownership_type` required within → `missingField("ownership")` | 🟡 |
+| `…/player/ownership/ownership_type` | `.ownership.ownershipType` | `String` | Yes (within `<ownership>`) | 🟡 |
+| `…/player/ownership/owner_team_key` · `owner_team_name` | `.ownership.ownerTeamKey` · `.ownerTeamName` | `String?` | No | 🟡 |
+| `…/player/player_stats/stats/stat` | `CDYahooPlayer.stats[]` | `[CDYahooPlayerStat]?` | No (`nil` unless `<player_stats>` present); `stat_id` + `value` required per entry → `missingField("stat")` | 🟡 |
 
 `<players>` is read **directly under `<league>`** here — not under a `roster` or `standings`
 wrapper as in the roster response.
 
 #### Cardinality notes
 
-- `players count="N"` — up to the page size (25).
+- `players count="N"` — up to the page size (Yahoo default and max 25).
 - `selected_position` never appears in this context → `CDYahooPlayer.selectedPosition` is always
   `nil` for league-pool players.
-- **🟡** The real league-players collection is widely documented to carry per-player `ownership`
-  data and pagination metadata on the collection element. CDYahooKit reads neither, and there is
-  no fixture element for them.
+- `percentOwned`, `ownership`, and `stats` are `nil` on every player unless the request asked
+  for the matching `;out=` selector.
+- **🟡** The `<player_stats>`, `<percent_owned>`, and `<ownership>` shapes are asserted only by
+  `LeaguePlayersFiltered.xml`. `percentOwned` reads just `<value>`; `<coverage_type>`, `<week>`,
+  and `<delta>` inside `<percent_owned>` are not modeled. Collection-level pagination metadata is
+  still not read.
 
 ---
 

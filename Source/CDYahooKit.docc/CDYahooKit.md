@@ -28,6 +28,12 @@ is known to be inconsistent.
 - ``CDYahooLeagueSettings``
 - ``CDYahooTeamStanding``
 - ``CDYahooPlayer``
+- ``CDYahooLeaguePlayersQuery``
+- ``CDYahooPlayerSubresource``
+- ``CDYahooPlayerStatusFilter``
+- ``CDYahooPlayersSort``
+- ``CDYahooPlayerOwnership``
+- ``CDYahooPlayerStat``
 - ``CDYahooMatchup``
 - ``CDYahooTransaction``
 - ``CDYahooDraftResult``

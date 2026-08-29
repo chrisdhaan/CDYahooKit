@@ -57,11 +57,22 @@ public final class CDYahooFantasyAPIClient {
         return try await session.perform(request)
     }
 
-    /// Fetches a league's player pool. Pass `start` (a zero-based offset) to page through results
-    /// beyond Yahoo's default page size; pass `nil` for the first page.
-    public func fetchLeaguePlayers(leagueKey: String, start: Int?) async throws -> CDYahooLeaguePlayersResponse {
-        let request = try await authorizedRequest(.players(leagueKey: leagueKey, start: start))
+    /// Fetches a league's player pool. Use ``CDYahooLeaguePlayersQuery`` to filter (by position,
+    /// availability, or name), sort, page, and pull optional per-player sub-resources (season
+    /// stats, ownership percentage, current owner). Pass `.init()` for Yahoo's first unfiltered
+    /// page.
+    public func fetchLeaguePlayers(leagueKey: String,
+                                   query: CDYahooLeaguePlayersQuery = .init()) async throws -> CDYahooLeaguePlayersResponse {
+        let request = try await authorizedRequest(.players(leagueKey: leagueKey, query: query))
         return try await session.perform(request)
+    }
+
+    /// Fetches a league's player pool one page at a time. Pass `start` (a zero-based offset) to
+    /// page beyond Yahoo's default page size; pass `nil` for the first page.
+    @available(*, deprecated,
+               message: "Use fetchLeaguePlayers(leagueKey:query:) with CDYahooLeaguePlayersQuery(start:)")
+    public func fetchLeaguePlayers(leagueKey: String, start: Int?) async throws -> CDYahooLeaguePlayersResponse {
+        try await fetchLeaguePlayers(leagueKey: leagueKey, query: CDYahooLeaguePlayersQuery(start: start))
     }
 
     /// Fetches a league's scoreboard (every matchup) for a week. Pass `nil` for the current week.

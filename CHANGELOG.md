@@ -3,6 +3,14 @@
 ## [Unreleased]
 
 ### Added
+- `CDYahooFantasyAPIClient.fetchLeaguePlayers(leagueKey:query:)`, extending the
+  `league/{league_key}/players` collection with the modifiers the Fantasy API supports: the
+  `;out=stats`, `;out=percent_owned`, and `;out=ownership` sub-resource selectors, `;position=`,
+  `;status=`, `;search=`, and `;sort=` filters, and `;start=` / `;count=` pagination. New public
+  types `CDYahooLeaguePlayersQuery`, the `CDYahooPlayerSubresource` option set, and the
+  `CDYahooPlayerStatusFilter` and `CDYahooPlayersSort` enums. `CDYahooPlayer` gained optional
+  `percentOwned`, `ownership` (`CDYahooPlayerOwnership`), and `stats` (`[CDYahooPlayerStat]`)
+  fields, populated only when the matching sub-resource is requested.
 - `CDYahooFantasyAPIClient.fetchGameStatCategories(gameKey:)`,
   `fetchGamePositionTypes(gameKey:)`, `fetchGameRosterPositions(gameKey:)`, and
   `fetchGameWeeks(gameKey:)`, wrapping the four `game/{game_key}` metadata sub-resources that
@@ -33,9 +41,12 @@
   `CDYahooDraftResult`.
 
 ### Changed
+- `CDYahooRouter.players` now takes a `CDYahooLeaguePlayersQuery` instead of a bare `start: Int?`.
+  `CDYahooFantasyAPIClient.fetchLeaguePlayers(leagueKey:start:)` is deprecated in favor of
+  `fetchLeaguePlayers(leagueKey:query:)`; the `start:` form still works and forwards to it.
 - `Documentation/API_SCHEMA.md`, `Documentation/Usage.md`, and `Documentation/ARCHITECTURE.md`
-  extended with the league settings, draft results, team matchups/stats, and game metadata
-  resources.
+  extended with the league settings, draft results, team matchups/stats, game metadata, and
+  league-players collection-modifier resources.
 - Example app: added **League Settings**, **League Draft Results**, **Team Draft Results**,
   **Team Matchups**, **Team Stats**, **Game Stat Categories**, **Game Position Types**,
   **Game Roster Positions**, and **Game Weeks** rows to the endpoint list.

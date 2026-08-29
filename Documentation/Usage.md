@@ -343,26 +343,51 @@ for player in current.players {
 
 Returns `CDYahooTeamRosterResponse` (`teamKey`, `name`, `players: [CDYahooPlayer]`).
 `CDYahooPlayer`: `playerKey`, `playerId`, `fullName`, `editorialTeamAbbr?`,
-`displayPosition?`, `selectedPosition?`, `status?`.
+`displayPosition?`, `selectedPosition?`, `status?`, plus `percentOwned?`, `ownership?`, and
+`stats?` (populated only when the matching sub-resource is requested — see below).
 
 ### Fetch the league player pool
 
-```swift
-var players: [CDYahooPlayer] = []
-var start: Int? = nil
+`CDYahooLeaguePlayersQuery` carries every collection modifier; a default `.init()` returns
+Yahoo's first unfiltered page.
 
-while true {
-    let page = try await client.fetchLeaguePlayers(leagueKey: "449.l.123456", start: start)
-    guard !page.players.isEmpty else { break }
-    players.append(contentsOf: page.players)
-    start = players.count            // Yahoo pages ~25 at a time
+```swift
+// Free-agent wide receivers, sorted by points, first 25, with ownership + season stats.
+let query = CDYahooLeaguePlayersQuery(
+    subresources: [.percentOwned, .ownership, .stats],
+    position: "WR",
+    status: .freeAgents,
+    sort: .points,
+    count: 25
+)
+let response = try await client.fetchLeaguePlayers(leagueKey: "449.l.123456", query: query)
+
+for player in response.players {
+    print(player.fullName,
+          player.percentOwned.map { "\($0)% owned" } ?? "",
+          player.ownership?.ownershipType ?? "")
 }
 ```
 
-Returns `CDYahooLeaguePlayersResponse` (`leagueKey`, `players: [CDYahooPlayer]`). Pass
-`start: nil` for the first page and a zero-based offset thereafter. (Filtering the pool by
-position / status / search term is tracked for a later release; v1 returns the default
-listing only.)
+To page, advance `query.start` (a zero-based offset) in steps of `count` (max 25):
+
+```swift
+var players: [CDYahooPlayer] = []
+var query = CDYahooLeaguePlayersQuery(count: 25)
+
+while true {
+    let page = try await client.fetchLeaguePlayers(leagueKey: "449.l.123456", query: query)
+    guard !page.players.isEmpty else { break }
+    players.append(contentsOf: page.players)
+    query.start = players.count
+}
+```
+
+Returns `CDYahooLeaguePlayersResponse` (`leagueKey`, `players: [CDYahooPlayer]`). The
+`;out=stats` / `;out=percent_owned` / `;out=ownership` selectors populate `CDYahooPlayer.stats`
+(`[CDYahooPlayerStat]`), `.percentOwned` (`Double`), and `.ownership` (`CDYahooPlayerOwnership`);
+those fields are `nil` otherwise. `fetchLeaguePlayers(leagueKey:start:)` is deprecated — it still
+works and forwards to the query form.
 
 ### Fetch the weekly scoreboard
 

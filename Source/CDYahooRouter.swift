@@ -12,7 +12,7 @@ enum CDYahooRouter {
     case league(leagueKey: String)
     case standings(leagueKey: String)
     case roster(teamKey: String, week: Int?)
-    case players(leagueKey: String, start: Int?)
+    case players(leagueKey: String, query: CDYahooLeaguePlayersQuery)
     case scoreboard(leagueKey: String, week: Int?)
     case transactions(leagueKey: String)
     case settings(leagueKey: String)
@@ -39,12 +39,8 @@ enum CDYahooRouter {
             } else {
                 "team/\(Self.percentEncodedPathSegment(teamKey))/roster"
             }
-        case let .players(leagueKey, start):
-            if let start {
-                "league/\(Self.percentEncodedPathSegment(leagueKey))/players;start=\(start)"
-            } else {
-                "league/\(Self.percentEncodedPathSegment(leagueKey))/players"
-            }
+        case let .players(leagueKey, query):
+            "league/\(Self.percentEncodedPathSegment(leagueKey))/players\(query.pathModifier)"
         case let .scoreboard(leagueKey, week):
             if let week {
                 "league/\(Self.percentEncodedPathSegment(leagueKey))/scoreboard;week=\(week)"
