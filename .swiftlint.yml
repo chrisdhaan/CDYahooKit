@@ -2,8 +2,12 @@ included:
   - Source
   - Example/Source
 
-file_length: 300
-function_body_length: 60
+file_length:
+  warning: 400
+  error: 1000
+function_body_length:
+  warning: 40
+  error: 100
 identifier_name:
   excluded:
     - id
@@ -14,4 +18,6 @@ line_length:
   ignores_comments: true
   ignores_function_declarations: true
   warning: 149
-type_body_length: 200
+type_body_length:
+  warning: 200
+  error: 350
